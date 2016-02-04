@@ -6,6 +6,9 @@ public class Timer : MonoBehaviour {
 	// Use this for initialization
 	private RectTransform rt;
 	private int block;
+	private bool tues=true;
+
+
 	void Start () {
 		 rt = GetComponent (typeof (RectTransform)) as RectTransform;
 
@@ -14,11 +17,25 @@ public class Timer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
-		rt.sizeDelta = new Vector2 (168f, 30*timer);
+		block = (int)(200 * timer / 83);
+
+		if (block < 6) {
+			rt.sizeDelta = new Vector2 (168f, 200 * timer);
+		}
+		//30*timer
+//		if (tues==true) 
+//		{
+//			Instantiate (rt, new Vector3 (-300, -98, 0), new Quaternion (0, 0, 0, 0));
+//			tues = false;
+//			Debug.Log (tues);
+//
+//		}
+		//**use TAG 
+
 		//Debug.Log (timer);
-		block = (int)(30 * timer / 83);
-		Debug.Log (block);
+		//Debug.Log (block);
 		//one day is 16s for timer;
+
 	}
 }
   
