@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/CalendarView.unity
-  isLoaded: 1
-  isActive: 1
