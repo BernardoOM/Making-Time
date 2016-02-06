@@ -9,11 +9,15 @@ public class DBMakingTime : MonoBehaviour {
     private IDbConnection _dbc;
     private IDbCommand _dbcm;
     private IDataReader _dbr;
-    string sqlQuery;
+    private string sqlQuery;
 
-    public void OpenDB(string p){
+	public int[] current_val=new int[2]{0,0}; 
+
+
+
+	public void OpenDB(string p){
         _constr = "URI=file:" + Application.dataPath + "/StreamingAssets/" + p; // we set the connection to our database
-        Debug.Log(_constr);
+        //Debug.Log(_constr);
        _dbc = new SqliteConnection(_constr);
        _dbc.Open();//Open connection to the database.
     }
@@ -21,42 +25,52 @@ public class DBMakingTime : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        OpenDB("MakingTime.db");
-       _dbcm = _dbc.CreateCommand();
-      
-        //Insert data 
-        sqlQuery = "INSERT INTO Event (name,current_day,current_time,min_day,max_day,min_time,max_time,scheduled,creator,type) VALUES ('Date',1,1,0,3,2,3,1,'Robert','Social')";
-        _dbcm.CommandText = sqlQuery;
-        _dbcm.ExecuteNonQuery();
 
-        sqlQuery = "INSERT INTO Event (name,current_day,current_time,min_day,max_day,min_time,max_time,scheduled,creator,type) VALUES ('Party',1,1,0,3,2,3,1,'Gina','Social')";
-        _dbcm.CommandText = sqlQuery;
-        _dbcm.ExecuteNonQuery();
 
-        sqlQuery = "INSERT INTO Event (name,current_day,current_time,min_day,max_day,min_time,max_time,scheduled,creator,type) VALUES ('Movie',1,1,0,3,2,3,1,'Robert','Social')";
-        _dbcm.CommandText = sqlQuery;
-        _dbcm.ExecuteNonQuery();
-
-        sqlQuery = "select * from Event";
-        _dbcm.CommandText = sqlQuery;
-        _dbr = _dbcm.ExecuteReader();
-
-        while (_dbr.Read())
-        {
-            Debug.Log("****** Data: " + _dbr["name"] + "\tday: " + _dbr["current_day"] + "\tTime: " + _dbr["current_time"] + "\tMin Day: " + _dbr["min_day"]
-                + "\tMax Day: " + _dbr["max_day"] + "\tMin Time: " + _dbr["min_time"] + "\tMax Time: " + _dbr["max_time"] + "\tScheduled: " + _dbr["scheduled"]
-                + "\tcreator: " + _dbr["creator"] + "\ttype: " + _dbr["type"]);
-        }
-        _dbr.Close();
-        _dbr = null;
-        _dbcm.Dispose();
-        _dbcm = null;
-        _dbc.Close();
-        _dbc = null;
     }
     // Update is called once per frame
     void Update()
     {
 
     }
+
+	public int[] Select_DB(string event_name){
+//		string evt = event_Name;
+		string category;
+		int egy_b=-9;
+		int hpy_b;
+		int[] values=new int[2]; 
+	
+		OpenDB("MakingTime.db");
+		_dbcm = _dbc.CreateCommand();
+
+		sqlQuery = "select * from Event_Type where Event_Name = '" +event_name+ "' ";
+
+		//where Event_Name = 'Teach a Class'
+		_dbcm.CommandText = sqlQuery;
+		_dbr = _dbcm.ExecuteReader();
+
+
+		while (_dbr.Read())
+		{
+
+
+			values [0] = _dbr.GetInt32 (3);
+			values [1] = _dbr.GetInt32 (5); 
+
+
+		}
+
+		_dbr.Close();
+		_dbr = null;
+		_dbcm.Dispose();
+		_dbcm = null;
+		_dbc.Close();
+		_dbc = null;
+		//return egy_b;
+		return values;
+	}
+
+
+
 }
