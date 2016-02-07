@@ -4,7 +4,8 @@ using Mono.Data.Sqlite;
 using System.Data;
 using System;
 
-public class DBMakingTime : MonoBehaviour {
+public class DBMakingTime : MonoBehaviour
+{
     private string _constr;// = "URI=file:" + Application.persistentDataPath + "/MakingTime.db";//Path to database.
     private IDbConnection _dbc;
     private IDbCommand _dbcm;
@@ -13,9 +14,8 @@ public class DBMakingTime : MonoBehaviour {
 
 	public int[] current_val=new int[2]{0,0}; 
 
-
-
-	public void OpenDB(string p){
+	public void OpenDB(string p)
+	{
         _constr = "URI=file:" + Application.dataPath + "/StreamingAssets/" + p; // we set the connection to our database
         //Debug.Log(_constr);
        _dbc = new SqliteConnection(_constr);
@@ -34,7 +34,8 @@ public class DBMakingTime : MonoBehaviour {
 
     }
 
-	public int[] Select_DB(string event_name){
+	public int[] Select_DB(string event_name)
+	{
 //		string evt = event_Name;
 		string category;
 		int egy_b=-9;
@@ -53,12 +54,8 @@ public class DBMakingTime : MonoBehaviour {
 
 		while (_dbr.Read())
 		{
-
-
 			values [0] = _dbr.GetInt32 (3);
 			values [1] = _dbr.GetInt32 (5); 
-
-
 		}
 
 		_dbr.Close();
@@ -68,9 +65,7 @@ public class DBMakingTime : MonoBehaviour {
 		_dbc.Close();
 		_dbc = null;
 		//return egy_b;
+
 		return values;
 	}
-
-
-
 }

@@ -2,7 +2,9 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+
+public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+{
 	public static GameObject itemBeingDragged;
 	Vector3 startPosition;
 	Transform startParent;
@@ -23,8 +25,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		text = GetComponent<Text> ().text;
 		Debug.Log (text);
 		Debug.Log ("start");
-
-
 	}
 
 
@@ -37,7 +37,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		startPosition = transform.position;
 		startParent = transform.parent;
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
-
 	}
 
 
@@ -56,7 +55,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		text = GetComponentInChildren<Text> ().text;
 
 		//Debug.Log (text);
-
 	}
 	
 	#endregion
@@ -65,12 +63,9 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
-
 		itemBeingDragged = null;
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 		transform.localPosition=Auto_absorp (transform.localPosition.x, transform.localPosition.y);		
-
-
 	}
 	
 	#endregion
@@ -82,15 +77,13 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 				
 			if (x < i + 120f && x > i - 120f)
 				if (y < j + 50f && y > j - 50f) 
-					{
-				x = i;
-				y = j;
-//				Debug.Log (x);
-//				Debug.Log (y);
-				GetComponent<Image> ().color = Color.red;
-
-			}
-		
+				{
+					x = i;
+					y = j;
+//					Debug.Log (x);
+//					Debug.Log (y);
+					GetComponent<Image> ().color = Color.red;
+				}
 		
 		return new Vector3 (x, y, 0);
 	}
@@ -98,10 +91,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	void update()
 	{
 		Debug.Log ("start");
-
 	}
-
-	}
+}
 
 
 
