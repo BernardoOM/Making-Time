@@ -34,7 +34,7 @@ public class DBMakingTime : MonoBehaviour
 
     }
 
-	public int[] Select_DB(string event_name)
+	public int[] Select_DB(string event_name, string Time_Length)
 	{
 //		string evt = event_Name;
 		string category;
@@ -45,7 +45,7 @@ public class DBMakingTime : MonoBehaviour
 		OpenDB("MakingTime.db");
 		_dbcm = _dbc.CreateCommand();
 
-		sqlQuery = "select * from Event_Type where Event_Name = '" +event_name+ "' ";
+		sqlQuery = "select * from Event_Type where pk_Event_Name = '" +event_name+ "' " +"where pk_Time_Length = '"+Time_Length+"'" ;
 
 		//where Event_Name = 'Teach a Class'
 		_dbcm.CommandText = sqlQuery;

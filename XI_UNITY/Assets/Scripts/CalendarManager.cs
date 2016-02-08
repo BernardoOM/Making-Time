@@ -30,7 +30,7 @@ public class CalendarManager : MonoBehaviour
 	public void TimeBlockStarted()
 	{
 		curTime += 1;
-		OnCheckCommitments(curWeek * 7 + curDay, curTime);
+//		OnCheckCommitments(curWeek * 7 + curDay, curTime);
 	}
 
 	public void DayEnded(int prevDay)
