@@ -6,9 +6,12 @@ public class Calculate : MonoBehaviour
 {
 	private float pos_y;
 	private float pos_x;
-	private float timer;
-	private int speed=50;
+	public float timer;
+	public int speed=50;
 	private int height=83;
+	private float anchor_x=-397f;
+	private float gap_x=171.7f;
+
 	private float test;
 	// Use this for initialization
 	private DBMakingTime db;
@@ -37,8 +40,16 @@ public class Calculate : MonoBehaviour
 
 	void compare()
 	{
-		if ((int)(timer * speed / height ) == ((237f - transform.localPosition.y) / height)) 
+
+		int loc = (int) ((timer*speed) / (height * 6));
+		// loc represents which colomn currently 
+
+//		Debug.Log(anchor_x+gap_x*loc);
+//		Debug.Log(transform.localPosition.x);
+
+		if ( ((int)( (timer * speed) % (height*6) )) == (237f - transform.localPosition.y)) 
 			if(exe==false)
+		if(transform.localPosition.x-anchor_x-gap_x*loc<2f && transform.localPosition.x-anchor_x-gap_x*loc>-2f)
 		{
 //			Debug.Log ("hit");
 			values = db.Select_DB (text);

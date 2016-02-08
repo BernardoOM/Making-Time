@@ -9,7 +9,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	Vector3 startPosition;
 	Transform startParent;
 	public bool isClicked=false;
-	Vector3 forzePos = new Vector3 (-399, 234, 0);
 
 	public float anchor_x=-397f;
 	public float anchor_y=237;
@@ -17,7 +16,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	private float gap_y= 83f;
 	private Color old_color = new Color32 (176,131,97,255);
 	private string text;
-   
+	private Calculate calculate;
+
 	void start()
 	{
 		old_color=GetComponent<Image> ().color;
@@ -27,7 +27,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		Debug.Log ("start");
 	}
 
-
+	void update(){
+	}
 
 	#region IBeginDragHandler implementation
 	
@@ -37,6 +38,10 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		startPosition = transform.position;
 		startParent = transform.parent;
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+		calculate = GameObject.Find ("Teach Class").GetComponent<Calculate> ();
+		//Debug.Log(calculate.timer);
+
 	}
 
 
@@ -73,25 +78,45 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	public Vector3 Auto_absorp(float x, float y)
 	{
 		for (float i = anchor_x; i < 4f * gap_x; i += gap_x)
-			for (float j = anchor_y; j > -3f * gap_y; j -= gap_y)
-				
-			if (x < i + 120f && x > i - 120f)
-				if (y < j + 50f && y > j - 50f) 
-				{
+			for (float j = anchor_y; j > -3f * gap_y; j -= gap_y) {	
+				if (x < i + 120f && x > i - 120f)
+				if (y < j + 50f && y > j - 50f) {
 					x = i;
 					y = j;
+
+
 //					Debug.Log (x);
 //					Debug.Log (y);
 					GetComponent<Image> ().color = Color.red;
 				}
+			}
 		
+		int loc = (int) ((calculate.timer * calculate.speed) / (gap_y * 6));
+		int remain = ((int)(calculate.timer * calculate.speed)) % ((int)(gap_y * 6));
+		// loc represents which colomn currently 
+
+		if ((anchor_y - y) < ( ((int) (calculate.timer * calculate.speed) )%((int)(gap_y*6)))) 
+		if(x==anchor_x+gap_x*loc)
+		{
+			x += gap_x;
+		}
+		//detect the current colomn 
+
+		for (int i = 0; i < loc; i++) {
+			if (x == anchor_x+gap_x*i) {
+				x += gap_x;
+			}
+		}
+		//detect past colomns 
+
+		//Debug.Log (calculate.timer * calculate.speed);
+		//Debug.Log (remain);
+		//Debug.Log (loc);
+
 		return new Vector3 (x, y, 0);
 	}
 
-	void update()
-	{
-		Debug.Log ("start");
-	}
+
 }
 
 
