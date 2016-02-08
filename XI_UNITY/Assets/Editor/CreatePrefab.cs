@@ -27,7 +27,6 @@ public class CreatePrefab : MonoBehaviour
 
 	static void CreateNew(GameObject GO, string localPath)
 	{
-		Transform objParent = GO.transform.parent;
 		Object prefab = PrefabUtility.CreateEmptyPrefab (localPath);
 		PrefabUtility.ReplacePrefab (GO, prefab, ReplacePrefabOptions.ConnectToPrefab);
 	}

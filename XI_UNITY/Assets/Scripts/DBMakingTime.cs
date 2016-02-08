@@ -51,7 +51,6 @@ public class DBMakingTime : MonoBehaviour
 		_dbcm.CommandText = sqlQuery;
 		_dbr = _dbcm.ExecuteReader();
 
-
 		while (_dbr.Read())
 		{
 			values [0] = _dbr.GetInt32 (3);

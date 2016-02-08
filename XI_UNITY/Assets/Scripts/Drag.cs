@@ -39,7 +39,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		startParent = transform.parent;
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-		calculate = GameObject.Find ("Teach Class").GetComponent<Calculate> ();
+		calculate = Camera.main.GetComponent<Calculate> ();
 		//Debug.Log(calculate.timer);
 
 	}
