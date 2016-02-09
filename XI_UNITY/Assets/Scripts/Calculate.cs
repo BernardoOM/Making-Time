@@ -16,6 +16,7 @@ public class Calculate : MonoBehaviour
 	// Use this for initialization
 	private DBMakingTime db;
 	private string text;
+	private string length;
 	private int[] values=new int[2];
 
 	private bool exe = false;
@@ -52,7 +53,7 @@ public class Calculate : MonoBehaviour
 		if(transform.localPosition.x-anchor_x-gap_x*loc<2f && transform.localPosition.x-anchor_x-gap_x*loc>-2f)
 		{
 //			Debug.Log ("hit");
-			values = db.Select_DB (text);
+			values = db.Select_DB (text, length);
 
 			db.current_val [0] += values[0];
 			db.current_val [1] += values[1];

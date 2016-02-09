@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	private static GameManager		instance;
 	private static CalendarManager	calendar;
 	private static PeopleManager	people;
+	private static UIManager		ui;
 
 	// Constructor
 	private GameManager() {}
@@ -48,6 +49,16 @@ public class GameManager : MonoBehaviour
 			{	people = Instance.GetComponent<PeopleManager>();	}
 
 			return people;
+		}
+	}
+
+	public static UIManager UI
+	{
+		get
+		{
+			if(ui == null)
+			{	ui = Instance.GetComponent<UIManager>();	}
+			return ui;
 		}
 	}
 

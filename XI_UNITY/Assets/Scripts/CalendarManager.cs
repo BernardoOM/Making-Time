@@ -9,7 +9,6 @@ public class CalendarManager : MonoBehaviour
 	public event CommitmentEvent	OnCheckCommitments;
 
 	//To be canged later
-	public Timer[]		timers;
 	public Commitment[]	unscheduledCommitments;
 	public Commitment[]	scheduledCommitments;
 

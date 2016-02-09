@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
 
 	public float timer = 0;
 
-	private RectTransform rt;
+	private RectTransform rectTransform;
 
 	//size of a block of time in pixels
 	private static int width = 168;
@@ -22,10 +22,11 @@ public class Timer : MonoBehaviour
 	void Start ()
 	{
 		GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
+
 		if((int)today == GameManager.Calendar.curDay)
 		{	isOn = true;	}
 
-		rt = GetComponent (typeof (RectTransform)) as RectTransform;
+		rectTransform = GetComponent (typeof (RectTransform)) as RectTransform;
 	}
 	
 	// Update is called once per frame
@@ -45,7 +46,7 @@ public class Timer : MonoBehaviour
 				GameManager.Calendar.DayEnded((int)today);
 			}
 
-			rt.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
+			rectTransform.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
 		}
 	}
 
@@ -54,7 +55,7 @@ public class Timer : MonoBehaviour
 		if(newDay == 0)
 		{
 			timer = 0;
-			rt.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
+			rectTransform.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
 		}
 		if(newDay == (int)today)
 		{	isOn = true;	}
