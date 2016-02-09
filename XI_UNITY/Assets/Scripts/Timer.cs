@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
 	private static int width = 168;
 	private static int maxHeight = 492;
 	//length of an in-game day in seconds
-	private static int realTimePerDay = 2;
+	private static int realTimePerDay = 120;
 
 	private bool isOn = false;
 
@@ -23,7 +23,7 @@ public class Timer : MonoBehaviour
 	{
 		GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
 
-		if((int)today == GameManager.Calendar.curDay)
+		if((int)today == GameManager.Calendar.curDayOfWeek)
 		{	isOn = true;	}
 
 		rectTransform = GetComponent (typeof (RectTransform)) as RectTransform;
@@ -36,7 +36,7 @@ public class Timer : MonoBehaviour
 		{
 			timer += Time.deltaTime;
 
-			if(timer / 6 > GameManager.Calendar.curTime)
+			if(timer / 6 > GameManager.Calendar.curTime * realTimePerDay / 6)
 			{	GameManager.Calendar.TimeBlockStarted();	}
 
 			if(timer >= realTimePerDay)

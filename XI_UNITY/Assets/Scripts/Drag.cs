@@ -5,45 +5,45 @@ using UnityEngine.UI;
 
 public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-	public static GameObject itemBeingDragged;
-	Vector3 startPosition;
-	Transform startParent;
-	public bool isClicked=false;
+	public static GameObject	itemBeingDragged;
+	private static Color		notScheduledColor = new Color(176, 131, 97, 255);
+	private static Color		scheduledColor = new Color(214, 110, 31, 255);
+	private static Color		completedColor = new Color(120, 72, 36, 255);
 
-	public float anchor_x=-397f;
-	public float anchor_y=237;
-	private float gap_x=171.7f;
-	private float gap_y= 83f;
-	private Color old_color = new Color32 (176,131,97,255);
-	private string text;
-	private Calculate calculate;
+	private static int	startX = -482;
+	private static int	calendarStartY = 277;
+	private static int	deckY = -218;
+	private static int	blockWidth = 171;
+	private static int	blockHeight = 83;
 
-	void start()
+	private Image		buttonImage;
+	private Vector3		startPosition;
+	private Commitment	com;
+
+	private bool	wasClicked = false;
+	private bool	isFocus = false;
+
+//	private Calculate calculate;
+
+	void Start()
 	{
-		old_color=GetComponent<Image> ().color;
-		Debug.Log ("color set");
-		text = GetComponent<Text> ().text;
-		Debug.Log (text);
-		Debug.Log ("start");
-	}
+		GameManager.Calendar.OnCommitmentClicked += Calendar_OnCommitmentClicked;
 
-	void update(){
+		buttonImage = GetComponent<Image>();
+		startPosition = transform.localPosition;
+		com = GetComponent<Commitment>();
 	}
 
 	#region IBeginDragHandler implementation
 	
 	public void OnBeginDrag (PointerEventData eventData)
 	{
-		itemBeingDragged = gameObject;
-		startPosition = transform.position;
-		startParent = transform.parent;
-		GetComponent<CanvasGroup>().blocksRaycasts = false;
-
-		calculate = Camera.main.GetComponent<Calculate> ();
-		//Debug.Log(calculate.timer);
-
+		if(isFocus && !com.completed)
+		{
+			itemBeingDragged = gameObject;
+			GetComponent<CanvasGroup>().blocksRaycasts = false;
+		}
 	}
-
 
 	#endregion
 
@@ -51,15 +51,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnDrag (PointerEventData eventData)
 	{
-		transform.position = eventData.position;
-		GetComponent<Image> ().color= old_color;
-
-		//Debug.Log (GetComponent<Image> ().color);
-		//Debug.Log (old_color);
-
-		text = GetComponentInChildren<Text> ().text;
-
-		//Debug.Log (text);
+		if(isFocus && !com.completed)
+		{	transform.position = eventData.position;	}
 	}
 	
 	#endregion
@@ -68,58 +61,101 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
-		itemBeingDragged = null;
-		GetComponent<CanvasGroup>().blocksRaycasts = true;
-		transform.localPosition=Auto_absorp (transform.localPosition.x, transform.localPosition.y);		
+		if(isFocus && !com.completed)
+		{
+			itemBeingDragged = null;
+			GetComponent<CanvasGroup>().blocksRaycasts = true;
+			isFocus = false;
+			GameManager.Calendar.NoFocus();
+
+			transform.localPosition = SnapToBlock(transform.localPosition.x, transform.localPosition.y);	
+		}
 	}
 	
 	#endregion
 
-	public Vector3 Auto_absorp(float x, float y)
+	public Vector3 SnapToBlock(float x, float y)
 	{
-		for (float i = anchor_x; i < 4f * gap_x; i += gap_x)
-			for (float j = anchor_y; j > -3f * gap_y; j -= gap_y) {	
-				if (x < i + 120f && x > i - 120f)
-				if (y < j + 50f && y > j - 50f) {
-					x = i;
-					y = j;
+		int positionX = Mathf.FloorToInt(x);	int positionY = Mathf.FloorToInt(y);
 
+		if(positionX < startX || positionX > startX + (blockWidth * 7) || positionY < deckY - blockHeight || positionY > calendarStartY)
+		{	return startPosition;	}
 
-//					Debug.Log (x);
-//					Debug.Log (y);
-					GetComponent<Image> ().color = Color.red;
-				}
-			}
-		
-		int loc = (int) ((calculate.timer * calculate.speed) / (gap_y * 6));
-		int remain = ((int)(calculate.timer * calculate.speed)) % ((int)(gap_y * 6));
-		// loc represents which colomn currently 
-
-		if ((anchor_y - y) < ( ((int) (calculate.timer * calculate.speed) )%((int)(gap_y*6)))) 
-		if(x==anchor_x+gap_x*loc)
+		if(positionY > deckY)
 		{
-			x += gap_x;
-		}
-		//detect the current colomn 
+			int dayOfWeek = (positionX - startX) / blockWidth;
+			int time = (calendarStartY - positionY) / blockHeight;
 
-		for (int i = 0; i < loc; i++) {
-			if (x == anchor_x+gap_x*i) {
-				x += gap_x;
+			if(CheckSchedulePlacement(GameManager.Calendar.viewingWeek * 7 + dayOfWeek, time))
+			{
+				if(!com.scheduled)
+				{
+					buttonImage.color = scheduledColor;
+					com.SetScheduled(true);
+					GameManager.Calendar.ScheduleCommitment(com);
+					transform.parent = GameObject.Find("Scheduled").transform;
+				}
+
+				return new Vector3(startX + (dayOfWeek * blockWidth), calendarStartY - (time * blockHeight), 0);
 			}
+			else
+			{	return startPosition;	}
 		}
-		//detect past colomns 
+		else
+		{
+			if(com.scheduled)
+			{
+				buttonImage.color = notScheduledColor;
+				com.SetScheduled(false);
+				GameManager.Calendar.UnScheduleCommitment(com);
+				transform.parent = GameObject.Find("Deck").transform;
+			}
 
-		//Debug.Log (calculate.timer * calculate.speed);
-		//Debug.Log (remain);
-		//Debug.Log (loc);
-
-		return new Vector3 (x, y, 0);
+			return new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);
+		}
 	}
 
+	void Calendar_OnCommitmentClicked ()
+	{
+		if(wasClicked && isFocus)
+		{
+			isFocus = false;
+			GameManager.Calendar.NoFocus();
+		}
+		else if(wasClicked && !isFocus)
+		{
+			isFocus = true;
+			GameManager.Calendar.CommitmentFocus(com);
+		}
+		else if(!wasClicked && isFocus)
+		{	isFocus = false;	}
 
+		wasClicked = false;
+	}
+
+	public void ButtonClicked()
+	{
+		wasClicked = true;
+		GameManager.Calendar.CommitmentClicked();
+	}
+
+	bool CheckSchedulePlacement(int totalDay, int time)
+	{
+		int maxTotalDay, minTotalDay, maxTime, minTime;
+		com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
+
+		if(totalDay > maxTotalDay || totalDay < minTotalDay || (totalDay == maxTotalDay && time > maxTime) || (totalDay == minTotalDay && time < minTime))
+		{	return false;	}
+
+		if(!GameManager.Calendar.CheckCalendarSpace(totalDay, time))
+		{	return false;	}
+
+		return true;
+	}
+
+	public static void PlaceUnscheduled(Commitment com)
+	{	com.transform.localPosition = new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);	}
+
+	public void Completed()
+	{	buttonImage.color = completedColor;	}
 }
-
-
-
-
-

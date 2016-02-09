@@ -3,12 +3,9 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-	public delegate void		DragHandler(int minDay, int maxDay, int minTime, int maxTime);
+	public delegate void		DragHandler(int maxTotalDay, int minTotalDay, int maxTime, int minTime);
 	public event DragHandler	OnDragAreaSet;
 
-	public void SetDragArea(int minDay, int maxDay, int minTime, int maxTime)
-	{
-		if(minDay < maxDay && minTime < maxTime)
-		{	OnDragAreaSet(minDay, maxDay, minTime, maxTime);	}
-	}
+	public void SetDragArea(int maxTotalDay, int minTotalDay, int maxTime, int minTime)
+	{	OnDragAreaSet(maxTotalDay, minTotalDay, maxTime, minTime);		}
 }
