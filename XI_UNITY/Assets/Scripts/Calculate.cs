@@ -53,7 +53,12 @@ public class Calculate : MonoBehaviour
 		if(transform.localPosition.x-anchor_x-gap_x*loc<2f && transform.localPosition.x-anchor_x-gap_x*loc>-2f)
 		{
 //			Debug.Log ("hit");
+<<<<<<< Updated upstream
 			values = db.Select_DB (text, length);
+=======
+			//values = db.Select_DB (text);
+			//read button text, call from database 
+>>>>>>> Stashed changes
 
 			db.current_val [0] += values[0];
 			db.current_val [1] += values[1];
