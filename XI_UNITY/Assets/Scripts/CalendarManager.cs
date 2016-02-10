@@ -70,7 +70,9 @@ public class CalendarManager : MonoBehaviour
 	public void ActivateCommitment(Commitment sender)
 	{
 		//To be changed later
-		GameManager.People.ChangePlayerStatus(0, 0);
+		//GameManager.People.ChangePlayerStatus(0, 0);
+		sender.readvalues ();
+
 		Debug.Log("WE GOT IT");
 	}
 

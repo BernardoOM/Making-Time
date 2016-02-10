@@ -128,4 +128,19 @@ public class Commitment : MonoBehaviour
 		com.transform.localScale = Vector3.one;
 		Drag.PlaceUnscheduled(com);
 	}
+
+	//use out then you can change the values of arguments 
+	public void readvalues()
+	{
+	// int arrys= db read function 
+		int[] array= DBMakingTime.Select_DB(name, timeLength);
+		Debug.Log (array);
+		GameObject.Find ("Managers").GetComponent<PeopleManager> ().ChangePlayerStatus (array [0], array [1]);
+
+		 //+= array [0];
+		//player_happiness += array [1];
+	}
+
 }
+
+

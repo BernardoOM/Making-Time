@@ -54,7 +54,7 @@ public class Calculate : MonoBehaviour
 		{
 //			Debug.Log ("hit");
 
-			values = db.Select_DB (text, length);
+			//values = db.Select_DB (text, length);
 
 			db.current_val [0] += values[0];
 			db.current_val [1] += values[1];

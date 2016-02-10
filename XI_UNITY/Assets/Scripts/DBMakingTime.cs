@@ -6,15 +6,15 @@ using System;
 
 public class DBMakingTime : MonoBehaviour
 {
-    private string _constr;// = "URI=file:" + Application.persistentDataPath + "/MakingTime.db";//Path to database.
-    private IDbConnection _dbc;
-    private IDbCommand _dbcm;
-    private IDataReader _dbr;
-    private string sqlQuery;
+	private static string _constr;// = "URI=file:" + Application.persistentDataPath + "/MakingTime.db";//Path to database.
+	private static IDbConnection _dbc;
+	private static IDbCommand _dbcm;
+	private static IDataReader _dbr;
+	private static string sqlQuery;
 
 	public int[] current_val=new int[2]{0,0}; 
 
-	public void OpenDB(string p)
+	public static void OpenDB(string p)
 	{
         _constr = "URI=file:" + Application.dataPath + "/StreamingAssets/" + p; // we set the connection to our database
         //Debug.Log(_constr);
@@ -34,7 +34,7 @@ public class DBMakingTime : MonoBehaviour
 
     }
 
-	public int[] Select_DB(string event_name, string Time_Length)
+	public static int[] Select_DB(string event_name, int Time_Length)
 	{
 //		string evt = event_Name;
 		string category;
@@ -53,8 +53,8 @@ public class DBMakingTime : MonoBehaviour
 
 		while (_dbr.Read())
 		{
-			values [0] = _dbr.GetInt32 (3);
-			values [1] = _dbr.GetInt32 (5); 
+			values [0] = _dbr.GetInt32 (5);
+			values [1] = _dbr.GetInt32 (7); 
 		}
 
 		_dbr.Close();

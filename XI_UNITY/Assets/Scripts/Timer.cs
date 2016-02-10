@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
 	private static int width = 168;
 	private static int maxHeight = 492;
 	//length of an in-game day in seconds
-	private static int realTimePerDay = 120;
+	private static int realTimePerDay = 12;
 
 	private bool isOn = false;
 
