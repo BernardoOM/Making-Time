@@ -59,7 +59,7 @@ public class Commitment : MonoBehaviour
 			else
 			{
 				timeLeft -= 1;
-				GameManager.Calendar.ActivateCommitment(this);
+				GameManager.Calendar.CompleteCommitment(this);
 				GetComponent<Drag>().Completed();
 				completed = true;
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;

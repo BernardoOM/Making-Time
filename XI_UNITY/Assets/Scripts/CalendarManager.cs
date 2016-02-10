@@ -68,7 +68,7 @@ public class CalendarManager : MonoBehaviour
 		viewingWeek = curWeek;
 	}
 
-	public void ActivateCommitment(Commitment sender)
+	public void CompleteCommitment(Commitment sender)
 	{
 		//To be changed later
 		//GameManager.People.ChangePlayerStatus(0, 0);

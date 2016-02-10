@@ -9,7 +9,7 @@ public class Sidebar : MonoBehaviour
 
 	public void ChangeValues(int newEnergy, int newHappiness)
 	{
-		energy.text = energy.text.Remove(energy.text.Length - 1) + (newEnergy + 5);
-		happiness.text = happiness.text.Remove(happiness.text.Length - 1) + (newHappiness + 5);
+		energy.text = (newEnergy + 5).ToString();
+		happiness.text = (newHappiness + 5).ToString();
 	}
 }
