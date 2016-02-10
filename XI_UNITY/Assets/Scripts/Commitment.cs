@@ -6,9 +6,10 @@ public class Commitment : MonoBehaviour
 {
 	public string	name { get; private set; }
 	public string 	creator { get; private set; }
-	int		curTotalDay,	curTime,		timeLength;
+	int		curTotalDay,	curTime,		timeLength,	timeLeft;
 	int		maxTotalDay,	minTotalDay,	maxTime,	minTime;
 	public bool	scheduled { get; private set; }
+	public bool activated { get; private set; }
 	public bool	completed { get; private set; }
 
 	// Use this for initialization
@@ -26,6 +27,7 @@ public class Commitment : MonoBehaviour
 		name = aName;				creator = aCreator;	timeLength = aTimeLength;	maxTotalDay = aMaxTotalDay;
 		minTotalDay = aMinTotalDay;	maxTime = aMaxTime;	minTime = aMinTime;			scheduled = false;
 
+		timeLeft = timeLength;
 		Text buttonText = GetComponentInChildren<Text>();
 		buttonText.text = name;
 	}
@@ -44,14 +46,24 @@ public class Commitment : MonoBehaviour
 	{
 		if(scheduled)
 		{
-			if(curTotalDay == aCurTotalDay && curTime == aCurTime)
+			if(!activated)
 			{
+				if(curTotalDay == aCurTotalDay && curTime == aCurTime)
+				{
+					activated = true;
+					GetComponent<Drag>().Activated();
+				}
+				else if(aCurTotalDay > maxTotalDay && aCurTime > maxTime && !completed)
+				{	GameManager.Calendar.FailedCommitment(this);	}
+			}
+			else
+			{
+				timeLeft -= 1;
 				GameManager.Calendar.ActivateCommitment(this);
 				GetComponent<Drag>().Completed();
 				completed = true;
+				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
 			}
-			else if(aCurTotalDay > maxTotalDay && aCurTime > maxTime && !completed)
-			{	GameManager.Calendar.FailedCommitment(this);	}
 		}
 	}
 
@@ -97,8 +109,8 @@ public class Commitment : MonoBehaviour
 			GenerateCommitment("Teach Class", "Boss", 2, 0, 0, 5, 4);
 			GenerateCommitment("Meeting", "Boss", 2, 2, 0, 3, 2);
 			GenerateCommitment("Dinner", "Sarah", 2, 3, 1, 5, 4);
-			GenerateCommitment("Gym", "You", 2, 3, 1, 4, 3);
-			GenerateCommitment("Groceries", "You", 2, 5, 2, 4, 3);
+			GenerateCommitment("Go to Gym", "You", 2, 3, 1, 4, 3);
+			GenerateCommitment("Grocery Shopping", "You", 2, 5, 2, 4, 3);
 			break;
 		}
 	}

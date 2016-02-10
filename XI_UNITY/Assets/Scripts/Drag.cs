@@ -8,6 +8,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	public static GameObject	itemBeingDragged;
 	private static Color		notScheduledColor = new Color(.69f, .51f, .38f);
 	private static Color		scheduledColor = new Color(.84f, .43f, .12f);
+	private static Color		activatedColor = new Color(.69f, .38f, .13f);
 	private static Color		completedColor = new Color(.47f, .28f, .14f);
 
 	private static int	startX = -496;
@@ -38,7 +39,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnBeginDrag (PointerEventData eventData)
 	{
-		if(isFocus && !com.completed)
+		if(isFocus && !com.activated)
 		{
 			itemBeingDragged = gameObject;
 			GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -51,7 +52,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnDrag (PointerEventData eventData)
 	{
-		if(isFocus && !com.completed)
+		if(isFocus && !com.activated)
 		{	transform.position = new Vector3(eventData.position.x - blockWidth/2, eventData.position.y + blockHeight/2, 0);	}
 	}
 	
@@ -61,7 +62,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
-		if(isFocus && !com.completed)
+		if(isFocus && !com.activated)
 		{
 			itemBeingDragged = null;
 			GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -163,6 +164,9 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
 	public static void PlaceUnscheduled(Commitment com)
 	{	com.transform.localPosition = new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);	}
+
+	public void Activated()
+	{	buttonImage.color = activatedColor;	}
 
 	public void Completed()
 	{	buttonImage.color = completedColor;	}
