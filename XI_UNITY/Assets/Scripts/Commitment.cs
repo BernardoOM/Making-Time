@@ -140,9 +140,7 @@ public class Commitment : MonoBehaviour
 	{
 	// int arrys= db read function 
 		int[] array= DBMakingTime.Select_DB(name, timeLength);
-		Debug.Log (array);
 		GameObject.Find ("Managers").GetComponent<PeopleManager> ().ChangePlayerStatus (array [0], array [1]);
-
 		 //+= array [0];
 		//player_happiness += array [1];
 	}

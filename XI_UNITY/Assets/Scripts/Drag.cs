@@ -52,7 +52,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	public void OnDrag (PointerEventData eventData)
 	{
 		if(isFocus && !com.completed)
-		{	transform.position = eventData.position;	}
+		{	transform.position = new Vector3(eventData.position.x - blockWidth/2, eventData.position.y + blockHeight/2, 0);	}
 	}
 	
 	#endregion
@@ -68,7 +68,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			isFocus = false;
 			GameManager.Calendar.NoFocus();
 
-			transform.localPosition = SnapToBlock(transform.localPosition.x, transform.localPosition.y);	
+			transform.localPosition = SnapToBlock(transform.localPosition.x + blockWidth/2, transform.localPosition.y - blockHeight/2);
+			ShiftDeck();
 		}
 	}
 	
@@ -114,6 +115,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
 			return new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);
 		}
+	}
+
+	void ShiftDeck()
+	{
+		foreach(Commitment listCom in GameManager.Calendar.unscheduledCommitments)
+		{	listCom.transform.localPosition = new Vector3(startX + (GameManager.Calendar.unscheduledCommitments.IndexOf(listCom) * blockWidth), deckY, 0);	}
 	}
 
 	void Calendar_OnCommitmentClicked ()

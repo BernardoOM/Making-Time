@@ -14,8 +14,8 @@ public class CalendarManager : MonoBehaviour
 	public event ClickHandler		OnCommitmentClicked;
 
 	//To be canged later
-	private List<Commitment>	unscheduledCommitments = new List<Commitment>();
-	private List<Commitment>	scheduledCommitments = new List<Commitment>();
+	public List<Commitment>	unscheduledCommitments = new List<Commitment>();
+	public List<Commitment>	scheduledCommitments = new List<Commitment>();
 	public ClickState			curState;
 
 	public int	viewingWeek { get; private set; }
@@ -74,7 +74,6 @@ public class CalendarManager : MonoBehaviour
 		//GameManager.People.ChangePlayerStatus(0, 0);
 		sender.readvalues ();
 
-		Debug.Log("WE GOT IT");
 	}
 
 	public void FailedCommitment(Commitment sender)
