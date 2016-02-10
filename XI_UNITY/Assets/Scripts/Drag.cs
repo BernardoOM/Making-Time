@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	public static GameObject	itemBeingDragged;
-	private static Color		notScheduledColor = new Color(176, 131, 97, 255);
-	private static Color		scheduledColor = new Color(214, 110, 31, 255);
-	private static Color		completedColor = new Color(120, 72, 36, 255);
+	private static Color		notScheduledColor = new Color(.69f, .51f, .38f);
+	private static Color		scheduledColor = new Color(.84f, .43f, .12f);
+	private static Color		completedColor = new Color(.47f, .28f, .14f);
 
 	private static int	startX = -496;
 	private static int	calendarStartY = 247;
@@ -145,7 +145,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		int maxTotalDay, minTotalDay, maxTime, minTime;
 		com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
 
-		if(totalDay > maxTotalDay || totalDay < minTotalDay || (totalDay == maxTotalDay && time > maxTime) || (totalDay == minTotalDay && time < minTime))
+		if(totalDay > maxTotalDay || totalDay < minTotalDay || time > maxTime || time < minTime)
 		{	return false;	}
 
 		if(!GameManager.Calendar.CheckCalendarSpace(totalDay, time))
