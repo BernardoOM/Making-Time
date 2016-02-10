@@ -15,9 +15,10 @@ public class Timer : MonoBehaviour
 	private static int width = 160;
 	private static int maxHeight = 492;
 	//length of an in-game day in seconds
-	private static int realTimePerDay = 12;
+	private static int realTimePerDay = 30;
 
 	private bool isOn = false;
+	private bool commitmentActive = false;
 
 	void Start ()
 	{
@@ -34,7 +35,10 @@ public class Timer : MonoBehaviour
 	{
 		if (GameManager.Instance.curState != GameState.Pause && isOn)
 		{
-			timer += Time.deltaTime;
+			if(commitmentActive)
+			{	timer += Time.deltaTime / 10;	}
+			else
+			{	timer += Time.deltaTime;	}
 
 			if(timer > (GameManager.Calendar.curTime + 1) * (realTimePerDay / 6))
 			{	GameManager.Calendar.TimeBlockStarted();	}
@@ -60,5 +64,11 @@ public class Timer : MonoBehaviour
 		if(newDay == (int)today)
 		{	isOn = true;	}
 	}
+
+	public void ActivateCommitment()
+	{	commitmentActive = true;	}
+
+	public void CompleteCommitment()
+	{	commitmentActive = false;	}
 }
   
