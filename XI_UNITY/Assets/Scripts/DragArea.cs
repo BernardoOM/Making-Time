@@ -5,9 +5,9 @@ public class DragArea : MonoBehaviour
 {
 	private RectTransform rectTransform;
 
-	private static int	startX = -484;
-	private static int	startY = 277;
-	private static int	blockWidth = 171;
+	private static int	startX = -496;
+	private static int	startY = 247;
+	private static int	blockWidth = 163;
 	private static int	blockHeight = 82;
 
 	void Start()

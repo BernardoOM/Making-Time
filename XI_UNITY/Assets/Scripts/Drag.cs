@@ -10,11 +10,11 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	private static Color		scheduledColor = new Color(214, 110, 31, 255);
 	private static Color		completedColor = new Color(120, 72, 36, 255);
 
-	private static int	startX = -482;
-	private static int	calendarStartY = 277;
-	private static int	deckY = -218;
-	private static int	blockWidth = 171;
-	private static int	blockHeight = 83;
+	private static int	startX = -496;
+	private static int	calendarStartY = 247;
+	private static int	deckY = -269;
+	private static int	blockWidth = 163;
+	private static int	blockHeight = 82;
 
 	private Image		buttonImage;
 	private Vector3		startPosition;

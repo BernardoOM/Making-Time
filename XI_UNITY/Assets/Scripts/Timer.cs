@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
 	private RectTransform rectTransform;
 
 	//size of a block of time in pixels
-	private static int width = 168;
+	private static int width = 160;
 	private static int maxHeight = 492;
 	//length of an in-game day in seconds
 	private static int realTimePerDay = 12;
