@@ -50,6 +50,8 @@ public class Commitment : MonoBehaviour
 			{
 				if(curTotalDay == aCurTotalDay && curTime == aCurTime)
 				{
+					if(name == "Party")
+					{	GameManager.UI.EnterCurrentScene();	}
 					activated = true;
 					GetComponent<Drag>().Activated();
 				}
@@ -59,6 +61,8 @@ public class Commitment : MonoBehaviour
 			else
 			{
 				timeLeft -= 1;
+				if(name == "Party")
+				{	GameManager.UI.LeaveCurrentScne();	}
 				GameManager.Calendar.CompleteCommitment(this);
 				GetComponent<Drag>().Completed();
 				completed = true;
@@ -111,6 +115,7 @@ public class Commitment : MonoBehaviour
 			GenerateCommitment("Dinner", "Sarah", 2, 3, 1, 5, 4);
 			GenerateCommitment("Go to Gym", "You", 2, 3, 1, 4, 3);
 			GenerateCommitment("Grocery Shopping", "You", 2, 5, 2, 4, 3);
+			GenerateCommitment("Party", "Sarah", 2, 1, 1, 5, 4);
 			break;
 		}
 	}

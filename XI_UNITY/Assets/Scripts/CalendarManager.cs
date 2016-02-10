@@ -42,7 +42,8 @@ public class CalendarManager : MonoBehaviour
 	public void TimeBlockStarted()
 	{
 		curTime += 1;
-		OnCheckCommitments(curTotalDay, curTime);
+		if(OnCheckCommitments != null)
+		{	OnCheckCommitments(curTotalDay, curTime);	}
 	}
 
 	public void DayEnded(int prevDayOfWeek)
@@ -52,7 +53,8 @@ public class CalendarManager : MonoBehaviour
 			curTime = 0;
 			curDayOfWeek = (curDayOfWeek+1) % 7;
 			curTotalDay += 1;
-			OnDayStarted(curDayOfWeek);
+			if(OnDayStarted != null)
+			{	OnDayStarted(curDayOfWeek);	}
 
 			//To be changed later
 			Commitment.GenerateTestCommitments(curDayOfWeek);
@@ -87,10 +89,12 @@ public class CalendarManager : MonoBehaviour
 		{
 		case ClickState.NoFocus:
 			curState = ClickState.CommitmentFocus;
-			OnCommitmentClicked();
+			if(OnCommitmentClicked != null)
+			{	OnCommitmentClicked();	}
 			break;
 		case ClickState.CommitmentFocus:
-			OnCommitmentClicked();
+			if(OnCommitmentClicked != null)
+			{	OnCommitmentClicked();	}
 			break;
 		case ClickState.MessageBoxFocus:
 			break;

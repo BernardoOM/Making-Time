@@ -36,7 +36,7 @@ public class Timer : MonoBehaviour
 		if (GameManager.Instance.curState != GameState.Pause && isOn)
 		{
 			if(commitmentActive)
-			{	timer += Time.deltaTime / 10;	}
+			{	timer += Time.deltaTime / 5;	}
 			else
 			{	timer += Time.deltaTime;	}
 

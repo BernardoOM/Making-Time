@@ -24,7 +24,8 @@ public class PeopleManager : MonoBehaviour
 
 	public void ChangePlayerStatus(int deltaEnergy, int deltaHappiness)
 	{
-		OnChangeStatus(deltaEnergy, deltaHappiness);
+		if(OnChangeStatus != null)
+		{	OnChangeStatus(deltaEnergy, deltaHappiness);	}
 		GameObject.Find("SideBar").GetComponent<Sidebar>().ChangeValues(player.energy, player.happiness);
 	}
 }

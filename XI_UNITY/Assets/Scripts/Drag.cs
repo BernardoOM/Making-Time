@@ -8,7 +8,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	public static GameObject	itemBeingDragged;
 	private static Color		notScheduledColor = new Color(.69f, .51f, .38f);
 	private static Color		scheduledColor = new Color(.84f, .43f, .12f);
-	private static Color		activatedColor = new Color(.69f, .38f, .13f);
+	private static Color		activatedColor = new Color(.95f, .59f, .16f);
 	private static Color		completedColor = new Color(.47f, .28f, .14f);
 
 	private static int	startX = -496;
