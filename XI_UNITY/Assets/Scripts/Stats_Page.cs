@@ -8,13 +8,13 @@ public class Stats_Page : MonoBehaviour {
 	public void onClick() {
 		if ( click)
 		{
-			transform.position = new Vector3 (1334 / 2f, 750 / 2f, 0);
+			transform.localPosition = new Vector3 (0, 0, 0);
 			click =false;
 			Debug.Log (click);
 		}
 		else if (!click)
 		{
-			transform.position = new Vector3 (-1334 / 2f, -750 / 2f, 0);
+			transform.localPosition = new Vector3 (0, -750, 0);
 			click =true;
 		}
 	}
