@@ -42,13 +42,14 @@ public class CalendarManager : MonoBehaviour
 	public void TimeBlockStarted()
 	{
 		curTime += 1;
-//		OnCheckCommitments(curTotalDay, curTime);
+		OnCheckCommitments(curTotalDay, curTime);
 	}
 
 	public void DayEnded(int prevDayOfWeek)
 	{
 		if(prevDayOfWeek == curDayOfWeek)
 		{
+			curTime = 0;
 			curDayOfWeek = (curDayOfWeek+1) % 7;
 			curTotalDay += 1;
 			OnDayStarted(curDayOfWeek);

@@ -91,6 +91,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 				if(!com.scheduled)
 				{
 					buttonImage.color = scheduledColor;
+					com.SetPlaceOnSchedule(time, GameManager.Calendar.viewingWeek * 7 + dayOfWeek);
 					com.SetScheduled(true);
 					GameManager.Calendar.ScheduleCommitment(com);
 					transform.parent = GameObject.Find("Scheduled").transform;

@@ -36,7 +36,7 @@ public class Timer : MonoBehaviour
 		{
 			timer += Time.deltaTime;
 
-			if(timer / 6 > GameManager.Calendar.curTime * realTimePerDay / 6)
+			if(timer > (GameManager.Calendar.curTime + 1) * (realTimePerDay / 6))
 			{	GameManager.Calendar.TimeBlockStarted();	}
 
 			if(timer >= realTimePerDay)

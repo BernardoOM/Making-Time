@@ -68,6 +68,12 @@ public class Commitment : MonoBehaviour
 		{	return false;	}
 	}
 
+	public void SetPlaceOnSchedule(int newTime, int newTotalDay)
+	{
+		curTime = newTime;
+		curTotalDay = newTotalDay;
+	}
+
 	public void SetScheduled(bool isScheduled)
 	{
 		scheduled = isScheduled;
