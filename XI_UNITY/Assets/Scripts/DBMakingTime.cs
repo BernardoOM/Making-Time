@@ -16,8 +16,10 @@ public class DBMakingTime : MonoBehaviour
 
 	public static void OpenDB(string p)
 	{
-        _constr = "URI=file:" + Application.dataPath + "/StreamingAssets/" + p; // we set the connection to our database
-        //Debug.Log(_constr);
+		_constr = "URI=file:" + Application.dataPath + "/Resources/Data/StreamingAssets/" + p; // we set the connection to our database
+        //#IMPORTANT  
+		//for Mac build , "/Resources/Data/StreamingAssets/".
+		//for other build, search for application.datapath for detail path. 
        _dbc = new SqliteConnection(_constr);
        _dbc.Open();//Open connection to the database.
     }
