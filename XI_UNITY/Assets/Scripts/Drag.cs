@@ -6,10 +6,22 @@ using UnityEngine.UI;
 public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	public static GameObject	itemBeingDragged;
-	private static Color		notScheduledColor = new Color(.69f, .51f, .38f);
-	private static Color		scheduledColor = new Color(.84f, .43f, .12f);
-	private static Color		activatedColor = new Color(.95f, .59f, .16f);
-	private static Color		completedColor = new Color(.47f, .28f, .14f);
+	private static Color[] notScheduledColors = { new Color(.90f, .63f, .45f),
+												  new Color(.45f, .73f, .90f),
+												  new Color(.48f, .78f, .80f),
+												  new Color(1.0f, .89f, .45f)};
+	private static Color[] scheduledColors = { new Color(.90f, .49f, .22f),
+											   new Color(.22f, .64f, .90f),
+											   new Color(.28f, .78f, .80f),
+											   new Color(.95f, .80f, .19f)};
+	private static Color[] activatedColors = { new Color(1.0f, .61f, .35f),
+											   new Color(.35f, .75f, 1.0f),
+											   new Color(.40f, .88f, .90f),
+											   new Color(1.0f, .86f, .30f)};
+	private static Color[] completedColors = { new Color(.80f, .39f, .12f),
+											   new Color(.12f, .53f, .80f),
+											   new Color(.18f, .67f, .70f),
+											   new Color(.85f, .69f, .09f)};
 
 	private static int	startX = -496;
 	private static int	calendarStartY = 247;
@@ -92,12 +104,14 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			{
 				if(!com.scheduled)
 				{
-					buttonImage.color = scheduledColor;
+					buttonImage.color = scheduledColors[(int)com.curType];
 					com.SetPlaceOnSchedule(time, GameManager.Calendar.viewingWeek * 7 + dayOfWeek);
 					com.SetScheduled(true);
 					GameManager.Calendar.ScheduleCommitment(com);
-					transform.parent = GameObject.Find("Scheduled").transform;
+					transform.SetParent(GameObject.Find("Scheduled").transform);
 				}
+				else
+				{	com.SetPlaceOnSchedule(time, GameManager.Calendar.viewingWeek * 7 + dayOfWeek);	}
 
 				return new Vector3(startX + (dayOfWeek * blockWidth), calendarStartY - (time * blockHeight), 0);
 			}
@@ -108,10 +122,10 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		{
 			if(com.scheduled)
 			{
-				buttonImage.color = notScheduledColor;
+				buttonImage.color = notScheduledColors[(int)com.curType];
 				com.SetScheduled(false);
 				GameManager.Calendar.UnScheduleCommitment(com);
-				transform.parent = GameObject.Find("Deck").transform;
+				transform.SetParent(GameObject.Find("Deck").transform);
 			}
 
 			return new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);
@@ -166,8 +180,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	{	com.transform.localPosition = new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);	}
 
 	public void Activated()
-	{	buttonImage.color = activatedColor;	}
+	{	buttonImage.color = activatedColors[(int)com.curType];	}
 
 	public void Completed()
-	{	buttonImage.color = completedColor;	}
+	{	buttonImage.color = completedColors[(int)com.curType];	}
 }

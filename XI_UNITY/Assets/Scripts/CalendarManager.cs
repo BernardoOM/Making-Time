@@ -36,7 +36,8 @@ public class CalendarManager : MonoBehaviour
 		curState = ClickState.NoFocus;
 
 		//To be changed later
-		Commitment.GenerateTestCommitments(curDayOfWeek);
+		for(int generateCount = 0; generateCount < 7; generateCount += 1)
+		{	Commitment.GenerateCommitment(curTotalDay - 1);	}
 	}
 
 	public void TimeBlockStarted()
@@ -44,6 +45,11 @@ public class CalendarManager : MonoBehaviour
 		curTime += 1;
 		if(OnCheckCommitments != null)
 		{	OnCheckCommitments(curTotalDay, curTime);	}
+		if(curTime % 2 == 1)
+		{
+			//To be changed later
+			Commitment.GenerateCommitment(curTotalDay);
+		}
 	}
 
 	public void DayEnded(int prevDayOfWeek)
@@ -55,9 +61,6 @@ public class CalendarManager : MonoBehaviour
 			curTotalDay += 1;
 			if(OnDayStarted != null)
 			{	OnDayStarted(curDayOfWeek);	}
-
-			//To be changed later
-			Commitment.GenerateTestCommitments(curDayOfWeek);
 
 			if(curDayOfWeek == 0)
 			{	WeekEnded();	}
@@ -74,7 +77,7 @@ public class CalendarManager : MonoBehaviour
 	{
 		//To be changed later
 		//GameManager.People.ChangePlayerStatus(0, 0);
-		sender.readvalues ();
+		sender.readValues ();
 
 	}
 

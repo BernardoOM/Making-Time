@@ -34,18 +34,56 @@ public class DBMakingTime : MonoBehaviour
 
     }
 
-	public static int[] Select_DB(string event_name, int Time_Length)
+	public static void ReadRandomNewCommitment(string event_Type, ref string name, ref int time_Length,
+	                                           ref int maxTime, ref int minTime)
+	{
+		OpenDB("MakingTime.db");
+		_dbcm = _dbc.CreateCommand();
+
+		sqlQuery = "select count(*) as NumberOfRegions from Event_Type where Category = '" + event_Type + "'";
+		_dbcm.CommandText = sqlQuery;
+		Int32 rows = Convert.ToInt32(_dbcm.ExecuteScalar());
+
+		sqlQuery = "select * from Event_Type where Category = '" + event_Type + "'";
+		_dbcm.CommandText = sqlQuery;
+		_dbr = _dbcm.ExecuteReader();
+
+		int commitmentRow = UnityEngine.Random.Range(0, rows);
+
+		for(int countRows = 0; countRows < commitmentRow + 1; countRows += 1)
+		{	_dbr.Read();	}
+		name = _dbr.GetString(0);
+		time_Length = _dbr.GetInt32(1);
+		maxTime = _dbr.GetInt32(8);
+		minTime = _dbr.GetInt32(7);
+
+		_dbr.Close();
+		_dbr = null;
+		_dbcm.Dispose();
+		_dbcm = null;
+		_dbc.Close();
+		_dbc = null;
+	}
+
+	/*
+	public static void AddCommitmentToCalendar()
+	{
+		
+	}
+	*/
+
+	public static int[] ChangeStatus(string event_Name, int time_Length)
 	{
 //		string evt = event_Name;
-		string category;
-		int egy_b=-9;
-		int hpy_b;
+//		string category;
+//		int egy_b=-9;
+//		int hpy_b;
 		int[] values=new int[2]; 
 	
 		OpenDB("MakingTime.db");
 		_dbcm = _dbc.CreateCommand();
 
-		sqlQuery = "select * from Event_Type where pk_Event_Name = '" +event_name+ "' " +"AND pk_Time_Length = '"+Time_Length+"'" ;
+		sqlQuery = "select * from Event_Type where pk_Event_Name = '" + event_Name + "' " + "AND pk_Time_Length = '" + time_Length + "'" ;
 
 		//where Event_Name = 'Teach a Class'
 		_dbcm.CommandText = sqlQuery;
@@ -53,8 +91,8 @@ public class DBMakingTime : MonoBehaviour
 
 		while (_dbr.Read())
 		{
-			values [0] = _dbr.GetInt32 (5);
-			values [1] = _dbr.GetInt32 (7); 
+			values [0] = _dbr.GetInt32 (4);
+			values [1] = _dbr.GetInt32 (6); 
 		}
 
 		_dbr.Close();
@@ -66,5 +104,36 @@ public class DBMakingTime : MonoBehaviour
 		//return egy_b;
 
 		return values;
+	}
+
+	public static bool CheckHasScene(string event_Name, int time_Length)
+	{
+		bool hasScene = false;
+
+		OpenDB("MakingTime.db");
+		_dbcm = _dbc.CreateCommand();
+
+		sqlQuery = "select * from Event_Type where pk_Event_Name = '" + event_Name + "' " +"AND pk_Time_Length = '" + time_Length + "'" ;
+
+		//where Event_Name = 'Teach a Class'
+		_dbcm.CommandText = sqlQuery;
+		_dbr = _dbcm.ExecuteReader();
+
+		while (_dbr.Read())
+		{
+			if(_dbr.GetInt32(9) == 0)
+			{	hasScene = false;	}
+			else
+			{	hasScene = true;	}
+		}
+
+		_dbr.Close();
+		_dbr = null;
+		_dbcm.Dispose();
+		_dbcm = null;
+		_dbc.Close();
+		_dbc = null;
+
+		return hasScene;
 	}
 }

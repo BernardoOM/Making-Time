@@ -8,9 +8,8 @@ public class Stats_Page : MonoBehaviour {
 	public void onClick() {
 		if ( click)
 		{
-			transform.localPosition = new Vector3 (0, 0, 0);
+			transform.localPosition = Vector3.zero;
 			click =false;
-			Debug.Log (click);
 		}
 		else if (!click)
 		{

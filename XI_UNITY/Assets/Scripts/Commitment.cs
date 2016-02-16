@@ -2,15 +2,19 @@
 using System.Collections;
 using UnityEngine.UI;
 
+public enum CommitmentType {Work, Leisure, Social, Chore };
+
 public class Commitment : MonoBehaviour
 {
-	public string	name { get; private set; }
-	public string 	creator { get; private set; }
-	int		curTotalDay,	curTime,		timeLength,	timeLeft;
-	int		maxTotalDay,	minTotalDay,	maxTime,	minTime;
-	public bool	scheduled { get; private set; }
-	public bool activated { get; private set; }
-	public bool	completed { get; private set; }
+	public CommitmentType curType;
+	public string	name;
+	public string creator;
+	public int		curTotalDay,	curTime,		timeLength,	timeLeft;
+	public int		maxTotalDay,	minTotalDay,	maxTime,	minTime;
+	public bool	scheduled;
+	public bool activated;
+	public bool	completed;
+	bool		activeScene;
 
 	// Use this for initialization
 	void Start ()
@@ -50,8 +54,11 @@ public class Commitment : MonoBehaviour
 			{
 				if(curTotalDay == aCurTotalDay && curTime == aCurTime)
 				{
-					if(name == "Party")
-					{	GameManager.UI.EnterCurrentScene();	}
+					if(DBMakingTime.CheckHasScene(name, timeLength))
+					{
+						GameManager.UI.EnterCurrentScene(curTotalDay % 7);
+						activeScene = true;
+					}
 					activated = true;
 					GetComponent<Drag>().Activated();
 				}
@@ -61,8 +68,8 @@ public class Commitment : MonoBehaviour
 			else
 			{
 				timeLeft -= 1;
-				if(name == "Party")
-				{	GameManager.UI.LeaveCurrentScne();	}
+				if(activeScene)
+				{	GameManager.UI.LeaveCurrentScne(curTotalDay % 7);	}
 				GameManager.Calendar.CompleteCommitment(this);
 				GetComponent<Drag>().Completed();
 				completed = true;
@@ -120,18 +127,82 @@ public class Commitment : MonoBehaviour
 		}
 	}
 
-	public static void GenerateCommitment()
+	public static void GenerateCommitment(int totalDay)
 	{
-		GameObject commitment = Instantiate(Resources.Load("Button"))  as GameObject;
+		GameObject commitment;
+		string aName = "";	string aCreator = "";
+		int aTimeLength = 0; int aMaxTotalDay = 0; int aMinTotalDay = 0; int aMaxTime = 0; int aMinTime = 0;
+
+		CommitmentType newCommitment;
+
+		int randomCommitmentType = Random.Range(0, 10);
+		if(randomCommitmentType <= 4)
+		{	newCommitment = CommitmentType.Work;	}
+		else if(randomCommitmentType <= 7)
+		{	newCommitment = CommitmentType.Social;	}
+		else
+		{	newCommitment = CommitmentType.Chore;	}
+
+		switch(newCommitment)
+		{
+		case CommitmentType.Work:
+			commitment = Instantiate(Resources.Load("WorkButton")) as GameObject;
+			DBMakingTime.ReadRandomNewCommitment("Work", ref aName, ref aTimeLength, ref aMaxTime, ref aMinTime);
+			break;
+		case CommitmentType.Leisure:
+			commitment = Instantiate(Resources.Load("LeisureButton")) as GameObject;
+			DBMakingTime.ReadRandomNewCommitment("Leisure", ref aName, ref aTimeLength, ref aMaxTime, ref aMinTime);
+			break;
+		case CommitmentType.Social:
+			commitment = Instantiate(Resources.Load("SocialButton")) as GameObject;
+			DBMakingTime.ReadRandomNewCommitment("Social", ref aName, ref aTimeLength, ref aMaxTime, ref aMinTime);
+			break;
+		case CommitmentType.Chore:
+			commitment = Instantiate(Resources.Load("ChoreButton")) as GameObject;
+			DBMakingTime.ReadRandomNewCommitment("Chore", ref aName, ref aTimeLength, ref aMaxTime, ref aMinTime);
+			break;
+		default:
+			commitment = Instantiate(Resources.Load("Button")) as GameObject;
+			break;
+		}
 		Commitment com = commitment.GetComponent<Commitment>();
+
+		switch((CommitmentType)Random.Range(0, 4))
+		{
+		case CommitmentType.Work:
+			if(aName == "Teach Class")
+			{
+				aMinTime = Random.Range(0, 2) * 2;
+				aMaxTime = aMinTime + 1;
+			}
+			aMinTotalDay = totalDay + Random.Range(2, 5);
+			aMaxTotalDay = aMinTotalDay;
+			break;
+		case CommitmentType.Leisure:
+			aMinTotalDay = totalDay + 2;
+			aMaxTotalDay = aMinTotalDay + Random.Range(0, 7);
+			break;
+		case CommitmentType.Social:
+			aMinTotalDay = totalDay + 2;
+			aMaxTotalDay = aMinTotalDay + Random.Range(0, 3);
+			break;
+		case CommitmentType.Chore:
+			aMinTotalDay = totalDay + 2;
+			aMaxTotalDay = aMinTotalDay + Random.Range(0, 5);
+			break;
+		}
+
+		com.RecordInfo(aName, aCreator, aTimeLength, aMaxTotalDay,
+		               aMinTotalDay, aMaxTime, aMinTime);
+		com.curType = newCommitment;
 
 		//To be changed later
 		//read from database
 
 		// generate values
 		GameManager.Calendar.UnScheduleCommitment(com);
-		com.transform.parent = GameObject.Find("Deck").transform;
-		com.transform.localScale = Vector3.one;
+		com.transform.SetParent(GameObject.Find("Deck").transform, false);
+//		com.transform.localScale = Vector3.one;
 		Drag.PlaceUnscheduled(com);
 
 		//write to database
@@ -153,10 +224,10 @@ public class Commitment : MonoBehaviour
 	}
 
 	//use out then you can change the values of arguments 
-	public void readvalues()
+	public void readValues()
 	{
 	// int arrys= db read function 
-		int[] array= DBMakingTime.Select_DB(name, timeLength);
+		int[] array= DBMakingTime.ChangeStatus(name, timeLength);
 		GameObject.Find ("Managers").GetComponent<PeopleManager> ().ChangePlayerStatus (array [0], array [1]);
 		 //+= array [0];
 		//player_happiness += array [1];

@@ -23,6 +23,7 @@ public class Timer : MonoBehaviour
 	void Start ()
 	{
 		GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
+		GameManager.UI.OnActivateCommitment += UI_OnActivateCommitment;
 
 		if((int)today == GameManager.Calendar.curDayOfWeek)
 		{	isOn = true;	}
@@ -65,10 +66,7 @@ public class Timer : MonoBehaviour
 		{	isOn = true;	}
 	}
 
-	public void ActivateCommitment()
-	{	commitmentActive = true;	}
-
-	public void CompleteCommitment()
-	{	commitmentActive = false;	}
+	public void UI_OnActivateCommitment(bool active)
+	{	commitmentActive = active;	}
 }
   

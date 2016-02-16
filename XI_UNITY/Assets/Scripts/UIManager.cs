@@ -4,7 +4,9 @@ using System.Collections;
 public class UIManager : MonoBehaviour
 {
 	public delegate void		DragHandler(int maxTotalDay, int minTotalDay, int maxTime, int minTime);
+	public delegate void		TimerSlow(bool active);
 	public event DragHandler	OnDragAreaSet;
+	public event TimerSlow		OnActivateCommitment;
 
 	public GameObject	dialogueBox;
 	public GameObject	currentScene;
@@ -16,18 +18,18 @@ public class UIManager : MonoBehaviour
 		{	OnDragAreaSet(maxTotalDay, minTotalDay, maxTime, minTime);	}
 	}
 
-	public void EnterCurrentScene()
+	public void EnterCurrentScene(int dayOfWeek)
 	{
 		GameObject.Find("Current Scene").GetComponent<RectTransform>().localPosition = new Vector3(-410.5f, 0, 0);
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = new Vector3(513f, 0, 0);
-		GameObject.Find("TimeBar1").GetComponent<Timer>().ActivateCommitment();
+		OnActivateCommitment(true);
 	}
 
-	public void LeaveCurrentScne()
+	public void LeaveCurrentScne(int dayOfWeek)
 	{
 		GameObject.Find("Current Scene").GetComponent<RectTransform>().localPosition = new Vector3(-921f, 0, 0);
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = Vector3.zero;
-		GameObject.Find("TimeBar1").GetComponent<Timer>().CompleteCommitment();
+		OnActivateCommitment(false);
 	}
 
 	public void StartDialogue()
