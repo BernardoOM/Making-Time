@@ -19,6 +19,8 @@ public class DBMakingTime : MonoBehaviour
 		_constr = "URI=file:" + Application.dataPath + "/StreamingAssets/" + p; // we set the connection to our database
         //#IMPORTANT  
 		//for Mac build , "/Resources/Data/StreamingAssets/".
+		//for iOS build, _constr = "URI=file:" + Application.dataPath + "/Raw/" + p;
+		//for Android build Application.persistentDataPath + "/StreamingAssets/" + p;
 		//for other build, search for application.datapath for detail path. 
        _dbc = new SqliteConnection(_constr);
        _dbc.Open();//Open connection to the database.

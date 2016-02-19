@@ -56,7 +56,7 @@ public class Commitment : MonoBehaviour
 				{
 					if(DBMakingTime.CheckHasScene(name, timeLength))
 					{
-						GameManager.UI.EnterCurrentScene(curTotalDay % 7);
+						GameManager.UI.EnterCurrentScene(curTotalDay % 7, name);
 						activeScene = true;
 					}
 					activated = true;
@@ -175,15 +175,17 @@ public class Commitment : MonoBehaviour
 				aMinTime = Random.Range(0, 2) * 2;
 				aMaxTime = aMinTime + 1;
 			}
-			aMinTotalDay = totalDay + Random.Range(2, 5);
+			aMinTotalDay = totalDay + Random.Range(0, 5);
+			//Random.Range(2, 5);
 			aMaxTotalDay = aMinTotalDay;
 			break;
 		case CommitmentType.Leisure:
-			aMinTotalDay = totalDay + 2;
+			aMinTotalDay = totalDay +2;
+			//+2
 			aMaxTotalDay = aMinTotalDay + Random.Range(0, 7);
 			break;
 		case CommitmentType.Social:
-			aMinTotalDay = totalDay + 2;
+			aMinTotalDay = totalDay + 1;
 			aMaxTotalDay = aMinTotalDay + Random.Range(0, 3);
 			break;
 		case CommitmentType.Chore:
