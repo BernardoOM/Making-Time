@@ -53,9 +53,12 @@ public class DBMakingTime : MonoBehaviour
 		_dbr = _dbcm.ExecuteReader();
 
 		int commitmentRow = UnityEngine.Random.Range(0, rows);
-
+		//Question 
 		for(int countRows = 0; countRows < commitmentRow + 1; countRows += 1)
-		{	_dbr.Read();	}
+		{	
+			_dbr.Read();	
+		}
+
 		name = _dbr.GetString(0);
 		time_Length = _dbr.GetInt32(1);
 		maxTime = _dbr.GetInt32(8);

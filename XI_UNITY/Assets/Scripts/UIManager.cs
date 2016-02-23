@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour
 
 	void Update(){
 		timer += Time.deltaTime;
-		Debug.Log (timer - start_time);
-		Debug.Log (end);
+//		Debug.Log (timer - start_time);
+//		Debug.Log (end);
 
 		//10s later disappear dialogue box 
 		if (timer - start_time   > 8f && end == false) {

@@ -82,6 +82,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			GameManager.Calendar.NoFocus();
 
 			transform.localPosition = SnapToBlock(transform.localPosition.x + blockWidth/2, transform.localPosition.y - blockHeight/2);
+			startPosition = transform.localPosition;
 			ShiftDeck();
 		}
 	}
