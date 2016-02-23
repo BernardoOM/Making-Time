@@ -174,7 +174,6 @@ public class Commitment : MonoBehaviour
 			{
 				aMinTime = Random.Range(0, 2) * 2;
 				aMaxTime = aMinTime + 1;
-				Debug.Log("class de");
 			}
 			aMinTotalDay = totalDay + Random.Range(2, 5);
 			//Random.Range(2, 5);
