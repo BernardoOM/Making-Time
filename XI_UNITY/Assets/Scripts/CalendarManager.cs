@@ -117,6 +117,10 @@ public class CalendarManager : MonoBehaviour
 
 		int maxTotalDay, minTotalDay, maxTime, minTime;
 		com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
+		Debug.Log (maxTotalDay);
+		Debug.Log ( minTotalDay);
+		Debug.Log (maxTime);
+		Debug.Log (minTime);
 
 		GameManager.UI.SetDragArea(maxTotalDay, minTotalDay, maxTime, minTime);
 	}
@@ -145,6 +149,8 @@ public class CalendarManager : MonoBehaviour
 	{
 		unscheduledCommitments.Add(com);
 		scheduledCommitments.Remove(com);
+
+		SortUnScheduled ();
 	}
 
 	public int FindIndexScheduled(Commitment com)
@@ -152,4 +158,127 @@ public class CalendarManager : MonoBehaviour
 
 	public int FindIndexUnScheduled(Commitment com)
 	{	return unscheduledCommitments.IndexOf(com);	}
+
+
+//	public void swap(List<Commitment>() a[0], List<Commitment>() a[1])
+//	{
+//		List<Commitment>	temp=new List<Commitment>() ;
+//		temp = b;
+//		b = a;
+//		a = temp;
+//
+//	}
+
+	public void SortUnScheduled()
+	{
+
+
+		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
+			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
+			{
+				if (unscheduledCommitments [j ].minTotalDay > unscheduledCommitments [j+1].minTotalDay) 
+				{
+					List<Commitment> temp=new List<Commitment>();
+					temp.Add (unscheduledCommitments [j + 1]);
+					temp[0]=unscheduledCommitments [j+1];
+					unscheduledCommitments [j+1]= unscheduledCommitments [j];
+					unscheduledCommitments [j]=temp[0];				}
+			}
+		
+		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
+			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
+			{
+				if(unscheduledCommitments [j ].minTotalDay == unscheduledCommitments [j+1].minTotalDay)
+				if (unscheduledCommitments [j ].maxTotalDay > unscheduledCommitments [j+1].maxTotalDay) 
+				{
+					List<Commitment> temp=new List<Commitment>();
+					temp.Add (unscheduledCommitments [j + 1]);
+
+					temp[0]=unscheduledCommitments [j+1];
+					unscheduledCommitments [j+1]= unscheduledCommitments [j];
+					unscheduledCommitments [j]=temp[0];
+
+				}
+			}		
+
+		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
+			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
+			{
+				if(unscheduledCommitments [j ].minTotalDay == unscheduledCommitments [j+1].minTotalDay)
+				if(unscheduledCommitments [j ].maxTotalDay == unscheduledCommitments [j+1].maxTotalDay)
+				if (unscheduledCommitments [j ].minTime > unscheduledCommitments [j+1].minTime) 
+				{
+					List<Commitment> temp=new List<Commitment>();
+					temp.Add (unscheduledCommitments [j + 1]);
+
+					temp[0]=unscheduledCommitments [j+1];
+					unscheduledCommitments [j+1]= unscheduledCommitments [j];
+					unscheduledCommitments [j]=temp[0];
+				}
+			}		
+
+		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
+			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
+			{
+				if(unscheduledCommitments [j ].minTotalDay == unscheduledCommitments [j+1].minTotalDay)
+				if(unscheduledCommitments [j ].maxTotalDay == unscheduledCommitments [j+1].maxTotalDay)
+				if (unscheduledCommitments [j ].minTime == unscheduledCommitments [j+1].minTime) 
+				if (unscheduledCommitments [j ].maxTime > unscheduledCommitments [j+1].maxTime) 
+				{
+					List<Commitment> temp=new List<Commitment>();
+					temp.Add (unscheduledCommitments [j + 1]);
+
+					temp[0]=unscheduledCommitments [j+1];
+					unscheduledCommitments [j+1]= unscheduledCommitments [j];
+					unscheduledCommitments [j]=temp[0];
+				}
+			}
+
+
+		Debug.Log ("sort finished");
+
+		for (int i = 0; i < unscheduledCommitments.Count; i++) {
+			//Debug.Log (unscheduledCommitments [i].minTotalDay);
+		}
+
+
+		//1
+		//new list
+		//for each following:
+
+//		int maxTotalDay, minTotalDay, maxTime, minTime;
+//		unscheduledCommitments[0].ReturnTimeRange (maxTotalDay, minTotalDay, maxTime, minTime);
+
+		// new array = maxTotalDay, minTotalDay, maxTime, minTime ; 
+
+
+	//store them in a new array / list. not decided yet. them sort. 
+
+		//2
+		//quick sort
+
+		//3
+		//display the sorted deck.
+//		Debug.Log ("current counts of unschdle:");
+//
+//		Debug.Log (unscheduledCommitments.Count);
+			
+//		for (int i=0;i<unscheduledCommitments.Count;i++) {
+//			Debug.Log ("current max time");
+//			Debug.Log (unscheduledCommitments[i].name);
+//
+//			Debug.Log (unscheduledCommitments[i].maxTime);
+//
+//		}
+
+
+
+
+	}
+
+
+
+	//int maxTotalDay, minTotalDay, maxTime, minTime;
+	//com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
+
 }

@@ -76,6 +76,14 @@ public class Commitment : MonoBehaviour
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
 			}
 		}
+		else
+		{
+			if (aCurTotalDay >= maxTotalDay && aCurTime >= maxTime)
+			{
+				//do delete 
+				//do feedback
+			}
+		}
 	}
 
 	public bool CheckScheduleConflict(int totalDay, int time)
