@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
 //		Debug.Log (end);
 
 		//10s later disappear dialogue box 
-		if (timer - start_time   > 8f && end == false) {
+		if (timer - start_time   > 5f && end == false) {
 			EndDialogue ();
 			end = true;
 			start_time = 99999f;
@@ -74,17 +74,21 @@ public class UIManager : MonoBehaviour
 		} else if (clicked == true) {
 			GameObject.Find ("Bubble").transform.localPosition = new Vector3 (-14.6f, 251.6f);
 			GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f,262.2f);
-
+			end=false;
+			start_time = timer;
 		}
 
-		end=false;
-		 start_time = timer;
+//		end=false;
+//		start_time = timer;
 		//float a = Time.deltaTime;
 		//GameObject.Find("big_NPC").SetActive(true);
 	}
 	public void ClickOption(){
 		GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f,0);
 		GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f,262.2f);
+
+		end=false;
+		start_time = timer;
 
 	}
 	public void EndDialogue()
@@ -108,8 +112,8 @@ public class UIManager : MonoBehaviour
 		}
 
 	public void OptionModification(string event_name){
-		GameObject.Find ("Option_A").GetComponent<Text> ().text = "A  Nice " + event_name+" !";
-		GameObject.Find ("Option_B").GetComponent<Text> ().text = "B  Poorly designed " + event_name+" !";
+		GameObject.Find ("Option_A").GetComponent<Text> ().text = "A.  Nice " + event_name+" !";
+		GameObject.Find ("Option_B").GetComponent<Text> ().text = "B.  Poorly designed " + event_name+" !";
 
 
 		if (event_name == "Party") {
