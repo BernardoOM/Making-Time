@@ -150,6 +150,11 @@ public class CalendarManager : MonoBehaviour
 		unscheduledCommitments.Add(com);
 		scheduledCommitments.Remove(com);
 
+//		if (curDayOfWeek > com.maxTotalDay) {
+//			unscheduledCommitments.Remove(com);
+//		}
+		//delete past events;
+
 		SortUnScheduled ();
 	}
 
@@ -172,23 +177,9 @@ public class CalendarManager : MonoBehaviour
 	public void SortUnScheduled()
 	{
 
-
 		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
 			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
 			{
-				if (unscheduledCommitments [j ].minTotalDay > unscheduledCommitments [j+1].minTotalDay) 
-				{
-					List<Commitment> temp=new List<Commitment>();
-					temp.Add (unscheduledCommitments [j + 1]);
-					temp[0]=unscheduledCommitments [j+1];
-					unscheduledCommitments [j+1]= unscheduledCommitments [j];
-					unscheduledCommitments [j]=temp[0];				}
-			}
-		
-		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
-			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
-			{
-				if(unscheduledCommitments [j ].minTotalDay == unscheduledCommitments [j+1].minTotalDay)
 				if (unscheduledCommitments [j ].maxTotalDay > unscheduledCommitments [j+1].maxTotalDay) 
 				{
 					List<Commitment> temp=new List<Commitment>();
@@ -204,25 +195,7 @@ public class CalendarManager : MonoBehaviour
 		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
 			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
 			{
-				if(unscheduledCommitments [j ].minTotalDay == unscheduledCommitments [j+1].minTotalDay)
 				if(unscheduledCommitments [j ].maxTotalDay == unscheduledCommitments [j+1].maxTotalDay)
-				if (unscheduledCommitments [j ].minTime > unscheduledCommitments [j+1].minTime) 
-				{
-					List<Commitment> temp=new List<Commitment>();
-					temp.Add (unscheduledCommitments [j + 1]);
-
-					temp[0]=unscheduledCommitments [j+1];
-					unscheduledCommitments [j+1]= unscheduledCommitments [j];
-					unscheduledCommitments [j]=temp[0];
-				}
-			}		
-
-		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
-			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
-			{
-				if(unscheduledCommitments [j ].minTotalDay == unscheduledCommitments [j+1].minTotalDay)
-				if(unscheduledCommitments [j ].maxTotalDay == unscheduledCommitments [j+1].maxTotalDay)
-				if (unscheduledCommitments [j ].minTime == unscheduledCommitments [j+1].minTime) 
 				if (unscheduledCommitments [j ].maxTime > unscheduledCommitments [j+1].maxTime) 
 				{
 					List<Commitment> temp=new List<Commitment>();
@@ -235,7 +208,45 @@ public class CalendarManager : MonoBehaviour
 			}
 
 
+		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
+			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
+			{
+				if(unscheduledCommitments [j ].maxTotalDay == unscheduledCommitments [j+1].maxTotalDay)
+				if (unscheduledCommitments [j ].maxTime == unscheduledCommitments [j+1].maxTime)
+				if (unscheduledCommitments [j].minTotalDay > unscheduledCommitments [j+1].minTotalDay) 
+				{
+					List<Commitment> temp=new List<Commitment>();
+					temp.Add (unscheduledCommitments [j + 1]);
+					temp[0]=unscheduledCommitments [j+1];
+					unscheduledCommitments [j+1]= unscheduledCommitments [j];
+					unscheduledCommitments [j]=temp[0];				}
+			}
+		
+
+
+		for (int i = 0; i < unscheduledCommitments.Count-1; i++)
+			for (int j = 0; j < unscheduledCommitments.Count-1-i; j++) 
+			{
+				if(unscheduledCommitments [j ].maxTotalDay == unscheduledCommitments [j+1].maxTotalDay)
+				if (unscheduledCommitments [j ].maxTime == unscheduledCommitments [j+1].maxTime)
+				if (unscheduledCommitments [j].minTotalDay == unscheduledCommitments [j+1].minTotalDay) 
+				if (unscheduledCommitments [j ].minTime > unscheduledCommitments [j+1].minTime) 
+				{
+					List<Commitment> temp=new List<Commitment>();
+					temp.Add (unscheduledCommitments [j + 1]);
+
+					temp[0]=unscheduledCommitments [j+1];
+					unscheduledCommitments [j+1]= unscheduledCommitments [j];
+					unscheduledCommitments [j]=temp[0];
+				}
+			}		
+
+
+
+
 		Debug.Log ("sort finished");
+		Debug.Log (curDayOfWeek);
+
 
 		for (int i = 0; i < unscheduledCommitments.Count; i++) {
 			//Debug.Log (unscheduledCommitments [i].minTotalDay);
