@@ -184,6 +184,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		//place every event button's place 
 		com.transform.localPosition = new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);
 		ShiftDeck();
+
 		}
 
 	public void Activated()

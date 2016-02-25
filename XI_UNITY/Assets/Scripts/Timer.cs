@@ -49,12 +49,15 @@ public class Timer : MonoBehaviour
 			{
 				timer = realTimePerDay;
 				isOn = false;
-				GameManager.Calendar.DayEnded((int)today);
+
+				GameObject.Find ("Window").transform.localPosition = new Vector3 (55f, -26f);
+				//show daily review window 
 			}
 
 			rectTransform.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
 		}
 	}
+
 
 	void Calendar_OnDayStart(int newDay)
 	{

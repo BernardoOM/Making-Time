@@ -17,6 +17,7 @@ public class DBMakingTime : MonoBehaviour
 	public static void OpenDB(string p)
 	{
 		_constr = "URI=file:" + Application.dataPath + "/StreamingAssets/" + p;
+
 		// set the connection to our database
         //#IMPORTANT  
 		//for Mac build , "/Resources/Data/StreamingAssets/".

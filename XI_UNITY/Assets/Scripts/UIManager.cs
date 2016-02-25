@@ -219,10 +219,15 @@ public class UIManager : MonoBehaviour
 		//GameObject.Find("big_NPC").SetActive(false);
 		}
 
+
 	public void OptionModification(string event_name){
 		GameObject.Find ("Option_A").GetComponent<Text> ().text = "A.  Nice " + event_name+" !";
 		GameObject.Find ("Option_B").GetComponent<Text> ().text = "B.  Poorly designed " + event_name+" !";
 
+		GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0, 150, 255, 255);
+		GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+		GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+		GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
 
 		if (event_name == "Party") {
 			GameObject.Find("Question_A").GetComponent<Text>().text="How's party?";

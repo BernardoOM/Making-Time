@@ -24,6 +24,7 @@ public class CalendarManager : MonoBehaviour
 	public int	curDayOfWeek { get; private set; }
 	public int	curTime { get; private set; }
 
+	public GameObject pop_window;
 	//To be canged later
 	void Start()
 	{
@@ -50,12 +51,16 @@ public class CalendarManager : MonoBehaviour
 			//To be changed later
 			Commitment.GenerateCommitment(curTotalDay);
 		}
+		delete_past_event ();
+		//delete past events on deck
 	}
 
-	public void DayEnded(int prevDayOfWeek)
+
+	// activated if window - "start new day" button is clicked. 
+	public void DayEnded()
 	{
-		if(prevDayOfWeek == curDayOfWeek)
-		{
+		GameObject.Find ("Window").transform.localPosition = new Vector3 (-200f, -1000f);
+
 			curTime = 0;
 			curDayOfWeek = (curDayOfWeek+1) % 7;
 			curTotalDay += 1;
@@ -64,13 +69,35 @@ public class CalendarManager : MonoBehaviour
 
 			if(curDayOfWeek == 0)
 			{	WeekEnded();	}
-		}
 	}
+
+
+
+//	public void DayEnded(int prevDayOfWeek)
+//	{
+//		if(prevDayOfWeek == curDayOfWeek)
+//		{
+//			curTime = 0;
+//			curDayOfWeek = (curDayOfWeek+1) % 7;
+//			curTotalDay += 1;
+//			if(OnDayStarted != null)
+//			{	OnDayStarted(curDayOfWeek);	}
+//
+//			if(curDayOfWeek == 0)
+//			{	WeekEnded();	}
+//		}
+//
+//
+//	}
+
 
 	public void WeekEnded()
 	{
 		curWeek += 1;
 		viewingWeek = curWeek;
+
+		delete_lastweek_calendar ();
+		//delete_lastweek_calendar
 	}
 
 	public void CompleteCommitment(Commitment sender)
@@ -165,14 +192,31 @@ public class CalendarManager : MonoBehaviour
 	{	return unscheduledCommitments.IndexOf(com);	}
 
 
-//	public void swap(List<Commitment>() a[0], List<Commitment>() a[1])
-//	{
-//		List<Commitment>	temp=new List<Commitment>() ;
-//		temp = b;
-//		b = a;
-//		a = temp;
-//
-//	}
+
+	//delete past events on deck
+	public void delete_past_event(){
+	for (int i = 0; i < unscheduledCommitments.Count; i++) {
+			while (unscheduledCommitments [i].maxTotalDay <= curDayOfWeek && unscheduledCommitments[i].maxTime<curTime )
+		{
+			unscheduledCommitments [i].gameObject.SetActive (false);
+			unscheduledCommitments.RemoveAt (i);
+
+
+		}
+	}
+		Drag.ShiftDeck();
+	}
+
+
+	//delete_lastweek_calendar
+	public void delete_lastweek_calendar(){
+		for (int i = 0; i < scheduledCommitments.Count; i++) {
+			scheduledCommitments [i].gameObject.SetActive (false);
+			scheduledCommitments.RemoveAt (i);
+		}
+	}
+
+
 
 	public void SortUnScheduled()
 	{
