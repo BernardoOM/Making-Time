@@ -51,7 +51,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	public void OnBeginDrag (PointerEventData eventData)
 	{
-		ButtonClicked();
+		if(!isFocus)
+		{	ButtonClicked();	}
 		if(isFocus && !com.activated)
 		{
 			itemBeingDragged = gameObject;
