@@ -82,6 +82,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			isFocus = false;
 			GameManager.Calendar.NoFocus();
 
+
+
 			transform.localPosition = SnapToBlock(transform.localPosition.x + blockWidth/2, transform.localPosition.y - blockHeight/2);
 			startPosition = transform.localPosition;
 			ShiftDeck();
@@ -134,7 +136,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		}
 	}
 
-	void ShiftDeck()
+	public static void ShiftDeck()
 	{
 		foreach(Commitment listCom in GameManager.Calendar.unscheduledCommitments)
 		{	listCom.transform.localPosition = new Vector3(startX + (GameManager.Calendar.unscheduledCommitments.IndexOf(listCom) * blockWidth), deckY, 0);	}
@@ -179,7 +181,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	}
 
 	public static void PlaceUnscheduled(Commitment com)
-	{	com.transform.localPosition = new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);	}
+	{	
+		//place every event button's place 
+		com.transform.localPosition = new Vector3(startX + (GameManager.Calendar.FindIndexUnScheduled(com) * blockWidth), deckY, 0);
+		ShiftDeck();
+
+		}
 
 	public void Activated()
 	{	buttonImage.color = activatedColors[(int)com.curType];	}
@@ -187,3 +194,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	public void Completed()
 	{	buttonImage.color = completedColors[(int)com.curType];	}
 }
+
+
+
