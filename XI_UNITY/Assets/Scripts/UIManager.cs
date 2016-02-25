@@ -19,8 +19,14 @@ public class UIManager : MonoBehaviour
 	private float end_time;
 	//private Timer timer;
 	private float timer;
+    //OPCTIONS A,B,C,D
+    private bool optionA;
+    private bool optionB;
+    private bool optionC;
+    private bool optionD;
+  
 
-	void Update(){
+    void Update(){
 		timer += Time.deltaTime;
 //		Debug.Log (timer - start_time);
 //		Debug.Log (end);
@@ -67,10 +73,15 @@ public class UIManager : MonoBehaviour
 			GameObject.Find ("Question_A").transform.localPosition = new Vector3 (-3.2f, 247.1f);
 			GameObject.Find ("big_NPC").transform.localPosition = new Vector3 (-136f, 47.5f);
 			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (-19f, -199f);
-			GameObject.Find ("Option_B").transform.localPosition = new Vector3 (-19f, -237f);
+            GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0,150,255,255);
+            GameObject.Find ("Option_B").transform.localPosition = new Vector3 (-19f, -237f);
 			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (-19f, -275.4f);
 			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (-15.7f, -313.4f);
-			clicked = true;
+            optionA = true;
+            optionB = false;
+            optionC = false;
+            optionD = false;
+            clicked = true;
 		} else if (clicked == true) {
 			GameObject.Find ("Bubble").transform.localPosition = new Vector3 (-14.6f, 251.6f);
 			GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f,262.2f);
@@ -83,15 +94,112 @@ public class UIManager : MonoBehaviour
 		//float a = Time.deltaTime;
 		//GameObject.Find("big_NPC").SetActive(true);
 	}
-	public void ClickOption(){
-		GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f,0);
-		GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f,262.2f);
 
-		end=false;
-		start_time = timer;
+	public void ClickOptionA(){
 
+        if (!optionA)
+        {
+            GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0, 150, 255, 255);
+            GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+            optionA = true;
+            optionB = false;
+            optionC = false;
+            optionD = false;
+        }
+        else
+        {
+            GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
+            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+            end = false;
+            start_time = timer;
+        }
 	}
-	public void EndDialogue()
+    public void ClickOptionB()
+    {
+        if (!optionB)
+        {
+            GameObject.Find("Option_B").GetComponent<Text>().color = new Color(0, 150, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+            optionA = false;
+            optionB = true;
+            optionC = false;
+            optionD = false;
+        }
+        else
+        {
+            GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
+            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+            end = false;
+            start_time = timer;
+        }
+
+    }
+    public void ClickOptionC()
+    {
+        if (!optionC)
+        {
+            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(0, 150, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+            optionA = false;
+            optionB = false;
+            optionC = true;
+            optionD = false;
+        }
+        else
+        {
+            GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
+            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+            end = false;
+            start_time = timer;
+        }
+
+    }
+    public void ClickOptionD()
+    {
+        if (!optionD)
+        {
+            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(0, 150, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+            GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+            optionA = false;
+            optionB = false;
+            optionC = false;
+            optionD = true;
+        }
+        else
+        {
+            GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
+            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+            end = false;
+            start_time = timer;
+        }
+
+    }
+
+    public void EndDialogue()
 	{	
 		GameObject.Find ("Option_A").GetComponent<Text>().enabled=true;
 		GameObject.Find ("Option_B").GetComponent<Text>().enabled=true;
