@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum ClickState { NoFocus, CommitmentFocus, MessageBoxFocus };
 
@@ -198,22 +199,36 @@ public class CalendarManager : MonoBehaviour
 	for (int i = 0; i < unscheduledCommitments.Count; i++) {
 			while (unscheduledCommitments [i].maxTotalDay <= curDayOfWeek && unscheduledCommitments[i].maxTime<curTime )
 		{
+				GameObject.Find ("Bubble_text").GetComponent<Text> ().text ="Oh you missed "+ unscheduledCommitments [i].name + " !";
+
 			unscheduledCommitments [i].gameObject.SetActive (false);
 			unscheduledCommitments.RemoveAt (i);
 
+		GameObject.Find ("Bubble_Calendar").transform.localPosition = new Vector3 (-444.3f, 315.7f);
 
 		}
 	}
+
 		Drag.ShiftDeck();
+	}
+
+	//activated if clicked on bubble 
+	public void delete_bubble(){
+		GameObject.Find ("Bubble_Calendar").transform.localPosition = new Vector3 (-444.3f, -1000.7f);
+
 	}
 
 
 	//delete_lastweek_calendar
 	public void delete_lastweek_calendar(){
+
+			
 		for (int i = 0; i < scheduledCommitments.Count; i++) {
 			scheduledCommitments [i].gameObject.SetActive (false);
 			scheduledCommitments.RemoveAt (i);
 		}
+
+
 	}
 
 
