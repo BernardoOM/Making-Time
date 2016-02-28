@@ -81,4 +81,10 @@ public class GameManager : MonoBehaviour
 	{
 
 	}
+
+	public void PauseGame()
+	{
+		curState = GameState.Pause;
+	//call this function when  you need to pause outside of this script.
+	}
 }

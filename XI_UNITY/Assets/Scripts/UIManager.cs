@@ -72,11 +72,18 @@ public class UIManager : MonoBehaviour
 			GameObject.Find ("Bubble").transform.localPosition = new Vector3 (-14.6f, 251.6f);
 			GameObject.Find ("Question_A").transform.localPosition = new Vector3 (-3.2f, 247.1f);
 			GameObject.Find ("big_NPC").transform.localPosition = new Vector3 (-136f, 47.5f);
-			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (-19f, -199f);
+
+			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (3f, -199f);
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0,150,255,255);
-            GameObject.Find ("Option_B").transform.localPosition = new Vector3 (-19f, -237f);
-			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (-19f, -275.4f);
-			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (-15.7f, -313.4f);
+            GameObject.Find ("Option_B").transform.localPosition = new Vector3 (3f, -237f);
+			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (3f, -275.4f);
+			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (7f, -313.4f);
+//			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (-19f, -199f);
+//			GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0,150,255,255);
+//			GameObject.Find ("Option_B").transform.localPosition = new Vector3 (-19f, -237f);
+//			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (-19f, -275.4f);
+//			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (-15.7f, -313.4f);
+//
             optionA = true;
             optionB = false;
             optionC = false;

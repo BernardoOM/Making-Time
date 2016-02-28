@@ -13,8 +13,7 @@ public class Commitment : MonoBehaviour
 	public int		maxTotalDay,	minTotalDay,	maxTime,	minTime;
 	public bool	scheduled;
 	public bool activated;
-	public bool	completed;
-	bool		activeScene;
+	public bool	completed;	bool		activeScene;
 
 	// Use this for initialization
 	void Start ()
