@@ -174,6 +174,7 @@ public class Commitment : MonoBehaviour
 		}
 		Commitment com = commitment.GetComponent<Commitment>();
 
+		//Debug.Log ((CommitmentType)Random.Range (0, 4));
 		switch((CommitmentType)Random.Range(0, 4))
 		{
 		case CommitmentType.Work:
@@ -208,12 +209,26 @@ public class Commitment : MonoBehaviour
 		//To be changed later
 		//read from database
 
-		// generate values
-		GameManager.Calendar.UnScheduleCommitment(com);
-		com.transform.SetParent(GameObject.Find("Deck").transform, false);
-//		com.transform.localScale = Vector3.one;
-		Drag.PlaceUnscheduled(com);
+//		if (com.curType == CommitmentType.Social) {
+//
+//
+//			//GameManager.PauseGame ();
+//			GameManager.UI.Acept_Window (com);
+//		    //go to UI manager, display acept window 
+//		} 
+//
+//		if (com.curType != CommitmentType.Social) {
+//			// generate values
+//			GameManager.Calendar.UnScheduleCommitment (com);
+//			com.transform.SetParent (GameObject.Find ("Deck").transform, false);
+////		com.transform.localScale = Vector3.one;
+//			Drag.PlaceUnscheduled (com);
+//		}
 
+		GameManager.Calendar.UnScheduleCommitment (com);
+		com.transform.SetParent (GameObject.Find ("Deck").transform, false);
+		//		com.transform.localScale = Vector3.one;
+		Drag.PlaceUnscheduled (com);
 		//write to database
 	}
 

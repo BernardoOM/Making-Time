@@ -145,10 +145,10 @@ public class CalendarManager : MonoBehaviour
 
 		int maxTotalDay, minTotalDay, maxTime, minTime;
 		com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
-		Debug.Log (maxTotalDay);
-		Debug.Log ( minTotalDay);
-		Debug.Log (maxTime);
-		Debug.Log (minTime);
+//		Debug.Log (maxTotalDay);
+//		Debug.Log ( minTotalDay);
+//		Debug.Log (maxTime);
+//		Debug.Log (minTime);
 
 		GameManager.UI.SetDragArea(maxTotalDay, minTotalDay, maxTime, minTime);
 	}
@@ -175,14 +175,13 @@ public class CalendarManager : MonoBehaviour
 
 	public void UnScheduleCommitment(Commitment com)
 	{
+		//GameManager.PauseGame ();
 		unscheduledCommitments.Add(com);
+
 		scheduledCommitments.Remove(com);
 
-//		if (curDayOfWeek > com.maxTotalDay) {
-//			unscheduledCommitments.Remove(com);
-//		}
-		//delete past events;
-
+		//display a window ask player accept or refuse a social event 
+		//acept_social_event ();
 		SortUnScheduled ();
 	}
 
@@ -193,6 +192,18 @@ public class CalendarManager : MonoBehaviour
 	{	return unscheduledCommitments.IndexOf(com);	}
 
 
+	public void acept_social_event(){
+		for (int i = 0; i < unscheduledCommitments.Count; i++) {
+			if (unscheduledCommitments [i].curType == CommitmentType.Social) {
+				GameManager.UI.Acept_Window(unscheduledCommitments[i],i);
+			}
+		}
+	}
+
+	public void refuse_social(int i){
+		Destroy (unscheduledCommitments [i].gameObject);
+		unscheduledCommitments.RemoveAt (i);
+	}
 
 	//delete past events on deck
 	public void delete_past_event(){
@@ -201,7 +212,8 @@ public class CalendarManager : MonoBehaviour
 		{
 				GameObject.Find ("Bubble_text").GetComponent<Text> ().text ="Oh you missed "+ unscheduledCommitments [i].name + " !";
 
-			unscheduledCommitments [i].gameObject.SetActive (false);
+			//unscheduledCommitments [i].gameObject.SetActive (false);
+			Destroy (unscheduledCommitments [i].gameObject);
 			unscheduledCommitments.RemoveAt (i);
 
 		GameObject.Find ("Bubble_Calendar").transform.localPosition = new Vector3 (-444.3f, 315.7f);
@@ -299,56 +311,11 @@ public class CalendarManager : MonoBehaviour
 					unscheduledCommitments [j]=temp[0];
 				}
 			}		
-
-
-
-
-		Debug.Log ("sort finished");
-		Debug.Log (curDayOfWeek);
-
-
-		for (int i = 0; i < unscheduledCommitments.Count; i++) {
-			//Debug.Log (unscheduledCommitments [i].minTotalDay);
-		}
-
-
-		//1
-		//new list
-		//for each following:
-
-//		int maxTotalDay, minTotalDay, maxTime, minTime;
-//		unscheduledCommitments[0].ReturnTimeRange (maxTotalDay, minTotalDay, maxTime, minTime);
-
-		// new array = maxTotalDay, minTotalDay, maxTime, minTime ; 
-
-
-	//store them in a new array / list. not decided yet. them sort. 
-
-		//2
-		//quick sort
-
-		//3
-		//display the sorted deck.
-//		Debug.Log ("current counts of unschdle:");
-//
-//		Debug.Log (unscheduledCommitments.Count);
-			
-//		for (int i=0;i<unscheduledCommitments.Count;i++) {
-//			Debug.Log ("current max time");
-//			Debug.Log (unscheduledCommitments[i].name);
-//
-//			Debug.Log (unscheduledCommitments[i].maxTime);
-//
+				
+//		for (int i = 0; i < unscheduledCommitments.Count; i++) {
+//			//Debug.Log (unscheduledCommitments [i].minTotalDay);
 //		}
 
 
-
-
 	}
-
-
-
-	//int maxTotalDay, minTotalDay, maxTime, minTime;
-	//com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
-
-}
+	}
