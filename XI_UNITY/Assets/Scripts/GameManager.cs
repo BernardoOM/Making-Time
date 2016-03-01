@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 	private GameManager() {}
 
 //	public event OnStateChange	stateChanger;
-	public GameState			curState {	get; private set; }
+	public  GameState curState {	get; private set; }
 
 	public static GameManager Instance
 	{
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
 	}
 
-	public void PauseGame()
+	public  void PauseGame()
 	{
 		curState = GameState.Pause;
 	//call this function when  you need to pause outside of this script.

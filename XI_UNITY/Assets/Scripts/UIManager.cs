@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class UIManager : MonoBehaviour
 	public GameObject	dialogueBox;
 	public GameObject	currentScene;
 	public GameObject	calendar;
+	private GameObject   acept_prefab;  
+	//acecept or refuse window prefab. Instantiated each time a social event is generated. 
 
 	private float start_time=99999f;
 	private bool end=false;
@@ -25,6 +28,11 @@ public class UIManager : MonoBehaviour
     private bool optionC;
     private bool optionD;
   
+	private List<int> social_nub=new List<int>();
+
+	public int acept_status=0;
+	private Commitment temp_com;
+	//0 unchosen 1 acpte 2 refuse
 
     void Update(){
 		timer += Time.deltaTime;
@@ -39,6 +47,56 @@ public class UIManager : MonoBehaviour
 		}
 
 	}
+
+	//display accept/refuse window for social events. being called in calen.mager in unschdle();
+	//use instantiate to display multiple windows 
+	public void Acept_Window(Commitment com, int i){
+		
+		social_nub.Add (i);
+		//GameObject.Find("Window_Accept_Social").transform.localPosition = new Vector3(0, 0, 0);
+		acept_prefab =Instantiate(Resources.Load("Window_Accept_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
+		
+		acept_prefab.transform.SetParent (GameObject.Find ("Calendar").transform, false);
+		acept_prefab.transform.localPosition= new Vector3(0, 0, 0);
+
+		//GameObject.Find ("Inviatation_Text").GetComponent<Text> ().text ="A new inviatation to "+ com.name;
+		//acept_prefab.GetComponentInChildren<Text> ().text ="A new inviatation to "+ com.name;
+
+		acept_prefab.transform.FindChild("Inviatation_Text").gameObject.GetComponent<Text>().text
+		="A new inviatation to "+ com.name;
+
+		acept_prefab.transform.FindChild ("Accept_Button").gameObject.GetComponent<Button> ().onClick.AddListener (Acept_Event);
+		acept_prefab.transform.FindChild ("Refuse_Button").gameObject.GetComponent<Button> ().onClick.AddListener (Refuse_Event);
+
+
+
+	} 
+
+	//acept / refuse event are being called by acept/refuse button in window_acept_social window
+	public void Acept_Event(){
+
+		//acept_prefab.transform.localPosition = new Vector3(0, 1000, 0);
+		//GameObject.Find("Window_Accept_Social").transform.localPosition = new Vector3(0, 1000, 0);
+		//close window
+	
+		social_nub.Remove (social_nub.Count - 1);
+		Destroy (acept_prefab);
+
+	}
+
+	public void Refuse_Event(){
+		Destroy (acept_prefab);
+		int num = social_nub.Count - 1;
+		GameManager.Calendar.refuse_social (social_nub[num]);
+		social_nub.Remove (social_nub.Count - 1);
+
+
+		//acept_prefab.transform.localPosition = new Vector3(0, 1000, 0);
+		//close window 
+		
+	}
+
+
 
 	public void SetDragArea(int maxTotalDay, int minTotalDay, int maxTime, int minTime)
 	{
