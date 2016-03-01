@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum DayofWeek {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
 
@@ -50,9 +51,11 @@ public class Timer : MonoBehaviour
 				timer = realTimePerDay;
 				isOn = false;
 
-				GameObject.Find ("Window").transform.localPosition = new Vector3 (55f, -26f);
-				//show daily review window 
-			}
+				GameObject.Find ("DayEnded").transform.localPosition = new Vector3 (62f, -7f);
+                GameManager.Calendar.SummaryDay();
+                GameManager.Calendar.CheckEventsDay();
+                //show daily review window 
+            }
 
 			rectTransform.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
 		}

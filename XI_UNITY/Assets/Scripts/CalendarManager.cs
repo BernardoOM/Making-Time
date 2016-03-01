@@ -18,14 +18,16 @@ public class CalendarManager : MonoBehaviour
 	public List<Commitment>	unscheduledCommitments = new List<Commitment>();
 	public List<Commitment>	scheduledCommitments = new List<Commitment>();
 	public ClickState			curState;
-
-	public int	viewingWeek { get; private set; }
+    private List<Commitment> eventsDay = new List<Commitment>();
+    public int currentEventDay=0;
+   
+    public int	viewingWeek { get; private set; }
 	public int	curWeek { get; private set; }
 	public int	curTotalDay { get; private set; }
 	public int	curDayOfWeek { get; private set; }
 	public int	curTime { get; private set; }
 
-	public GameObject pop_window;
+    public GameObject pop_window;
 	//To be canged later
 	void Start()
 	{
@@ -34,8 +36,10 @@ public class CalendarManager : MonoBehaviour
 		curTotalDay = 0;
 		curDayOfWeek = 0;
 		curTime = 0;
+       // hasEventDone = true;
+       // hasEventMissed = false;
 
-		curState = ClickState.NoFocus;
+        curState = ClickState.NoFocus;
 
 		//To be changed later
 		for(int generateCount = 0; generateCount < 7; generateCount += 1)
@@ -52,7 +56,7 @@ public class CalendarManager : MonoBehaviour
 			//To be changed later
 			Commitment.GenerateCommitment(curTotalDay);
 		}
-		delete_past_event ();
+		//delete_past_event ();
 		//delete past events on deck
 	}
 
@@ -60,39 +64,209 @@ public class CalendarManager : MonoBehaviour
 	// activated if window - "start new day" button is clicked. 
 	public void DayEnded()
 	{
-		GameObject.Find ("Window").transform.localPosition = new Vector3 (-200f, -1000f);
-
-			curTime = 0;
-			curDayOfWeek = (curDayOfWeek+1) % 7;
-			curTotalDay += 1;
-			if(OnDayStarted != null)
-			{	OnDayStarted(curDayOfWeek);	}
-
-			if(curDayOfWeek == 0)
-			{	WeekEnded();	}
+        GameObject.Find("DayEnded").transform.localPosition = new Vector3(-200f, -1000f);
+        GameObject.Find("DayEvent").transform.localPosition = new Vector3(-200f, -1000f);
+        //delete_past_event();
+        currentEventDay = 0;
+        curTime = 0;
+		curDayOfWeek = (curDayOfWeek+1) % 7;
+		curTotalDay += 1;
+		if(OnDayStarted != null)
+		{	OnDayStarted(curDayOfWeek);	}
+		if(curDayOfWeek == 0)
+		{	WeekEnded();	}
 	}
 
 
+    public void SummaryDay()
+    {
+        int totalScheduled = scheduledCommitments.Count;
+        int totalUnscheduled = unscheduledCommitments.Count;
+        int cuTotalScheduled = 0;
+        int cuTotalUnscheduled = 0;
+        string day = "";
+        int done = 0;
+        int missed = 0;
+      
 
-//	public void DayEnded(int prevDayOfWeek)
-//	{
-//		if(prevDayOfWeek == curDayOfWeek)
-//		{
-//			curTime = 0;
-//			curDayOfWeek = (curDayOfWeek+1) % 7;
-//			curTotalDay += 1;
-//			if(OnDayStarted != null)
-//			{	OnDayStarted(curDayOfWeek);	}
-//
-//			if(curDayOfWeek == 0)
-//			{	WeekEnded();	}
-//		}
-//
-//
-//	}
+        switch (curDayOfWeek)
+        {
+            case (int)DayofWeek.Sunday:
+                day = "Sunday";
+                break;
+            case (int)DayofWeek.Monday:
+                day = "Monday";
+                break;
+            case (int)DayofWeek.Tuesday:
+                day = "Tuesday";
+                break;
+            case (int)DayofWeek.Wednesday:
+                day = "Wednesday";
+                break;
+            case (int)DayofWeek.Thursday:
+                day = "Thursday";
+                break;
+            case (int)DayofWeek.Friday:
+                day = "Friday";
+                break;
+            case (int)DayofWeek.Saturday:
+                day = "Saturday";
+                break;
+            default:
+                break;
+        }
+
+        while (cuTotalScheduled < totalScheduled || cuTotalUnscheduled < totalUnscheduled)
+        {
+            if (cuTotalScheduled < totalScheduled)
+            {
+                Commitment scheDay = scheduledCommitments[cuTotalScheduled];
+
+                if (scheDay.curTotalDay == curDayOfWeek)
+                {
+                    eventsDay.Add(scheDay);
+                    done++;
+                }
+                cuTotalScheduled++;
+            }
+
+            if (cuTotalUnscheduled < totalUnscheduled)
+            {
+                Commitment unscheDay = unscheduledCommitments[cuTotalUnscheduled];
+
+                if (unscheDay.maxTotalDay == curDayOfWeek)
+                {
+                    eventsDay.Add(unscheDay);
+                    missed++;
+                }
+                cuTotalUnscheduled++;
+            }
+        }
+        GameObject.Find("TItleDEnded").GetComponent<Text>().text = day + " ended";
+        GameObject.Find("DescriptionDEnded").GetComponent<Text>().text = " You did " + done + " things\n You missed " + missed + " things";
+        ///GameObject.Find("FaceDEnded").GetComponent<Image>().sprite = GameObject.
+
+        //Debug.Log("Day: " + day + " You did " + done + " things");
+        //Debug.Log("Day: " + day + " You missed " + missed + " things");
+    }
+
+    public void CheckEventsDay()
+    {
+        int totalEvents = eventsDay.Count;
+
+        if (totalEvents == 0)
+        {
+            GameObject.Find("ButtonDayEnded").SetActive(true);
+            GameObject.Find("ButtonDayEvent").SetActive(false);
+        }
+        else if (totalEvents == 1)
+        {
+            GameObject.Find("ButtonDayEnded").SetActive(false);
+            GameObject.Find("ButtonDayEvent").SetActive(true);
+            GameObject.Find("ButtonDEnded").SetActive(true);
+            GameObject.Find("ButtonDEvent").SetActive(false);
+            GameObject.Find("BackBDLastEvent").SetActive(false);
+        }
+        else if (totalEvents == 2)
+        {
+            GameObject.Find("ButtonDayEnded").SetActive(false);
+            GameObject.Find("ButtonDayEvent").SetActive(true);
+            GameObject.Find("ButtonDEnded").SetActive(true);
+            GameObject.Find("ButtonDEvent").SetActive(false);
+            GameObject.Find("BackBDLastEvent").SetActive(true);
+        }
+    }
+
+    public void DayEvent()
+    {
+        GameObject.Find("DayEnded").transform.localPosition = new Vector3(-200f, -1000f);
+        GameObject.Find("DayEvent").transform.localPosition = new Vector3(62f, -7f);
+
+        if(currentEventDay < eventsDay.Count)
+        {
+            int doubleCheck = currentEventDay + 2;
+
+            if (eventsDay[currentEventDay].scheduled){
+                ShowNextEvent("Done");
+            }
+            else{
+                ShowNextEvent("Missed");
+            }
+
+            if (doubleCheck == eventsDay.Count ) //eventsDay.Count - 1
+            {
+                GameObject.Find("ButtonDEnded").SetActive(true);
+                GameObject.Find("ButtonDEvent").SetActive(false);
+                
+                if(doubleCheck == 1) {
+                   GameObject.Find("BackBDLastEvent").SetActive(false);
+                }
+                else if(doubleCheck > 1)
+                {
+                   GameObject.Find("BackBDLastEvent").SetActive(true);
+                }
+            }
+
+        }
+    }
+
+    public void ShowNextEvent(string DoM)
+    {
+        // GameObject.Find("CreatorDEvent") creator image
+         GameObject.Find("NameDEvent").GetComponent<Text>().text = eventsDay[currentEventDay].name;
+         GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "Your " + eventsDay[currentEventDay].creator + " is happy with you";
+        //    GameObject.Find("AchieveDEvent") done or missed image
+         GameObject.Find("TextAchievedDEvent").GetComponent<Text>().text = DoM;
+         currentEventDay++;
+    }
+
+    public void ShowPreviewEvent(string DoM)
+    {
+        currentEventDay = currentEventDay - 1;
+        // GameObject.Find("CreatorDEvent") creator image
+        GameObject.Find("NameDEvent").GetComponent<Text>().text = eventsDay[currentEventDay].name;
+        GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "Your " + eventsDay[currentEventDay].creator + " is happy with you";
+        //    GameObject.Find("AchieveDEvent") done or missed image
+        GameObject.Find("TextAchievedDEvent").GetComponent<Text>().text = DoM;
+
+        if(currentEventDay == 1)
+        {
+            GameObject.Find("ButtonDEvent").SetActive(true);
+            GameObject.Find("BackBDLastEvent").SetActive(false);
+        }
+        else if (currentEventDay > 1 && currentEventDay != eventsDay.Count - 1)
+        {
+            GameObject.Find("ButtonDEvent").SetActive(true);
+            GameObject.Find("BackBDLastEvent").SetActive(true);
+        }
+        else if (currentEventDay == eventsDay.Count - 1)
+        {
+            GameObject.Find("ButtonDEnded").SetActive(true);
+            GameObject.Find("ButtonDEvent").SetActive(false);
+            GameObject.Find("BackBDLastEvent").SetActive(true);
+        }
+
+    }
+
+    //	public void DayEnded(int prevDayOfWeek)
+    //	{
+    //		if(prevDayOfWeek == curDayOfWeek)
+    //		{
+    //			curTime = 0;
+    //			curDayOfWeek = (curDayOfWeek+1) % 7;
+    //			curTotalDay += 1;
+    //			if(OnDayStarted != null)
+    //			{	OnDayStarted(curDayOfWeek);	}
+    //
+    //			if(curDayOfWeek == 0)
+    //			{	WeekEnded();	}
+    //		}
+    //
+    //
+    //	}
 
 
-	public void WeekEnded()
+    public void WeekEnded()
 	{
 		curWeek += 1;
 		viewingWeek = curWeek;
@@ -145,10 +319,10 @@ public class CalendarManager : MonoBehaviour
 
 		int maxTotalDay, minTotalDay, maxTime, minTime;
 		com.ReturnTimeRange(out maxTotalDay, out minTotalDay, out maxTime, out minTime);
-		Debug.Log (maxTotalDay);
-		Debug.Log ( minTotalDay);
-		Debug.Log (maxTime);
-		Debug.Log (minTime);
+		//Debug.Log (maxTotalDay);
+		//Debug.Log ( minTotalDay);
+		//Debug.Log (maxTime);
+		//Debug.Log (minTime);
 
 		GameManager.UI.SetDragArea(maxTotalDay, minTotalDay, maxTime, minTime);
 	}
@@ -197,14 +371,14 @@ public class CalendarManager : MonoBehaviour
 	//delete past events on deck
 	public void delete_past_event(){
 	for (int i = 0; i < unscheduledCommitments.Count; i++) {
-			while (unscheduledCommitments [i].maxTotalDay <= curDayOfWeek && unscheduledCommitments[i].maxTime<curTime )
+			while (unscheduledCommitments[i].maxTotalDay <= curDayOfWeek && unscheduledCommitments[i].maxTime<curTime )
 		{
-				GameObject.Find ("Bubble_text").GetComponent<Text> ().text ="Oh you missed "+ unscheduledCommitments [i].name + " !";
+				//GameObject.Find ("Bubble_text").GetComponent<Text>().text ="Oh you missed "+ unscheduledCommitments [i].name + " !";
 
-			unscheduledCommitments [i].gameObject.SetActive (false);
+			unscheduledCommitments[i].gameObject.SetActive(false);
 			unscheduledCommitments.RemoveAt (i);
 
-		GameObject.Find ("Bubble_Calendar").transform.localPosition = new Vector3 (-444.3f, 315.7f);
+		//GameObject.Find ("Bubble_Calendar").transform.localPosition = new Vector3 (-444.3f, 315.7f);
 
 		}
 	}
@@ -303,8 +477,8 @@ public class CalendarManager : MonoBehaviour
 
 
 
-		Debug.Log ("sort finished");
-		Debug.Log (curDayOfWeek);
+		//Debug.Log ("sort finished");
+		//Debug.Log (curDayOfWeek);
 
 
 		for (int i = 0; i < unscheduledCommitments.Count; i++) {
