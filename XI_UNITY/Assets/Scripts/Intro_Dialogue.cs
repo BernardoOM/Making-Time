@@ -16,7 +16,7 @@ public class Intro_Dialogue : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timer += Time.deltaTime;
-		if (timer - click_time > 3f&&timer - click_time < 4f) {
+		if (timer - click_time > 0.3f&&timer - click_time < 4f) {
 			SceneManager.LoadScene (2);
 		}
 	}

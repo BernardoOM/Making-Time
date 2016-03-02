@@ -41,9 +41,15 @@ public class CalendarManager : MonoBehaviour
 
         curState = ClickState.NoFocus;
 
-		//To be changed later
-		for(int generateCount = 0; generateCount < 7; generateCount += 1)
-		{	Commitment.GenerateCommitment(curTotalDay - 1);	}
+ 		//generate work events at begining. 5-15 work events. 1-3 per day. mon to friday. 
+		for(int generateCount = 1; generateCount < 6; generateCount += 1)
+		{	
+			int event_numbs=Random.Range (1, 4);
+			for (int i = 0; i < event_numbs; i++) {
+				Commitment.Generate_Works (generateCount);
+			}
+
+		}
 	}
 
 	public void TimeBlockStarted()
@@ -365,18 +371,24 @@ public class CalendarManager : MonoBehaviour
 	public int FindIndexUnScheduled(Commitment com)
 	{	return unscheduledCommitments.IndexOf(com);	}
 
-
-	public void acept_social_event(){
-		for (int i = 0; i < unscheduledCommitments.Count; i++) {
-			if (unscheduledCommitments [i].curType == CommitmentType.Social) {
-				GameManager.UI.Acept_Window(unscheduledCommitments[i],i);
-			}
+	//display inviattation window 
+	public void acept_social_event(Commitment com){
+		if (com.curType == CommitmentType.Social) {
+				GameObject	acept_prefab =Instantiate(Resources.Load("Window_Accept_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
+			acept_prefab.GetComponent<Social_Acceptance> ().Acept_Window (com);
 		}
 	}
 
-	public void refuse_social(int i){
-		Destroy (unscheduledCommitments [i].gameObject);
-		unscheduledCommitments.RemoveAt (i);
+	//being called if player clicked on refuse button from the inviation window. 
+	public void refuse_social(Commitment com){
+		for (int i = 0; i < unscheduledCommitments.Count; i++) {
+			if (com == unscheduledCommitments [i]) {
+				Destroy (unscheduledCommitments [i].gameObject);
+				unscheduledCommitments.RemoveAt (i);
+				Drag.ShiftDeck ();
+
+			}
+		}
 	}
 
 	//delete past events on deck

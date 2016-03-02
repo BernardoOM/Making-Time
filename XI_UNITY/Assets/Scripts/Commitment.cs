@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
+//using System;
+
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 public enum CommitmentType {Work, Leisure, Social, Chore };
 
@@ -14,6 +18,12 @@ public class Commitment : MonoBehaviour
 	public bool	scheduled;
 	public bool activated;
 	public bool	completed;	bool		activeScene;
+
+	private static int	startX = -496;
+	private static int	calendarStartY = 247;
+	private static int	deckY = -269;
+	private static int	blockWidth = 163;
+	private static int	blockHeight = 82;
 
 	// Use this for initialization
 	void Start ()
@@ -59,7 +69,9 @@ public class Commitment : MonoBehaviour
 						activeScene = true;
 					}
 					activated = true;
-					GetComponent<Drag>().Activated();
+					if (curType != CommitmentType.Work) {
+						GetComponent<Drag> ().Activated ();
+					}
 				}
 				else if(aCurTotalDay > maxTotalDay && aCurTime > maxTime && !completed)
 				{	GameManager.Calendar.FailedCommitment(this);	}
@@ -70,7 +82,9 @@ public class Commitment : MonoBehaviour
 				if(activeScene)
 				{	GameManager.UI.LeaveCurrentScne(curTotalDay % 7);	}
 				GameManager.Calendar.CompleteCommitment(this);
-				GetComponent<Drag>().Completed();
+				if (curType != CommitmentType.Work) {
+					GetComponent<Drag> ().Completed ();
+				}
 				completed = true;
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
 			}
@@ -142,10 +156,9 @@ public class Commitment : MonoBehaviour
 
 		CommitmentType newCommitment;
 
+		// no work events generated 
 		int randomCommitmentType = Random.Range(0, 10);
-		if(randomCommitmentType <= 4)
-		{	newCommitment = CommitmentType.Work;	}
-		else if(randomCommitmentType <= 7)
+         if(randomCommitmentType <=4)
 		{	newCommitment = CommitmentType.Social;	}
 		else
 		{	newCommitment = CommitmentType.Chore;	}
@@ -209,27 +222,98 @@ public class Commitment : MonoBehaviour
 		//To be changed later
 		//read from database
 
-//		if (com.curType == CommitmentType.Social) {
-//
-//
-//			//GameManager.PauseGame ();
-//			GameManager.UI.Acept_Window (com);
-//		    //go to UI manager, display acept window 
-//		} 
-//
-//		if (com.curType != CommitmentType.Social) {
-//			// generate values
-//			GameManager.Calendar.UnScheduleCommitment (com);
-//			com.transform.SetParent (GameObject.Find ("Deck").transform, false);
-////		com.transform.localScale = Vector3.one;
-//			Drag.PlaceUnscheduled (com);
-//		}
-
 		GameManager.Calendar.UnScheduleCommitment (com);
 		com.transform.SetParent (GameObject.Find ("Deck").transform, false);
 		//		com.transform.localScale = Vector3.one;
 		Drag.PlaceUnscheduled (com);
 		//write to database
+
+		GameManager.Calendar.acept_social_event (com);
+		//display inviatation window for social events. code is in calendar.cs
+	}
+
+
+	public static void Generate_Works(int totalDay)
+	{
+		GameObject commitment;
+		string aName = "";	string aCreator = "";
+		int aTimeLength = 0; int aMaxTotalDay = 0; int aMinTotalDay = 0; int aMaxTime = 0; int aMinTime = 0;
+
+		CommitmentType newCommitment;
+	newCommitment = CommitmentType.Work;
+
+		switch(newCommitment)
+		{
+		case CommitmentType.Work:
+			commitment = Instantiate(Resources.Load("WorkButton")) as GameObject;
+			DBMakingTime.ReadRandomNewCommitment("Work", ref aName, ref aTimeLength, ref aMaxTime, ref aMinTime);
+			break;
+		
+		default:
+			commitment = Instantiate(Resources.Load("Button")) as GameObject;
+			break;
+		}
+		Commitment com = commitment.GetComponent<Commitment>();
+
+//			if(aName == "Teach Class")
+//			{
+//				aMinTime = Random.Range(0, 2) * 2;
+//				aMaxTime = aMinTime + 1;
+//			}
+		aMinTotalDay = 0 ;
+		aMaxTotalDay = 6;
+
+
+		com.RecordInfo(aName, aCreator, aTimeLength, aMaxTotalDay,
+			aMinTotalDay, aMaxTime, aMinTime);
+		com.curType = newCommitment;
+
+		com.GetComponent<Image> ().color = new Color (.90f, .49f, .22f);
+
+		int random_time = Random.Range (aMinTime, aMaxTime + 1);
+		int random_day = totalDay; 
+		// not random day. monday to friday. based on cldr.cs start();
+
+
+		//####### OVERLAP AVOIDANCE function.#do not delete#. not perfect.
+//		List<int> pool=new List<int>();
+//		for (int i = 0; i < aMaxTime - aMinTime+1; i++) {
+//			pool.Add (aMinTime + i);
+//		}
+//
+//		for (int i = 0; i < GameManager.Calendar.scheduledCommitments.Count; i++) {
+//			//while (GameManager.Calendar.scheduledCommitments [i].curTime == random_time)
+//			if (GameManager.Calendar.scheduledCommitments [i].curTotalDay == random_day) {
+//				while (GameManager.Calendar.scheduledCommitments [i].curTime == random_time) {
+//					int temp_time = GameManager.Calendar.scheduledCommitments [i].curTime;
+//					pool.Remove (temp_time);
+//					random_time = Random.Range (pool[0],pool[pool.Count-1]+1);
+//				}
+//			}
+//		}
+//
+
+		//not perfect too 
+		for (int i = 0; i < GameManager.Calendar.scheduledCommitments.Count; i++) {
+					if (GameManager.Calendar.scheduledCommitments [i].curTotalDay == random_day) {
+						while (GameManager.Calendar.scheduledCommitments [i].curTime == random_time) {
+							int temp_time = GameManager.Calendar.scheduledCommitments [i].curTime;
+					random_time = Random.Range (aMinTime,aMaxTime+1);
+						}
+					}
+				}
+		
+
+
+
+		com.SetPlaceOnSchedule(random_time, random_day);
+		com.SetScheduled(true);
+		GameManager.Calendar.ScheduleCommitment(com);
+		com.transform.SetParent(GameObject.Find("Scheduled").transform,false);
+
+		com.transform.localPosition
+		= new Vector3(startX + (random_day* blockWidth), calendarStartY - (random_time * blockHeight), 0);
+		// Random.Range(aMinTime,aMaxTime+1), Random.Range(aMinTotalDay,aMaxTotalDay+1)
 	}
 
 	public static void GenerateCommitment(string aName, string aCreator, int aTimeLength, int aMaxTotalDay,
