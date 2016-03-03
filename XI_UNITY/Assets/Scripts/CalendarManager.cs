@@ -72,7 +72,7 @@ public class CalendarManager : MonoBehaviour
 	{
         GameObject.Find("DayEnded").transform.localPosition = new Vector3(-200f, -1000f);
         GameObject.Find("DayEvent").transform.localPosition = new Vector3(-200f, -1000f);
-        //delete_past_event();
+        delete_past_event();
         currentEventDay = 0;
         curTime = 0;
 		curDayOfWeek = (curDayOfWeek+1) % 7;
@@ -167,16 +167,23 @@ public class CalendarManager : MonoBehaviour
         }
         else if (totalEvents == 1)
         {
-            GameObject.Find("ButtonDayEnded").SetActive(false);
-            GameObject.Find("ButtonDayEvent").SetActive(true);
+			// GameObject.Find("ButtonDayEnded").SetActive(false);
+			//GameObject.Find("ButtonDayEvent").SetActive(true);
+			GameObject.Find("ButtonDayEnded").SetActive(true);
+			GameObject.Find("ButtonDayEvent").SetActive(false);
+
             GameObject.Find("ButtonDEnded").SetActive(true);
             GameObject.Find("ButtonDEvent").SetActive(false);
             GameObject.Find("BackBDLastEvent").SetActive(false);
         }
         else if (totalEvents == 2)
         {
-            GameObject.Find("ButtonDayEnded").SetActive(false);
-            GameObject.Find("ButtonDayEvent").SetActive(true);
+			// GameObject.Find("ButtonDayEnded").SetActive(false);
+			//GameObject.Find("ButtonDayEvent").SetActive(true);
+			GameObject.Find("ButtonDayEnded").SetActive(true);
+			GameObject.Find("ButtonDayEvent").SetActive(false);
+
+
             GameObject.Find("ButtonDEnded").SetActive(true);
             GameObject.Find("ButtonDEvent").SetActive(false);
             GameObject.Find("BackBDLastEvent").SetActive(true);
