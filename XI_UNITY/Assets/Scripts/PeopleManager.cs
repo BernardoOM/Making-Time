@@ -17,7 +17,7 @@ public class PeopleManager : MonoBehaviour
 		population = new Dictionary<string, Person>();
 		nameList = new List<string>();
 
-		player = new Player(RelationType.Player, MoodType.Neutral, "Jena Star", 4, 3);
+		player = new Player(RelationType.Player, MoodType.Neutral, "Jena Balton", 4, 3);
 		population.Add(player.name, player);
 		nameList.Add(player.name);
 	}
@@ -26,6 +26,6 @@ public class PeopleManager : MonoBehaviour
 	{
 		if(OnChangeStatus != null)
 		{	OnChangeStatus(deltaEnergy, deltaHappiness);	}
-		GameObject.Find("SideBar").GetComponent<Sidebar>().ChangeValues(player.energy, player.happiness);
+		//GameObject.Find("SideBar").GetComponent<Sidebar>().ChangeValues(player.energy, player.happiness);
 	}
 }

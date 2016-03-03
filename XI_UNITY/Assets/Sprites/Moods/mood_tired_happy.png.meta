@@ -1,9 +1,11 @@
 fileFormatVersion: 2
 guid: 349dd632f90ab491e85c7392be38d871
-timeCreated: 1456474123
+timeCreated: 1456919244
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: mood_tired_happy_0
+    21300002: mood_tired_happy_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +32,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +40,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +51,47 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: mood_tired_happy_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42, y: 50}
+        - {x: -54, y: 23}
+        - {x: -54, y: -38}
+        - {x: -37, y: -52}
+        - {x: 18, y: -52}
+        - {x: 47, y: -36}
+        - {x: 51, y: -22}
+        - {x: 51, y: 24}
+        - {x: 32, y: 50}
+    - name: mood_tired_happy_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -42, y: 50}
+        - {x: -54, y: 23}
+        - {x: -54, y: -38}
+        - {x: -37, y: -52}
+        - {x: 18, y: -52}
+        - {x: 47, y: -36}
+        - {x: 51, y: -22}
+        - {x: 51, y: 24}
+        - {x: 32, y: 50}
     outline: []
   spritePackingTag: 
   userData: 

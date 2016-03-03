@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 5cc0183570989449fbe3ab191a62717f
-timeCreated: 1456919211
+guid: 6f1216a9977644b2486f03c9dabe972b
+timeCreated: 1457012701
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mood_energetic_stressed_0
-    21300002: mood_energetic_stressed_1
+    21300000: MuteIcon_0
+    21300002: MuteIcon_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,58 +52,44 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: mood_energetic_stressed_0
+    - name: MuteIcon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 128
+        width: 177
+        height: 174
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -32, y: 52}
-        - {x: -64, y: 19}
-        - {x: -64, y: -47}
-        - {x: -32, y: -50}
-        - {x: 26, y: -50}
-        - {x: 54, y: -37}
-        - {x: 54, y: 38}
-        - {x: 26, y: 52}
-      - - {x: -61, y: -9}
-        - {x: -60, y: -12}
-        - {x: -55, y: -12}
-        - {x: -53, y: -10}
-        - {x: -54, y: -7}
-        - {x: -59, y: -7}
-    - name: mood_energetic_stressed_1
+      - - {x: 87.5, y: 87}
+        - {x: -86.5, y: 87}
+        - {x: -88.5, y: 86}
+        - {x: -88.5, y: -84}
+        - {x: -85.5, y: -87}
+        - {x: 85.5, y: -87}
+        - {x: 88.5, y: -85}
+        - {x: 88.5, y: 85}
+    - name: MuteIcon_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 177
         y: 0
-        width: 128
-        height: 128
+        width: 177
+        height: 174
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -60, y: -29}
-        - {x: -63, y: -33}
-        - {x: -63, y: -51}
-        - {x: -62, y: -55}
-        - {x: -52, y: -55}
-        - {x: -50, y: -52}
-        - {x: -50, y: -31}
-        - {x: -53, y: -29}
-      - - {x: 41, y: 52}
-        - {x: -41, y: 52}
-        - {x: -52, y: 42}
-        - {x: -52, y: -29}
-        - {x: -42, y: -50}
-        - {x: 24, y: -50}
-        - {x: 54, y: -37}
-        - {x: 54, y: 37}
+      - - {x: 87.5, y: 87}
+        - {x: -86.5, y: 87}
+        - {x: -88.5, y: 86}
+        - {x: -88.5, y: -84}
+        - {x: -85.5, y: -87}
+        - {x: 85.5, y: -87}
+        - {x: 88.5, y: -85}
+        - {x: 88.5, y: 85}
     outline: []
   spritePackingTag: 
   userData: 

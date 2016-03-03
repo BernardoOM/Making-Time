@@ -20,5 +20,7 @@ public class Player : Person
 	{
 		energy += deltaEnergy;
 		happiness += deltaHappiness;
+
+		GameObject.Find("SideBar").GetComponent<Sidebar>().ChangeMood(deltaEnergy,deltaHappiness, energy, happiness);
 	}
 }
