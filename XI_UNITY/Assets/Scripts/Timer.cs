@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
 
 	//size of a block of time in pixels
 	private static int width = 160;
-	private static int maxHeight = 492;
+	private static int maxHeight = 520;
 	//length of an in-game day in seconds
 	private static int realTimePerDay = 30;
 	//30
@@ -51,8 +51,9 @@ public class Timer : MonoBehaviour
 				timer = realTimePerDay;
 				isOn = false;
 
-				DailyReview review = GameObject.Find("Calendar").GetComponent<DailyReview>();
-				review.StartReview(today);
+				GameObject.Find ("DayEnded").transform.localPosition = new Vector3 (62f, -7f);
+                GameManager.Calendar.SummaryDay();
+                GameManager.Calendar.CheckEventsDay();
                 //show daily review window 
             }
 
