@@ -51,9 +51,8 @@ public class Timer : MonoBehaviour
 				timer = realTimePerDay;
 				isOn = false;
 
-				GameObject.Find ("DayEnded").transform.localPosition = new Vector3 (62f, -7f);
-                GameManager.Calendar.SummaryDay();
-                GameManager.Calendar.CheckEventsDay();
+				DailyReview review = GameObject.Find("Calendar").GetComponent<DailyReview>();
+				review.StartReview(today);
                 //show daily review window 
             }
 

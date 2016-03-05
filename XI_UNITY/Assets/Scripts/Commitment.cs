@@ -73,8 +73,6 @@ public class Commitment : MonoBehaviour
 						GetComponent<Drag> ().Activated ();
 					}
 				}
-				else if(aCurTotalDay > maxTotalDay && aCurTime > maxTime && !completed)
-				{	GameManager.Calendar.FailedCommitment(this);	}
 			}
 			else
 			{
@@ -93,6 +91,10 @@ public class Commitment : MonoBehaviour
 		{
 			if (aCurTotalDay >= maxTotalDay && aCurTime >= maxTime)
 			{
+				Debug.Log(aCurTotalDay + " " + maxTotalDay + " " + aCurTime + " " + maxTime);
+				GameManager.Calendar.FailedCommitment(this);
+				gameObject.SetActive(false);
+				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
 				//do delete 
 				//do feedback
 			}
