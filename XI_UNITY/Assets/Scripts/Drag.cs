@@ -10,15 +10,10 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 												  new Color(.45f, .73f, .90f),
 												  new Color(.48f, .78f, .80f),
 												  new Color(1.0f, .89f, .45f)};
-	
-	private static Color[] scheduledColors = { new Color(1f,1f,1f,1f),
-												new Color(1f,1f,1f,1f),
-											   new Color(.9f, 1f, 1f),
-											   new Color(1f, .60f, 1f)};
-//	private static Color[] scheduledColors = { new Color(.90f, .49f, .22f),
-//		new Color(.22f, .64f, .90f),
-//		new Color(.28f, .78f, .80f),
-//		new Color(.95f, .80f, .19f)};
+	private static Color[] scheduledColors = { new Color(.90f, .49f, .22f),
+											   new Color(.22f, .64f, .90f),
+											   new Color(.28f, .78f, .80f),
+											   new Color(.95f, .80f, .19f)};
 	private static Color[] activatedColors = { new Color(1.0f, .61f, .35f),
 											   new Color(.35f, .75f, 1.0f),
 											   new Color(.40f, .88f, .90f),
@@ -27,22 +22,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 											   new Color(.12f, .53f, .80f),
 											   new Color(.18f, .67f, .70f),
 											   new Color(.85f, .69f, .09f)};
-	
-	private static Color orginal_color = new Color (1f, 1f, 1f, 1f);
 
-
-
-	private static int	startX = -494;
-	private static int	calendarStartY = 272;
-	private static int	deckY = -290;
+	private static int	startX = -496;
+	private static int	calendarStartY = 247;
+	private static int	deckY = -269;
 	private static int	blockWidth = 163;
-	private static int	blockHeight = 88;
-
-//	private static int	startX = -496;
-//	private static int	calendarStartY = 247;
-//	private static int	deckY = -269;
-//	private static int	blockWidth = 163;
-//	private static int	blockHeight = 82;
+	private static int	blockHeight = 82;
 
 	private Image		buttonImage;
 	private Vector3		startPosition;
@@ -124,9 +109,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			{
 				if(!com.scheduled)
 				{
-					//change color of buttons, if drag back to calendar 
 					buttonImage.color = scheduledColors[(int)com.curType];
-						
 					com.SetPlaceOnSchedule(time, GameManager.Calendar.viewingWeek * 7 + dayOfWeek);
 					com.SetScheduled(true);
 					GameManager.Calendar.ScheduleCommitment(com);
@@ -144,9 +127,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		{
 			if(com.scheduled)
 			{
-				//change color of buttons to original color, if drag back to deck
-				buttonImage.color=orginal_color;
-					
+				buttonImage.color = notScheduledColors[(int)com.curType];
 				com.SetScheduled(false);
 				GameManager.Calendar.UnScheduleCommitment(com);
 				transform.SetParent(GameObject.Find("Deck").transform);
@@ -209,14 +190,10 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		}
 
 	public void Activated()
-	{	
-		buttonImage.color = activatedColors[(int)com.curType];	
-	}
+	{	buttonImage.color = activatedColors[(int)com.curType];	}
 
 	public void Completed()
-	{	
-		buttonImage.color = completedColors[(int)com.curType];	
-	}
+	{	buttonImage.color = completedColors[(int)com.curType];	}
 }
 
 

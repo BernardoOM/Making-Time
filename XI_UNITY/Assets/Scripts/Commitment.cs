@@ -19,11 +19,11 @@ public class Commitment : MonoBehaviour
 	public bool activated;
 	public bool	completed;	bool		activeScene;
 
-	private static int	startX = -494;
-	private static int	calendarStartY = 272;
-	private static int	deckY = -290;
+	private static int	startX = -496;
+	private static int	calendarStartY = 247;
+	private static int	deckY = -269;
 	private static int	blockWidth = 163;
-	private static int	blockHeight = 88;
+	private static int	blockHeight = 82;
 
 	// Use this for initialization
 	void Start ()
@@ -73,8 +73,6 @@ public class Commitment : MonoBehaviour
 						GetComponent<Drag> ().Activated ();
 					}
 				}
-				else if(aCurTotalDay > maxTotalDay && aCurTime > maxTime && !completed)
-				{	GameManager.Calendar.FailedCommitment(this);	}
 			}
 			else
 			{
@@ -93,6 +91,10 @@ public class Commitment : MonoBehaviour
 		{
 			if (aCurTotalDay >= maxTotalDay && aCurTime >= maxTime)
 			{
+				Debug.Log(aCurTotalDay + " " + maxTotalDay + " " + aCurTime + " " + maxTime);
+				GameManager.Calendar.FailedCommitment(this);
+				gameObject.SetActive(false);
+				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
 				//do delete 
 				//do feedback
 			}
@@ -268,7 +270,7 @@ public class Commitment : MonoBehaviour
 			aMinTotalDay, aMaxTime, aMinTime);
 		com.curType = newCommitment;
 
-		//com.GetComponent<Image> ().color = new Color (.90f, .49f, .22f);
+		com.GetComponent<Image> ().color = new Color (.90f, .49f, .22f);
 
 		int random_time = Random.Range (aMinTime, aMaxTime + 1);
 		int random_day = totalDay; 
@@ -294,7 +296,6 @@ public class Commitment : MonoBehaviour
 //
 
 		//not perfect too 
-		//events overlap avoidance 
 		for (int i = 0; i < GameManager.Calendar.scheduledCommitments.Count; i++) {
 					if (GameManager.Calendar.scheduledCommitments [i].curTotalDay == random_day) {
 						while (GameManager.Calendar.scheduledCommitments [i].curTime == random_time) {
@@ -337,9 +338,6 @@ public class Commitment : MonoBehaviour
 	{
 	// int arrys= db read function 
 		int[] array= DBMakingTime.ChangeStatus(name, timeLength);
-
-
-
 		GameObject.Find ("Managers").GetComponent<PeopleManager> ().ChangePlayerStatus (array [0], array [1]);
 		 //+= array [0];
 		//player_happiness += array [1];
