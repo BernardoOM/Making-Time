@@ -343,6 +343,61 @@ public class Commitment : MonoBehaviour
 		GameObject.Find ("Managers").GetComponent<PeopleManager> ().ChangePlayerStatus (array [0], array [1]);
 		//+= array [0];
 		//player_happiness += array [1];
+
+
+		//below code is to show face on each event buttons. based on Database energy, happy values. 
+		string path="Faces_on_events/face00";
+
+		if (array [0] == 0) {
+			if (array [1] == 0) {
+				 path="Faces_on_events/face00";
+
+			}
+			if (array [1] > 0) {
+				 path="Faces_on_events/face30";
+
+			}
+			if (array [1] < 0) {
+				 path="Faces_on_events/face-30";
+
+			}
+		}
+
+		if (array [0] > 0) {
+			if (array [1] == 0) {
+				 path="Faces_on_events/face03";
+
+			}
+			if (array [1] > 0) {
+				 path="Faces_on_events/face33";
+
+			}
+			if (array [1] < 0) {
+				 path="Faces_on_events/face-33";
+
+			}
+		}	
+		if (array [0] < 0) {
+			if (array [1] == 0) {
+				 path="Faces_on_events/face0-3";
+
+			}
+			if (array [1] > 0) {
+				 path="Faces_on_events/face03";
+
+			}
+			if (array [1] < 0) {
+				 path="Faces_on_events/face-3-3";
+
+			}
+		}
+
+
+		GameObject face = Instantiate(Resources.Load(path),transform.parent.position, transform.parent.rotation) as GameObject;
+		face.transform.parent = transform.parent;
+		face.transform.localPosition 
+		= new Vector3(startX + (curTotalDay* blockWidth)+blockWidth/2, calendarStartY - (curTime * blockHeight)-blockHeight/2, 0);
+
 	}
 
 }
