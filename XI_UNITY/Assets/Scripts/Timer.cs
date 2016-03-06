@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
 
 		rectTransform = GetComponent (typeof (RectTransform)) as RectTransform;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -51,11 +51,10 @@ public class Timer : MonoBehaviour
 				timer = realTimePerDay;
 				isOn = false;
 
-				GameObject.Find ("DayEnded").transform.localPosition = new Vector3 (62f, -7f);
-                GameManager.Calendar.SummaryDay();
-                GameManager.Calendar.CheckEventsDay();
-                //show daily review window 
-            }
+				DailyReview review = GameObject.Find("Calendar").GetComponent<DailyReview>();
+				review.StartReview(today);
+				//show daily review window 
+			}
 
 			rectTransform.sizeDelta = new Vector2(width, Mathf.Lerp(0, maxHeight, timer / realTimePerDay));
 		}
@@ -76,4 +75,4 @@ public class Timer : MonoBehaviour
 	public void UI_OnActivateCommitment(bool active)
 	{	commitmentActive = active;	}
 }
-  
+
