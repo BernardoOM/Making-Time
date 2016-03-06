@@ -22,6 +22,7 @@ public class Timer : MonoBehaviour
 	private bool isOn = false;
 	private bool commitmentActive = false;
 
+
 	void Start ()
 	{
 		GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
@@ -41,7 +42,9 @@ public class Timer : MonoBehaviour
 			if(commitmentActive)
 			{	timer += Time.deltaTime / 5;	}
 			else
-			{	timer += Time.deltaTime;	}
+			{	timer += Time.deltaTime*GameManager.Calendar.fastforward;	}
+			//fastforwar is used on pause window fastforward button
+			//when clicked, the timer will accelerate 
 
 			if(timer > (GameManager.Calendar.curTime + 1) * (realTimePerDay / 6))
 			{	GameManager.Calendar.TimeBlockStarted();	}

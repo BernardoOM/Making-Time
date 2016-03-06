@@ -28,6 +28,12 @@ public class CalendarManager : MonoBehaviour
 
     public GameObject pop_window;
 	//To be canged later
+
+	public int fastforward=1;
+	//fastforwar is used on pause window fastforward button
+	//when clicked, the timer will accelerate 
+
+
 	void Start()
 	{
 		viewingWeek = 0;

@@ -34,6 +34,10 @@ public class UIManager : MonoBehaviour
 	private Commitment temp_com;
 	//0 unchosen 1 acpte 2 refuse
 
+	public bool CuSceneBool =false;
+	//creat this bool for invitation and ause window when current scene on the left
+	//move those two windows to the middle of the screen 
+
     void Update(){
 		timer += Time.deltaTime;
 //		Debug.Log (timer - start_time);
@@ -110,6 +114,11 @@ public class UIManager : MonoBehaviour
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = new Vector3(513f, 0, 0);
 		OnActivateCommitment(true);
 		OptionModification (event_name);
+
+		CuSceneBool = true;
+		//creat this bool for invitation and ause window when current scene on the left
+		//move those two windows to the middle of the screen 
+
 	}
 
 	public void LeaveCurrentScne(int dayOfWeek)
@@ -120,6 +129,8 @@ public class UIManager : MonoBehaviour
 		GameObject.Find("Current Scene").GetComponent<RectTransform>().localPosition = new Vector3(-923.5f, 0, 0);
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = Vector3.zero;
 		OnActivateCommitment(false);
+
+		CuSceneBool = false;
 	}
 
 	public void StartDialogue()
