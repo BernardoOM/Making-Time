@@ -25,6 +25,8 @@ public class Commitment : MonoBehaviour
 	private static int	blockWidth = 163;
 	private static int	blockHeight = 88;
 
+
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -344,6 +346,8 @@ public class Commitment : MonoBehaviour
 		//+= array [0];
 		//player_happiness += array [1];
 
+		//change bgm based on current values 
+		GameManager.People.switch_bgm();
 
 		//below code is to show face on each event buttons. based on Database energy, happy values. 
 		string path="Faces_on_events/face00";
