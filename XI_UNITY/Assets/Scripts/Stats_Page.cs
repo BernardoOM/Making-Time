@@ -10,11 +10,15 @@ public class Stats_Page : MonoBehaviour {
 		{
 			transform.localPosition = Vector3.zero;
 			click =false;
+			GameManager.Instance.PauseGame();
+
 		}
 		else if (!click)
 		{
 			transform.localPosition = new Vector3 (0, -750, 0);
 			click =true;
+			GameManager.Instance.StartGame();
+
 		}
 	}
 		

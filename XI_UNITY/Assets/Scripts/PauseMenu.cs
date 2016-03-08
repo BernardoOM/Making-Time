@@ -54,6 +54,7 @@ public class PauseMenu : MonoBehaviour
 
 	public void Close()
 	{
+
 		GameManager.Instance.StartGame();
 		Destroy(gameObject);
 	}

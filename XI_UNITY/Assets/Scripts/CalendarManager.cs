@@ -33,6 +33,9 @@ public class CalendarManager : MonoBehaviour
 	//fastforwar is used on pause window fastforward button
 	//when clicked, the timer will accelerate 
 
+	public bool tutorial=true;
+	public GameObject tutorial_circle;
+	//tutorial circle object 
 
 	void Start()
 	{
@@ -208,7 +211,7 @@ public class CalendarManager : MonoBehaviour
 	public void refuse_social(Commitment com){
 		for (int i = 0; i < unscheduledCommitments.Count; i++) {
 			if (com == unscheduledCommitments [i]) {
-				Destroy (unscheduledCommitments [i].gameObject);
+				unscheduledCommitments [i].gameObject.SetActive(false);
 				unscheduledCommitments.RemoveAt (i);
 				Drag.ShiftDeck ();
 
@@ -253,7 +256,17 @@ public class CalendarManager : MonoBehaviour
 
 	}
 
+	public void Tutorial(Commitment com)
+	{
+		if (tutorial == true) {
+			 tutorial_circle = Instantiate (Resources.Load ("Sprites/Tutorial_circle")) as GameObject;
+			tutorial_circle.transform.SetParent (com.transform,false);
+			tutorial_circle.transform.localPosition = new Vector3 (77.1f, -41.5f, 0);
+			tutorial = false;
 
+		}
+
+	}
 
 	public void SortUnScheduled()
 	{

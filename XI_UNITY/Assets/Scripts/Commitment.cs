@@ -75,6 +75,8 @@ public class Commitment : MonoBehaviour
 						GetComponent<Drag> ().Activated ();
 					}
 				}
+
+
 			}
 			else
 			{
@@ -88,6 +90,7 @@ public class Commitment : MonoBehaviour
 				completed = true;
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
 			}
+
 		}
 		else
 		{
@@ -235,6 +238,9 @@ public class Commitment : MonoBehaviour
 
 		GameManager.Calendar.acept_social_event (com);
 		//display inviatation window for social events. code is in calendar.cs
+
+		//GameManager.Calendar.Tutorial (com);
+		//generate  tutorial circle for first event 
 	}
 
 

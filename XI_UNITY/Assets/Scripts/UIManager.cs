@@ -135,6 +135,7 @@ public class UIManager : MonoBehaviour
 
 	public void StartDialogue()
 	{	
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().bubble_play();
 
 		if (clicked == false) {
 			GameObject.Find ("Dialogue").transform.localPosition = new Vector3 (0f, -251.5f, 0f);

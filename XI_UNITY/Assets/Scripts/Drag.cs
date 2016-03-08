@@ -72,6 +72,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		{
 			itemBeingDragged = gameObject;
 			GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+			GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pickup_play();
 		}
 	}
 
@@ -103,6 +105,10 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			transform.localPosition = SnapToBlock(transform.localPosition.x + blockWidth/2, transform.localPosition.y - blockHeight/2);
 			startPosition = transform.localPosition;
 			ShiftDeck();
+
+			GameObject.Find ("Main Camera").GetComponent<AudioManager> ().putdown_play ();
+
+
 		}
 	}
 	
