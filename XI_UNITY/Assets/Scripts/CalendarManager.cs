@@ -70,6 +70,15 @@ public class CalendarManager : MonoBehaviour
 			//To be changed later
 			Commitment.GenerateCommitment(curTotalDay);
 		}
+
+		if(curTime == 2)
+		{
+			//change to afternoon
+		}
+		else if(curTime == 4)
+		{
+			//change to evening
+		}
 		//delete_past_event ();
 		//delete past events on deck
 	}
@@ -91,6 +100,8 @@ public class CalendarManager : MonoBehaviour
 
         if (OnCheckCommitments != null)
         { OnCheckCommitments(curTotalDay, curTime); }
+
+		//change to morning
     }
 
     public void WeekEnded()

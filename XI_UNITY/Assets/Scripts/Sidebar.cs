@@ -183,14 +183,14 @@ public class Sidebar : MonoBehaviour
 			break;
 		}
 
-		if(newEnergy >= 3)
+		if(newEnergy >= 4)
 		{
-			if(newHappiness >= 3)
+			if(newHappiness >= 4)
 			{
 				currMood = PlayerMood.EH;
 				StartCoroutine("RevHappyEnergized");
 			}
-			else if(newHappiness <= -3)
+			else if(newHappiness <= -4)
 			{
 				currMood = PlayerMood.ES;
 				StartCoroutine("RevStressedEnergized");
@@ -201,14 +201,14 @@ public class Sidebar : MonoBehaviour
 				StartCoroutine("RevNeutralEnergized");
 			}
 		}
-		else if(newEnergy <= -3)
+		else if(newEnergy <= -4)
 		{
-			if(newHappiness >= 3)
+			if(newHappiness >= 4)
 			{
 				currMood = PlayerMood.TH;
 				StartCoroutine("RevHappyTired");
 			}
-			else if(newHappiness <= -3)
+			else if(newHappiness <= -4)
 			{
 				currMood = PlayerMood.TS;
 				StartCoroutine("RevStressedTired");
@@ -221,12 +221,12 @@ public class Sidebar : MonoBehaviour
 		}
 		else
 		{
-			if(newHappiness >= 3)
+			if(newHappiness >= 4)
 			{
 				currMood = PlayerMood.NH;
 				StartCoroutine("RevHappyNeutral");
 			}
-			else if(newHappiness <= -3)
+			else if(newHappiness <= -4)
 			{
 				currMood = PlayerMood.NS;
 				StartCoroutine("RevStressedNeutral");

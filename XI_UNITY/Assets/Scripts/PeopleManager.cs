@@ -40,6 +40,10 @@ public class PeopleManager : MonoBehaviour
 		//GameObject.Find("SideBar").GetComponent<Sidebar>().ChangeValues(player.energy, player.happiness);
 	}
 
+	public int GetEnergy()
+	{	return player.energy;	}
+	public int GetHappiness()
+	{	return player.happiness;	}
 
 	//switch background music when two values changed 
 	public void switch_bgm(){
@@ -48,13 +52,13 @@ public class PeopleManager : MonoBehaviour
 		Debug.Log (current_egy);
 		Debug.Log (current_hpy);
 
-		if (current_egy <= -3  ) 
+		if (current_egy <= -4  ) 
 		if(cur_bgm!=1) {
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().clip = tired_music;
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().Play ();
 			cur_bgm = 1;		}
 		
-		if (current_hpy  <= -3 && current_egy  > -3)
+		if (current_hpy  <= -4 && current_egy  > -4)
 		if(cur_bgm!=2) {
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().clip = stress_music;
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().Play ();
@@ -62,7 +66,7 @@ public class PeopleManager : MonoBehaviour
 
 		}
 
-		if (current_egy > -3 && current_hpy  > -3)
+		if (current_egy > -4 && current_hpy  > -4)
 		if(cur_bgm!=0) {
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().clip = tired_music;
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().Play ();
