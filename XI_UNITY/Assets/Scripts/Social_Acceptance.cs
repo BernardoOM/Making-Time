@@ -33,8 +33,8 @@ public class Social_Acceptance : MonoBehaviour {
 
 	public void Acept_Window(Commitment com){
         temp_com = com;
-		transform.FindChild("Inviatation_Text").gameObject.GetComponent<Text>().text
-		="A new inviatation to "+ com.name;
+		transform.FindChild("Invitation_Text").gameObject.GetComponent<Text>().text
+		="A new invitation to "+ com.name;
 
 		//pause game
 		GameManager.Instance.PauseGame ();

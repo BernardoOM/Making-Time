@@ -89,12 +89,6 @@ public class CalendarManager : MonoBehaviour
         { OnCheckCommitments(curTotalDay, curTime); }
     }
 
-
-
-
-
-
-  
     public void WeekEnded()
 	{
 		curWeek += 1;

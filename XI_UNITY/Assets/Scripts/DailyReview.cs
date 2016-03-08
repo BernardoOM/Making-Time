@@ -7,8 +7,9 @@ public class DailyReview : MonoBehaviour
 {
 	public GameObject	mainPage;
 	public GameObject	eventPage;
-	public Text			mainButtonText;
-	public Text			eventButtonText;
+    public GameObject   endDay;
+	//public Text			mainButtonText;
+	//public Text			eventButtonText;
 
 	private string imagePath = "Sprites/Characters";
 	private string iconsPath = "Sprites/Icons"; 
@@ -106,7 +107,7 @@ public class DailyReview : MonoBehaviour
 			{	missed += 1;	}
 		}
 
-		GameObject.Find("TItleDEnded").GetComponent<Text>().text = day + " ended";
+		GameObject.Find("TitleTextDR").GetComponent<Text>().text = day + " ended";
 
 		if(done == 0)
 		{
@@ -131,15 +132,16 @@ public class DailyReview : MonoBehaviour
 		}
 		else if (missed >= 2)
 		{
-			textMissed = "You missed" + missed + " things today\n";
+			textMissed = "You missed " + missed + " things today\n";
 		}
 
-		GameObject.Find("DescriptionDEnded").GetComponent<Text>().text = textDone + textMissed;
+		GameObject.Find("DoneTextDR").GetComponent<Text>().text = textDone;
+        GameObject.Find("MissedTextDR").GetComponent<Text>().text = textMissed;
 
-		if (dailyEvents.Count == 0)
-		{	mainButtonText.text = "Go to\nSleep";	}
-		else
-		{	mainButtonText.text = "Next";	}
+  //      if (dailyEvents.Count == 0)
+		//{	mainButtonText.text = "Go to\nSleep";	}
+		//else
+		//{	mainButtonText.text = "Next";	}
 
 		ShowWindow(mainPage);
 	}
@@ -148,10 +150,17 @@ public class DailyReview : MonoBehaviour
 	{
 		if(curDisplaingPage == dailyEvents.Count)
 		{
-			HideWindow(mainPage);
-			HideWindow(eventPage);
-			GameManager.Calendar.DayEnded();
-		}
+            HideWindow(eventPage);
+            ShowWindow(endDay);
+            curDisplaingPage += 1;
+        }
+        else if (curDisplaingPage == dailyEvents.Count + 1)
+        {
+            HideWindow(mainPage);
+            HideWindow(eventPage);
+            HideWindow(endDay);
+            GameManager.Calendar.DayEnded();
+        }
 		else
 		{
 			if(curDisplaingPage == 0)
@@ -160,12 +169,18 @@ public class DailyReview : MonoBehaviour
 				ShowWindow(eventPage);
 			}
 
-			curDisplaingPage += 1;
+            if (curDisplaingPage == dailyEvents.Count - 1)
+            {
+                HideWindow(endDay);
+                ShowWindow(eventPage);
+            }
 
-			if(curDisplaingPage == dailyEvents.Count)
-			{	eventButtonText.text = "Go to\nSleep";	}
-			else
-			{	eventButtonText.text = "Next";	}
+            curDisplaingPage += 1;
+
+			//if(curDisplaingPage == dailyEvents.Count)
+			//{	eventButtonText.text = "Go to\nSleep";	}
+			//else
+			//{	eventButtonText.text = "Next";	}
 
 			ShowEvent();
 		}
@@ -175,51 +190,58 @@ public class DailyReview : MonoBehaviour
 	{
 		curDisplaingPage -= 1;
 
-		if(curDisplaingPage == dailyEvents.Count - 1)
-		{	eventButtonText.text = "Next";	}
+		//if(curDisplaingPage == dailyEvents.Count - 1)
+		//{	eventButtonText.text = "Next";	}
 
 		if(curDisplaingPage == 0)
 		{
 			ShowWindow(mainPage);
 			HideWindow(eventPage);
-		}
+            HideWindow(endDay);
+		}else if (curDisplaingPage == dailyEvents.Count)
+        {
+            HideWindow(endDay);
+            ShowWindow(eventPage);
+        }
 		else
-		{	ShowEvent();	}
+		{ ShowEvent();	}
 	}
 
 	public void ShowEvent()
 	{
-		GameObject.Find("NameDEvent").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].name;
+		GameObject.Find("TitleTextEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].name;
 		int imageCreator = Random.Range(0, 9);
-		GameObject.Find("CreatorDEvent").GetComponent<Image>().sprite = characters[imageCreator];
+		GameObject.Find("CharacterEP").GetComponent<Image>().sprite = characters[imageCreator];
 		//GameObject.Find("FaceDEnded").GetComponent<Image>().sprite; 
 		string eventStatus;
 		if(dailyEvents[curDisplaingPage - 1].scheduled)
 		{
 			eventStatus = "done";
-			GameObject.Find("AchieveDEvent").GetComponent<Image>().sprite = goodIcon;
+			GameObject.Find("AchievedImgEP").GetComponent<Image>().sprite = goodIcon;
 			typeEvent("happy");
 		}
 		else
 		{	eventStatus = "missed";
-			GameObject.Find("AchieveDEvent").GetComponent<Image>().sprite = badIcon;
+			GameObject.Find("AchievedImgEP").GetComponent<Image>().sprite = badIcon;
 			typeEvent("angry");
 		}
-		GameObject.Find("TextAchievedDEvent").GetComponent<Text>().text = eventStatus;
+		GameObject.Find("AchievedTextEP").GetComponent<Text>().text = eventStatus;
 	}
 
 	private void typeEvent(string ChkGoodBad)
 	{
-		if (dailyEvents[curDisplaingPage - 1].name == "Meeting") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "Your Boss is " + ChkGoodBad+ " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Office Hours") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "Your Boss is " + ChkGoodBad + " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Plan Classes") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "Your Boss is " + ChkGoodBad + " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Movie Night") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator+ " is " + ChkGoodBad + " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Game Night") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Book Club") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Grocery Shopping") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "You are" + ChkGoodBad + " with yourself"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "Dinner") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
-		else if (dailyEvents[curDisplaingPage - 1].name == "House Cleaning") { GameObject.Find("DescriptionDEvent").GetComponent<Text>().text = "You are" + ChkGoodBad + " with yourself"; }
-	}
+		if (dailyEvents[curDisplaingPage - 1].name == "Meeting") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "Your Boss is " + ChkGoodBad+ " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Office Hours") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "Your Boss is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Plan Classes") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "Your Boss is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Movie Night") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator+ " is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Game Night") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Book Club") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Grocery Shopping") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Dinner") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "House Cleaning") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+        else if (dailyEvents[curDisplaingPage - 1].name == "Go to Gym") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+        else if (dailyEvents[curDisplaingPage - 1].name == "Get Gas") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+    }
 
 	public void AddEventToReview(Commitment newCom)
 	{	dailyEvents.Add(newCom);	}
