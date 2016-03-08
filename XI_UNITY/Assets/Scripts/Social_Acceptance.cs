@@ -27,7 +27,7 @@ public class Social_Acceptance : MonoBehaviour {
 		rand_num=Random.Range (1, 10);
 		NPCPath= "Sprites/Characters/Char_0"+rand_num+ "_Full";
 		NPCImage.GetComponent<Image>().sprite =(Sprite) Resources.Load(NPCPath, typeof(Sprite));
-		
+
 	}
 	
 	// Update is called once per frame
