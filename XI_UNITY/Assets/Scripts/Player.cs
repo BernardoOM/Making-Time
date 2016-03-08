@@ -19,7 +19,9 @@ public class Player : Person
 	void People_OnChangeStatus (int deltaEnergy, int deltaHappiness)
 	{
 		energy += deltaEnergy;
+		Mathf.Clamp(energy, -5, 5);
 		happiness += deltaHappiness;
+		Mathf.Clamp(happiness, -5, 5);
 
 		GameObject.Find("SideBar").GetComponent<Sidebar>().ChangeMood(deltaEnergy,deltaHappiness, energy, happiness);
 	}

@@ -79,6 +79,7 @@ public class CalendarManager : MonoBehaviour
 	public void DayEnded()
 	{
 		GameObject.Find("Calendar").GetComponent<DailyReview>().ClearDay();
+		GameManager.People.ChangePlayerStatus(2, 2);
 		//delete_past_event();
 		curTime = 0;
 		curDayOfWeek = (curDayOfWeek+1) % 7;
