@@ -135,6 +135,15 @@ public class DailyReview : MonoBehaviour
 			textMissed = "You missed " + missed + " things today\n";
 		}
 
+        if(done == 0 && missed == 0)
+        {
+            GameObject.Find("DescriptionDR").GetComponent<Text>().text ="";
+        }
+        else
+        {
+            GameObject.Find("DescriptionDR").GetComponent<Text>().text = "Really! What happened this day?";
+        }
+
 		GameObject.Find("DoneTextDR").GetComponent<Text>().text = textDone;
         GameObject.Find("MissedTextDR").GetComponent<Text>().text = textMissed;
 
