@@ -22,10 +22,21 @@ public class Timer : MonoBehaviour
 	private bool isOn = false;
 	private bool commitmentActive = false;
 
+    private string timePath = "Sprites/TimeIcon";
+    public Sprite[] timeIcon;
 
-	void Start ()
+
+    void Start ()
 	{
-		GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
+        Object[] TimeS = Resources.LoadAll(timePath, typeof(Sprite));
+        timeIcon = new Sprite[TimeS.Length];
+        for (int i = 0; i < TimeS.Length; i++)
+        {
+            if (TimeS[i].name == "Morning") { timeIcon[0] = (Sprite)TimeS[i]; }
+            else if (TimeS[i].name == "Afternoon") { timeIcon[1] = (Sprite)TimeS[i]; }
+            else if (TimeS[i].name == "Evening") { timeIcon[2] = (Sprite)TimeS[i]; }
+        }
+        GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
 		GameManager.UI.OnActivateCommitment += UI_OnActivateCommitment;
 
 		if((int)today == GameManager.Calendar.curDayOfWeek)
@@ -49,7 +60,17 @@ public class Timer : MonoBehaviour
 			if(timer > (GameManager.Calendar.curTime + 1) * (realTimePerDay / 6))
 			{	GameManager.Calendar.TimeBlockStarted();	}
 
-			if(timer >= realTimePerDay)
+            if (timer >= 0 && timer < 10) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[0];
+                GameObject.Find("DayTextIcon").GetComponent<Text>().text = "Morning";
+            }
+            else if (timer >= 10 && timer < 20) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[1];
+                GameObject.Find("DayTextIcon").GetComponent<Text>().text = "Afternoon";
+            }
+            else if (timer >= 20 && timer <= 30) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[2];
+                GameObject.Find("DayTextIcon").GetComponent<Text>().text = "Evening";
+            }
+
+            if (timer >= realTimePerDay)
 			{
 				timer = realTimePerDay;
 				isOn = false;

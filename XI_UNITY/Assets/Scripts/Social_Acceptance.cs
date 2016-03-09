@@ -84,7 +84,7 @@ public class Social_Acceptance : MonoBehaviour {
         else if (day == 3) { return days[3]; }
         else if (day == 4) { return days[4]; }
         else if (day == 5) { return days[5]; }
-        else if (day == 6) { return days[6]; }
+        else if (day >= 6) { return days[6]; }
         return "";
     }
 
