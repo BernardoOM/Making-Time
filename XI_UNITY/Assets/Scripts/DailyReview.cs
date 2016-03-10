@@ -13,8 +13,11 @@ public class DailyReview : MonoBehaviour
 
 	private string imagePath = "Sprites/Characters";
 	private string iconsPath = "Sprites/Icons"; 
+    private string facesPath = "Sprites/Faces";
 	public Sprite[] characters;
 	public Sprite[] icons;
+    public Sprite[] faces;
+
 	public Sprite badIcon;
 	public Sprite goodIcon;
 
@@ -26,8 +29,10 @@ public class DailyReview : MonoBehaviour
 	{
 		Object[] CharactersS = Resources.LoadAll(imagePath, typeof(Sprite));
 		Object[] IconsS = Resources.LoadAll(iconsPath, typeof(Sprite));
+        Object[] FacedS = Resources.LoadAll(facesPath, typeof(Sprite));
 		characters = new Sprite[10];
 		icons = new Sprite[IconsS.Length];
+        faces = new Sprite[FacedS.Length];
 
 		for (int i = 0; i < CharactersS.Length; i++)
 		{
@@ -61,7 +66,20 @@ public class DailyReview : MonoBehaviour
 
 		}
 
-		Debug.Log("Textures Loaded: " + characters.Length);
+        for (int i = 0; i < FacedS.Length; i++)
+        {
+            if (FacedS[i].name == "face_4_4_02") { faces[0] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_4_-4_02") { faces[1] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_-4_-4_01") { faces[2] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_-4_4_02") { faces[3] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_N_4_02") { faces[4] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_N_-4_02") { faces[5] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_-4_N_01") { faces[6] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_4_N_02") { faces[7] = (Sprite)FacedS[i]; }
+            else if (FacedS[i].name == "face_N_N_02") { faces[8] = (Sprite)FacedS[i]; }
+        }
+
+        Debug.Log("Textures Loaded: " + characters.Length);
 		Debug.Log("Textures Loaded: " + icons.Length);
 		Debug.Log("Image Path: " + imagePath + " " + iconsPath);
 	}
@@ -109,33 +127,30 @@ public class DailyReview : MonoBehaviour
 
 		GameObject.Find("TitleTextDR").GetComponent<Text>().text = day + " ended";
 
-		if(done == 0)
-		{
-			textDone = "You didn't do anything today\n";
-		}
-		else if(done == 1)
-		{
-			textDone = "You did 1 thing today\n";
-		}
-		else if (done >=2)
-		{
-			textDone = "You did " + done + " things today\n";
-		}
+		if(done == 0){textDone = "You didn't do anything today\n";}
+		else if(done == 1){textDone = "You did 1 thing today\n";}
+        else if (done >=2){textDone = "You did " + done + " things today\n";}
 
-		if (missed == 0)
-		{
-			textMissed = "You didn't miss anything today\n";
-		}
-		else if (missed == 1)
-		{
-			textMissed = "You missed 1 thing today\n";
-		}
-		else if (missed >= 2)
-		{
-			textMissed = "You missed " + missed + " things today\n";
-		}
+		if (missed == 0){textMissed = "You didn't miss anything today\n";}
+		else if (missed == 1){textMissed = "You missed 1 thing today\n";}
+		else if (missed >= 2){textMissed = "You missed " + missed + " things today\n";}
 
-		GameObject.Find("DoneTextDR").GetComponent<Text>().text = textDone;
+        if(done == 0 && missed == 0){GameObject.Find("DescriptionDR").GetComponent<Text>().text ="";}
+        else{GameObject.Find("DescriptionDR").GetComponent<Text>().text = "Really! What happened this day?";}
+
+        if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[0]; }
+        else if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[1]; }
+        else if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[2]; }
+        else if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[3]; }
+        else if (GameManager.People.GetEnergy() >= 4 && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[4]; }//Energetic
+        else if (GameManager.People.GetEnergy() <= -4 && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[5]; }//tiredness
+        else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4)&& GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[6]; }//stressed 
+        else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[7]; }//happiness
+        else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[8]; }//neutral 
+        Debug.Log(GameManager.People.GetEnergy() + "  " + GameManager.People.GetHappiness());
+
+
+        GameObject.Find("DoneTextDR").GetComponent<Text>().text = textDone;
         GameObject.Find("MissedTextDR").GetComponent<Text>().text = textMissed;
 
   //      if (dailyEvents.Count == 0)
