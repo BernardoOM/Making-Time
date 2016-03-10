@@ -60,7 +60,7 @@ public class DailyReview : MonoBehaviour
 			if (icons[j].name == "goodCheck")
 			{
 				goodIcon = icons[j]; 
-				Debug.Log("good applied." );
+				//Debug.Log("good applied." );
 
 			}
 
@@ -79,9 +79,9 @@ public class DailyReview : MonoBehaviour
             else if (FacedS[i].name == "face_N_N_02") { faces[8] = (Sprite)FacedS[i]; }
         }
 
-        Debug.Log("Textures Loaded: " + characters.Length);
-		Debug.Log("Textures Loaded: " + icons.Length);
-		Debug.Log("Image Path: " + imagePath + " " + iconsPath);
+  //      Debug.Log("Textures Loaded: " + characters.Length);
+		//Debug.Log("Textures Loaded: " + icons.Length);
+		//Debug.Log("Image Path: " + imagePath + " " + iconsPath);
 	}
 	public void StartReview(DayofWeek curDayOfWeek)
 	{
