@@ -51,7 +51,7 @@ public class Timer : MonoBehaviour
 		if (GameManager.Instance.curState != GameState.Pause && isOn)
 		{
 			if(commitmentActive)
-			{	timer += Time.deltaTime / 5;	}
+			{	timer += Time.deltaTime*GameManager.Calendar.fastforward / 5;	}
 			else
 			{	timer += Time.deltaTime*GameManager.Calendar.fastforward;	}
 			//fastforwar is used on pause window fastforward button
