@@ -3,7 +3,12 @@ using System.Collections;
 
 public class DragArea : MonoBehaviour
 {
-	private RectTransform rectTransform;
+//	private RectTransform rectTransform;
+
+	public RectTransform	borderHorz1;
+	public RectTransform	borderHorz2;
+	public RectTransform	borderVert1;
+	public RectTransform	borderVert2;
 
 	private static int	startX = -579;
 	private static int	startY = 272;
@@ -21,9 +26,14 @@ public class DragArea : MonoBehaviour
 	{
 		GameManager.UI.OnDragAreaSet += UI_OnDragAreaSet;
 
-		rectTransform = GetComponent(typeof(RectTransform)) as RectTransform;
-		rectTransform.position = new Vector3(startX, startY, 0);
-		rectTransform.sizeDelta = Vector2.zero;
+		borderHorz1.gameObject.SetActive(false);
+		borderHorz2.gameObject.SetActive(false);
+		borderVert1.gameObject.SetActive(false);
+		borderVert2.gameObject.SetActive(false);
+
+//		rectTransform = GetComponent(typeof(RectTransform)) as RectTransform;
+//		rectTransform.position = new Vector3(startX, startY, 0);
+//		rectTransform.sizeDelta = Vector2.zero;
 	}
 		
 	void UI_OnDragAreaSet(int maxTotalDay, int minTotalDay, int maxTime, int minTime)
@@ -33,11 +43,16 @@ public class DragArea : MonoBehaviour
 			gameObject.SetActive(true);
 			maxTotalDay = Mathf.FloorToInt(Mathf.Min(GameManager.Calendar.viewingWeek * 7 + 6, maxTotalDay));
 			minTotalDay = Mathf.FloorToInt(Mathf.Max(GameManager.Calendar.viewingWeek * 7, minTotalDay));
-			rectTransform.localPosition = new Vector3(minTotalDay * blockWidth + startX, startY - minTime * blockHeight, 0);
-			rectTransform.sizeDelta = new Vector2((maxTotalDay - minTotalDay + 1) * blockWidth,
-			                                      (maxTime - minTime + 1) * blockHeight);
+//			rectTransform.localPosition = new Vector3(minTotalDay * blockWidth + startX, startY - minTime * blockHeight, 0);
+//			rectTransform.sizeDelta = new Vector2((maxTotalDay - minTotalDay + 1) * blockWidth,
+//			                                      (maxTime - minTime + 1) * blockHeight);
 		}
 		else
-		{	gameObject.SetActive(false);	}
+		{
+			borderHorz1.gameObject.SetActive(false);
+			borderHorz2.gameObject.SetActive(false);
+			borderVert1.gameObject.SetActive(false);
+			borderVert2.gameObject.SetActive(false);
+		}
 	}
 }
