@@ -10,8 +10,8 @@ public class DragArea : MonoBehaviour
 	public RectTransform	borderLeftDay;
 	public RectTransform	borderRightDay;
 
-    //private static int	startX = -579
-    //   private static int	startY = 272;
+	private static int	startX = -579;
+    private static int	startY = 272;
 
     private static int startXTimeUpDown = -502;
     private static int startYTimeUp = 272;
@@ -51,77 +51,39 @@ public class DragArea : MonoBehaviour
         float difTime = 0;
         float difDay = 0;
 
-		if(minTotalDay == maxTotalDay && minTime == maxTime) //minTotalDay <= maxTotalDay && minTime <= maxTime
+		if(minTotalDay <= maxTotalDay && minTime <= maxTime) //minTotalDay <= maxTotalDay && minTime <= maxTime
         {
-			gameObject.SetActive(true);
-			maxTotalDay = Mathf.FloorToInt(Mathf.Min(GameManager.Calendar.viewingWeek * 7 + 6, maxTotalDay));
-			minTotalDay = Mathf.FloorToInt(Mathf.Max(GameManager.Calendar.viewingWeek * 7, minTotalDay));
-            //			rectTransform.localPosition = new Vector3(minTotalDay * blockWidth + startX, startY - minTime * blockHeight, 0);
-            //			rectTransform.sizeDelta = new Vector2((maxTotalDay - minTotalDay + 1) * blockWidth,
-            //			                                      (maxTime - minTime + 1) * blockHeight);
+			difTime = maxTime - minTime;
+			difDay = maxTotalDay - minTotalDay;
 
-            //difTime = maxTime - minTime;
-            //difDay = maxTotalDay - minTotalDay;
+			borderUpTime.gameObject.SetActive(true);
+			borderDownTime.gameObject.SetActive(true);
+			borderLeftDay.gameObject.SetActive(true);
+			borderRightDay.gameObject.SetActive(true);
 
-            //borderUpTime.gameObject.SetActive(true);
-            //borderDownTime.gameObject.SetActive(true);
-            //borderLeftDay.gameObject.SetActive(true);
-            //borderRightDay.gameObject.SetActive(true);
+			borderLeftDay.localPosition = new Vector3(startX + blockWidth * minTotalDay, startY - blockHeight * ((float)(minTime + maxTime + 1))/2, 0);
+			borderLeftDay.localScale = new Vector3(.25f, 0.25f + 0.25f * difTime, .25f);
 
-            //borderUpTime.localPosition = new Vector3(startXTimeUpDown + blockWidth * ((minTotalDay + maxTotalDay) / 2), startYTimeUp - blockHeight * minTime, 0);
-            //borderUpTime.localScale = new Vector3(0.25f + 0.25f * difDay, 0, 0);
+			borderRightDay.localPosition = new Vector3(startX + blockWidth * (maxTotalDay + 1), startY - blockHeight * ((float)(minTime + maxTime + 1))/2, 0);
+			borderRightDay.localScale = new Vector3(.25f,0.25f + 0.25f * difTime, .25f);
 
-            //borderDownTime.localPosition = new Vector3(startXTimeUpDown + blockWidth * ((minTotalDay + maxTotalDay) / 2), startYTimeDown - blockHeight * maxTime, 0);
-            //borderDownTime.localScale = new Vector3(0.25f + 0.25f * difDay, 0, 0);
+			maxTotalDay = Mathf.Clamp(maxTotalDay, GameManager.Calendar.curWeek * 7, GameManager.Calendar.curWeek * 7 + 6);
+			minTotalDay = Mathf.Clamp(minTotalDay, GameManager.Calendar.curWeek * 7, GameManager.Calendar.curWeek * 7 + 6);
+			difTime = maxTime - minTime;
+			difDay = maxTotalDay - minTotalDay;
 
-            //borderLeftDay.localPosition = new Vector3(startXDayLeft + blockWidth * minTotalDay, startYDayLeftRight - blockHeight * ((minTime + maxTime) / 2), 0);
-            //borderLeftDay.localScale = new Vector3(0, 0.25f + 0.25f * difTime, 0);
+			borderUpTime.localPosition = new Vector3(startX + blockWidth * ((float)(minTotalDay + maxTotalDay + 1))/2, startY - blockHeight * minTime, 0);
+			borderUpTime.localScale = new Vector3(0.25f + 0.25f * difDay, .25f, .25f);
 
-            //borderRightDay.localPosition = new Vector3(startXDayRight + blockWidth * maxTotalDay, startYDayLeftRight - blockHeight * ((minTime + maxTime) / 2), 0);
-            //borderRightDay.localScale = new Vector3(0, 0.25f + 0.25f * difTime, 0);
-
-            Debug.Log("Enter in IF Condition\n");
-            Debug.Log("MinTotalDay: " + minTotalDay);
-            Debug.Log("MaxTotalDay: " + maxTotalDay);
-            Debug.Log("MinTime: " + minTime);
-            Debug.Log("MaxTime: " + maxTime);
-            Debug.Log("\n");
+			borderDownTime.localPosition = new Vector3(startX + blockWidth * ((float)(minTotalDay + maxTotalDay + 1))/2, startY - blockHeight * (maxTime + 1), 0);
+			borderDownTime.localScale = new Vector3(0.25f + 0.25f * difDay, .25f, .25f);
         }
         else
 		{
-            difTime = maxTime - minTime;
-            difDay = maxTotalDay - minTotalDay;
-
-            borderUpTime.gameObject.SetActive(true);
-            borderDownTime.gameObject.SetActive(true);
-            borderLeftDay.gameObject.SetActive(true);
-            borderRightDay.gameObject.SetActive(true);
-
-            Debug.Log("Enter in ELSE Condition\n");
-            Debug.Log("MinTotalDay: " + minTotalDay);
-            Debug.Log("MaxTotalDay: " + maxTotalDay);
-            Debug.Log("MinTime: " + minTime);
-            Debug.Log("MaxTime: " + maxTime);
-            Debug.Log("\n");
-
-
-
-            borderLeftDay.localPosition = new Vector3(startXDayLeft + blockWidth * minTotalDay, startYDayLeftRight - blockHeight * ((minTime + maxTime)/2), 0);
-            //borderLeftDay.localScale = new Vector3(0, 0.25f + 0.25f * difTime, 0);
-
-            borderRightDay.localPosition = new Vector3(startXDayRight + blockWidth * maxTotalDay, startYDayLeftRight - blockHeight * ((minTime + maxTime)/2), 0);
-            //borderRightDay.localScale = new Vector3(0,0.25f + 0.25f * difTime, 0);
-
-
-            maxTotalDay = Mathf.Clamp(maxTotalDay, GameManager.Calendar.curWeek * 7, GameManager.Calendar.curWeek * 7 + 6);
-            minTotalDay = Mathf.Clamp(maxTotalDay, GameManager.Calendar.curWeek * 7, GameManager.Calendar.curWeek * 7 + 6);
-
-            borderUpTime.localPosition = new Vector3(startXTimeUpDown + blockWidth * ((minTotalDay + maxTotalDay)/2), startYTimeUp - blockHeight * minTime, 0);
-            //borderUpTime.localScale = new Vector3(0.25f + 0.25f * difDay, 0, 0);
-
-            borderDownTime.localPosition = new Vector3(startXTimeUpDown + blockWidth * ((minTotalDay + maxTotalDay)/2), startYTimeDown - blockHeight * maxTime, 0);
-            //borderDownTime.localScale = new Vector3(0.25f + 0.25f * difDay, 0, 0);
-
+			borderUpTime.gameObject.SetActive(false);
+			borderDownTime.gameObject.SetActive(false);
+			borderLeftDay.gameObject.SetActive(false);
+			borderRightDay.gameObject.SetActive(false);
         }
     }
 }
