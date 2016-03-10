@@ -17,7 +17,7 @@ public class Commitment : MonoBehaviour
 	public int		maxTotalDay,	minTotalDay,	maxTime,	minTime;
 	public bool	scheduled;
 	public bool activated;
-	public bool	completed;	bool		activeScene;
+	public bool	completed;
 
 	private static int	startX = -494;
 	private static int	calendarStartY = 272;
@@ -66,10 +66,7 @@ public class Commitment : MonoBehaviour
 				if(curTotalDay == aCurTotalDay && curTime == aCurTime)
 				{
 					if(DBMakingTime.CheckHasScene(name, timeLength))
-					{
-						GameManager.UI.EnterCurrentScene(curTotalDay % 7, name);
-						activeScene = true;
-					}
+					{	GameManager.UI.EnterCurrentScene(curTotalDay % 7, name);	}
 					activated = true;
 					if (curType != CommitmentType.Work) {
 						GetComponent<Drag> ().Activated ();
@@ -81,8 +78,6 @@ public class Commitment : MonoBehaviour
 			else
 			{
 				timeLeft -= 1;
-				if(activeScene)
-				{	GameManager.UI.LeaveCurrentScne(curTotalDay % 7);	}
 				GameManager.Calendar.CompleteCommitment(this);
 				if (curType != CommitmentType.Work) {
 					GetComponent<Drag> ().Completed ();

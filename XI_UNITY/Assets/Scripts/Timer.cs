@@ -6,9 +6,11 @@ public enum DayofWeek {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Sat
 
 public class Timer : MonoBehaviour
 {
+	public GameObject blackOut;
 	public DayofWeek today;
 
 	public float timer = 0;
+	public float eventTimer = 0;
 
 	private RectTransform rectTransform;
 
@@ -16,11 +18,13 @@ public class Timer : MonoBehaviour
 	private static int width = 160;
 	private static int maxHeight = 520;
 	//length of an in-game day in seconds
-	private static int realTimePerDay = 30;
+	private static int realTimePerDay = 42;
 	//30
 
 	private bool isOn = false;
-	private bool commitmentActive = false;
+	private static bool startingEvent = false;
+	private static bool leavingEvent = false;
+	private static bool commitmentActive = false;
 
     private string timePath = "Sprites/TimeIcon";
     public Sprite[] timeIcon;
@@ -37,7 +41,6 @@ public class Timer : MonoBehaviour
             else if (TimeS[i].name == "Evening") { timeIcon[2] = (Sprite)TimeS[i]; }
         }
         GameManager.Calendar.OnDayStarted += Calendar_OnDayStart;
-		GameManager.UI.OnActivateCommitment += UI_OnActivateCommitment;
 
 		if((int)today == GameManager.Calendar.curDayOfWeek)
 		{	isOn = true;	}
@@ -48,10 +51,25 @@ public class Timer : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if(startingEvent && isOn)
+		{
+			commitmentActive = true;
+			blackOut.SetActive(true);
+			eventTimer = 0;
+			startingEvent = false;
+		}
+		if(leavingEvent && isOn)
+		{
+			commitmentActive = false;
+			blackOut.SetActive(false);
+			timer += Mathf.Min(eventTimer, 6);
+			leavingEvent = false;
+		}
+
 		if (GameManager.Instance.curState != GameState.Pause && isOn)
 		{
 			if(commitmentActive)
-			{	timer += Time.deltaTime*GameManager.Calendar.fastforward / 5;	}
+			{	eventTimer += Time.deltaTime*GameManager.Calendar.fastforward / 5;	}
 			else
 			{	timer += Time.deltaTime*GameManager.Calendar.fastforward;	}
 			//fastforwar is used on pause window fastforward button
@@ -96,7 +114,13 @@ public class Timer : MonoBehaviour
 		{	isOn = true;	}
 	}
 
-	public void UI_OnActivateCommitment(bool active)
-	{	commitmentActive = active;	}
+	public static void EnterScene()
+	{	startingEvent = true;	}
+
+	public static void ExitScene()
+	{
+		leavingEvent = true;
+		GameManager.UI.LeaveCurrentScne();
+	}
 }
 
