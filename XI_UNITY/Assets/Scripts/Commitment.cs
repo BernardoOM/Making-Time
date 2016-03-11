@@ -25,7 +25,9 @@ public class Commitment : MonoBehaviour
 	private static int	blockWidth = 163;
 	private static int	blockHeight = 88;
 
-
+	private string timePath = "Sprites/Postits";
+	private Object[] events;
+	//variables for change colors of each event button. acctivated and done.
 
 	// Use this for initialization
 	void Start ()
@@ -71,6 +73,16 @@ public class Commitment : MonoBehaviour
 					if (curType != CommitmentType.Work) {
 						GetComponent<Drag> ().Activated ();
 					}
+
+					//change event color to activated. 
+						events = Resources.LoadAll(timePath, typeof(Sprite));
+						for (int i = 0; i < events.Length; i++)
+						{
+						if ((int)curType==3 && events[i].name == "Chore_Postit_active") { GetComponent<Image>().sprite = (Sprite)events[i]; }
+						else if ((int)curType==2 &&events[i].name == "Social_Postit_active") { GetComponent<Image>().sprite = (Sprite)events[i]; }
+						else if ((int)curType==0 &&events[i].name == "Work_Postit_active") { GetComponent<Image>().sprite= (Sprite)events[i]; }
+						}
+
 				}
 
 
@@ -84,6 +96,16 @@ public class Commitment : MonoBehaviour
 				}
 				completed = true;
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
+
+				//change event color to done. 
+				events = Resources.LoadAll(timePath, typeof(Sprite));
+				for (int i = 0; i < events.Length; i++)
+				{
+					if ((int)curType==3 && events[i].name == "Chore_Postit_done") { GetComponent<Image>().sprite = (Sprite)events[i]; }
+					else if ((int)curType==2 &&events[i].name == "Social_Postit_done") { GetComponent<Image>().sprite = (Sprite)events[i]; }
+					else if ((int)curType==0 &&events[i].name == "Work_Postit_done") { GetComponent<Image>().sprite= (Sprite)events[i]; }
+				}
+
 			}
 
 		}

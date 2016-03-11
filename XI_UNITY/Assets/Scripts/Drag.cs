@@ -51,6 +51,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	private bool	wasClicked = false;
 	private bool	isFocus = false;
 
+
+	private string timePath = "Sprites/Postits";
+	private Object[] events;
+	//variables for change colors of each event button. unsched and sched
+
+
 //	private Calculate calculate;
 
 	void Start()
@@ -114,6 +120,7 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	
 	#endregion
 
+
 	public Vector3 SnapToBlock(float x, float y)
 	{
 		int positionX = Mathf.FloorToInt(x);	int positionY = Mathf.FloorToInt(y);
@@ -131,8 +138,9 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 				if(!com.scheduled)
 				{
 					//change color of buttons, if drag back to calendar 
-					buttonImage.color = scheduledColors[(int)com.curType];
-						
+					//buttonImage.color = scheduledColors[(int)com.curType];
+					Change_sch_color ();
+
 					com.SetPlaceOnSchedule(time, GameManager.Calendar.viewingWeek * 7 + dayOfWeek);
 					com.SetScheduled(true);
 					GameManager.Calendar.ScheduleCommitment(com);
@@ -151,7 +159,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			if(com.scheduled)
 			{
 				//change color of buttons to original color, if drag back to deck
-				buttonImage.color=orginal_color;
+				//buttonImage.color=orginal_color;
+				Change_unsch_color ();
 					
 				com.SetScheduled(false);
 				GameManager.Calendar.UnScheduleCommitment(com);
@@ -223,6 +232,32 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	{	
 		buttonImage.color = completedColors[(int)com.curType];	
 	}
+
+	//change color of event buttons on calendar. 
+	void Change_sch_color ()
+	{
+		events = Resources.LoadAll(timePath, typeof(Sprite));
+		for (int i = 0; i < events.Length; i++)
+		{
+			if ((int)com.curType==3 && events[i].name == "Chore_Postit_sched") { buttonImage.sprite = (Sprite)events[i]; }
+			else if ((int)com.curType==2 &&events[i].name == "Social_Postit_sched") { buttonImage.sprite = (Sprite)events[i]; }
+			else if ((int)com.curType==0 &&events[i].name == "Work_Postit_sched") { buttonImage.sprite = (Sprite)events[i]; }
+		}
+	}
+
+
+	void Change_unsch_color ()
+	{
+		events = Resources.LoadAll(timePath, typeof(Sprite));
+		for (int i = 0; i < events.Length; i++)
+		{
+			if ((int)com.curType==3 && events[i].name == "Chore_Postit_unsched") { buttonImage.sprite = (Sprite)events[i]; }
+			else if ((int)com.curType==2 &&events[i].name == "Social_Postit_unsched") { buttonImage.sprite = (Sprite)events[i]; }
+			else if ((int)com.curType==0 &&events[i].name == "Work_Postit_unsched") { buttonImage.sprite = (Sprite)events[i]; }
+		}
+	}
+
+
 }
 
 
