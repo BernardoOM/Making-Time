@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour {
 	public  AudioClip[] bubble;
 	public AudioClip neg_mood_sfx;
 	public AudioClip pos_mood_sfx;
+	public AudioClip neu_mood_sfx;
+
 	public  AudioSource sfx;
 	// Use this for initialization
 	void Start () {
@@ -46,6 +48,11 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	public  void pos_sfx_play(){
+		sfx.clip= pos_mood_sfx;
+		sfx.Play ();
+	}
+
+	public  void neu_sfx_play(){
 		sfx.clip= pos_mood_sfx;
 		sfx.Play ();
 	}

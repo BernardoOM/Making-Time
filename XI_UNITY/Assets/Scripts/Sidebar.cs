@@ -12,7 +12,7 @@ public class Sidebar : MonoBehaviour
 
 	public PlayerMood currMood;
 //	public PlayerMood prevMood;
-
+	public GameObject pausephone;
 	void Start()
 	{	currMood = PlayerMood.NN;	}
 
@@ -310,23 +310,38 @@ public class Sidebar : MonoBehaviour
 //		happiness.text = (newHappiness + 5).ToString();
 //	}
 
+
+
+	//call the pause window object from a pause prefab in the scene
+	//
 	public void PauseButton()
 	{
 		if(GameManager.Instance.curState != GameState.Pause)
 		{
+
+
 			GameManager.Instance.PauseGame();
-			GameObject go = Instantiate(Resources.Load("PausePhone"),transform.parent.position, transform.parent.rotation) as GameObject;
-			//go.transform.parent = transform.parent;
-			go.transform.SetParent (GameObject.Find ("Calendar").transform, false);
-			go.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
 
-			//if in real scene, move the pause window to the center of screen 
-			if (GameManager.UI.CuSceneBool == true) {
-				go.transform.SetParent (GameObject.Find ("Canvas").transform, false);
-				go.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+			pausephone.SetActive (true);
+			pausephone.transform.SetParent (GameObject.Find ("Calendar").transform, false);
+			pausephone.GetComponent<RectTransform> ().localPosition = new Vector3 (0, 0, 0);
 
+//				GameObject go = Instantiate (Resources.Load ("PausePhone"), transform.parent.position, transform.parent.rotation) as GameObject;
+//				//go.transform.parent = transform.parent;
+//				go.transform.SetParent (GameObject.Find ("Calendar").transform, false);
+//				go.GetComponent<RectTransform> ().localPosition = new Vector3 (0, 0, 0);
+
+				//if in real scene, move the pause window to the center of screen 
+				if (GameManager.UI.CuSceneBool == true) {
+				pausephone.transform.SetParent (GameObject.Find ("Canvas").transform, false);
+				pausephone.GetComponent<RectTransform> ().localPosition = new Vector3 (0, 0, 0);
+				}
 			}
 
+
+
+
 		}
+
 	}
-}
+

@@ -381,7 +381,7 @@ public class Commitment : MonoBehaviour
 		if (array [0] == 0) {
 			if (array [1] == 0) {
 				 path="Faces_on_events/face00";
-				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neu_sfx_play ();
 			}
 			if (array [1] > 0) {
 				 path="Faces_on_events/face30";
@@ -408,19 +408,19 @@ public class Commitment : MonoBehaviour
 			}
 			if (array [1] < 0) {
 				 path="Faces_on_events/face-33";
-				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neu_sfx_play ();
 
 			}
 		}	
 		if (array [0] < 0) {
 			if (array [1] == 0) {
 				 path="Faces_on_events/face0-3";
-				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
 
 			}
 			if (array [1] > 0) {
 				 path="Faces_on_events/face03";
-				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neu_sfx_play ();
 
 			}
 			if (array [1] < 0) {
