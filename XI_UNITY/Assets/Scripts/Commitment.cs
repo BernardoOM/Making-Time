@@ -270,6 +270,8 @@ public class Commitment : MonoBehaviour
 		//write to database
 
 		GameManager.Calendar.acept_social_event (com);
+		GameManager.Calendar.acept_chore_event (com);
+
 		//display inviatation window for social events. code is in calendar.cs
 
 		//GameManager.Calendar.Tutorial (com);

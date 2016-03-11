@@ -74,14 +74,13 @@ public class GameManager : MonoBehaviour
 		}
 
 		curState = GameState.Tutorial;
-
-		StartGame ();
 	}
+
+	public void BeginGame()
+	{	instance.curState = GameState.Calendar;	}
 
 	public void StartGame()
-	{
-		instance.curState = prevState;
-	}
+	{	instance.curState = prevState;	}
 
 	public void PauseGame()
 	{

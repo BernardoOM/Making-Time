@@ -107,13 +107,14 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 			GameManager.Calendar.NoFocus();
 
 
-
 			transform.localPosition = SnapToBlock(transform.localPosition.x + blockWidth/2, transform.localPosition.y - blockHeight/2);
 			startPosition = transform.localPosition;
 			ShiftDeck();
 
 			GameObject.Find ("Main Camera").GetComponent<AudioManager> ().putdown_play ();
 
+			if(GameManager.Instance.curState == GameState.Tutorial)
+			{	GameObject.Find("Calendar").GetComponent<Tutorial>().TutorialEventUnselected();	}
 
 		}
 	}
@@ -183,14 +184,22 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		{
 			isFocus = false;
 			GameManager.Calendar.NoFocus();
+			if(GameManager.Instance.curState == GameState.Tutorial)
+			{	GameObject.Find("Calendar").GetComponent<Tutorial>().TutorialEventUnselected();	}
 		}
 		else if(wasClicked && !isFocus)
 		{
 			isFocus = true;
 			GameManager.Calendar.CommitmentFocus(com);
+			if(GameManager.Instance.curState == GameState.Tutorial)
+			{	GameObject.Find("Calendar").GetComponent<Tutorial>().TutorialEventSelected();	}
 		}
 		else if(!wasClicked && isFocus)
-		{	isFocus = false;	}
+		{
+			isFocus = false;
+			if(GameManager.Instance.curState == GameState.Tutorial)
+			{	GameObject.Find("Calendar").GetComponent<Tutorial>().TutorialEventUnselected();	}
+		}
 
 		wasClicked = false;
 	}
@@ -211,6 +220,12 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
 		if(!GameManager.Calendar.CheckCalendarSpace(totalDay, time))
 		{	return false;	}
+
+		if(GameManager.Instance.curState == GameState.Tutorial)
+		{
+			GameObject.Find("Calendar").GetComponent<Tutorial>().TutorialEnd();
+			GameManager.Instance.BeginGame();
+		}
 
 		return true;
 	}

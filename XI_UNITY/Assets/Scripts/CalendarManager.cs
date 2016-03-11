@@ -240,6 +240,13 @@ public class CalendarManager : MonoBehaviour
 		}
 	}
 
+	public void acept_chore_event(Commitment com){
+		if (com.curType == CommitmentType.Chore) {
+			GameObject	acept_prefab =Instantiate(Resources.Load("Window_Chore_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
+			acept_prefab.GetComponent<Chore_Acceptance> ().Acept_Window (com);
+		}
+	}
+
 	//being called if player clicked on refuse button from the inviation window. 
 	public void refuse_social(Commitment com){
 		for (int i = 0; i < unscheduledCommitments.Count; i++) {
