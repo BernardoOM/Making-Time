@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = new Vector3(513f, 0, 0);
 		Timer.EnterScene();
 		OptionModification (event_name);
-		GameObject.Find ("Real_Scene_Label").GetComponent<Text> ().text = event_name;
+		GameObject.Find ("RealScene_Label_Text").GetComponent<Text> ().text = event_name;
 		CuSceneBool = true;
 		//creat this bool for invitation and ause window when current scene on the left
 		//move those two windows to the middle of the screen 
