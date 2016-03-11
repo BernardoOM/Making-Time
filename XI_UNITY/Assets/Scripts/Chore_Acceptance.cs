@@ -4,19 +4,15 @@ using UnityEngine.UI;
 
 //script for display inviatation window, ask player accept or refuse.  binded with "Window_Accept_Social" prefab 
 
-public class Social_Acceptance : MonoBehaviour {
+public class Chore_Acceptance : MonoBehaviour {
 
 	private int num;
 	private Commitment temp_com;
-	private string NPCPath = "Sprites/Characters/Char_01_Full"; 
 	private int rand_num;
-	public Image NPCImage;
     private string[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
     private string[] times = {"Morning", "Afternoon", "Evening"};
 
-    public  GameObject NPC_Refuse;
-	public  GameObject NPC_Accept;
-	public  bool close = false;
+
 	// Use this for initialization
 	void Start () {
 		transform.SetParent (GameObject.Find ("Calendar").transform, false);
@@ -27,8 +23,6 @@ public class Social_Acceptance : MonoBehaviour {
 
 		}
 		rand_num=Random.Range (1, 10);
-		NPCPath= "Sprites/Characters/Char_0"+rand_num+ "_Full";
-		NPCImage.GetComponent<Image>().sprite =(Sprite) Resources.Load(NPCPath, typeof(Sprite));
 
 	}
 	
@@ -45,7 +39,7 @@ public class Social_Acceptance : MonoBehaviour {
         string maxTime = getTime(com.maxTime);
      
         temp_com = com;
-		transform.FindChild("Invitation_Text").gameObject.GetComponent<Text>().text ="A new invitation to "+ com.name;
+		transform.FindChild("Invitation_Text").gameObject.GetComponent<Text>().text ="A new chore: "+ com.name;
 
         if (minDay == maxDay)
         {
@@ -98,42 +92,17 @@ public class Social_Acceptance : MonoBehaviour {
 
     // being called by button onclick(), in prefab - acept button.
 	public void Acept_Event(){
-		GameObject.Find ("Accept_Button").SetActive (false);
-		GameObject.Find ("Refuse_Button").SetActive (false);
-		close = true;
-		NPC_Accept.SetActive (true);
+		GameManager.Instance.StartGame();
+		Destroy (gameObject);
 
-		//StartCoroutine(wait());
+
 //		Destroy (gameObject);
 //		//if clicked, resume game
 //		GameManager.Instance.StartGame();
 
 	}
 
-	IEnumerator wait() {
-		yield return new WaitForSeconds(1f);
 
-		Destroy (gameObject);
-		//if clicked, resume game
-		GameManager.Instance.StartGame();
-	}
 
-    //being called like above, refuse button.
-	public void Refuse_Event(){
-		GameManager.Calendar.refuse_social (temp_com);
-		close = true;
-		GameObject.Find ("Accept_Button").SetActive (false);
-		GameObject.Find ("Refuse_Button").SetActive (false);
-		NPC_Refuse.SetActive (true);
 
-		//StartCoroutine(wait());
-
-	}
-
-	public void Close_Window(){
-		if (close == true) {
-			Destroy (gameObject);
-			GameManager.Instance.StartGame ();
-		}
-	}
 }

@@ -68,7 +68,7 @@ public class PeopleManager : MonoBehaviour
 
 		if (current_egy > -4 && current_hpy  > -4)
 		if(cur_bgm!=0) {
-			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().clip = tired_music;
+			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().clip = neutral_music;
 			GameObject.Find ("Main Camera").GetComponent<AudioSource> ().Play ();
 			cur_bgm = 0;	}
 

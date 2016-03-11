@@ -36,7 +36,8 @@ public class UIManager : MonoBehaviour
 	//creat this bool for invitation and ause window when current scene on the left
 	//move those two windows to the middle of the screen 
 
-
+	public GameObject RealScene_NPC_Face_A;
+	public GameObject RealScene_NPC_Face_B;
 
 
     void Update(){
@@ -127,30 +128,36 @@ public class UIManager : MonoBehaviour
 //		}
 		if (event_name == "Office Hours") {
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Office", typeof(Sprite));
-	
+			GameObject.Find ("RealSceneLabel").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Office_Label", typeof(Sprite));
+
 			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-155f, 131f, 0f);
 
 			GameObject.Find ("Main Camera").GetComponent<AudioManager> ().office_sfx_play ();
 
+
 		}	
-		if (event_name == "Lunch") {
+		if (event_name == "Dinner") {
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Lunch", typeof(Sprite));
 			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 154f, 0f);
+			GameObject.Find ("RealSceneLabel").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Restaurant_Label", typeof(Sprite));
 
 		}		
 		if (event_name == "Party") {
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Party", typeof(Sprite));
 			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 71f, 0f);
+			GameObject.Find ("RealSceneLabel").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Party_Label", typeof(Sprite));
 
 		}
 		if (event_name == "Movie Night") {
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_MovieNight", typeof(Sprite));
 			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 71f, 0f);
+			GameObject.Find ("RealSceneLabel").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Party_Label", typeof(Sprite));
 
 		}
 		if (event_name == "Game Night") {
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_MovieNight", typeof(Sprite));
 			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 71f, 0f);
+			GameObject.Find ("RealSceneLabel").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Party_Label", typeof(Sprite));
 
 		}
 		//creat this bool for invitation and ause window when current scene on the left
@@ -167,6 +174,8 @@ public class UIManager : MonoBehaviour
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = Vector3.zero;
 
 		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().office_sfx_stop ();
+		RealScene_NPC_Face_A.SetActive (false);
+		RealScene_NPC_Face_B.SetActive (false);
 
 		CuSceneBool = false;
 	}
@@ -178,14 +187,14 @@ public class UIManager : MonoBehaviour
 		if (clicked == false) {
 			GameObject.Find ("Dialogue").transform.localPosition = new Vector3 (0f, -251.5f, 0f);
 			GameObject.Find ("Bubble").transform.localPosition = new Vector3 (-14.6f, 251.6f);
-			GameObject.Find ("Question_A").transform.localPosition = new Vector3 (-3.2f, 247.1f);
+			GameObject.Find ("Question_A").transform.localPosition = new Vector3 (-3f, 254.7f);
 			GameObject.Find ("big_NPC").transform.localPosition = new Vector3 (-136f, 47.5f);
 
 			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (3f, -199f);
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0,150,255,255);
             GameObject.Find ("Option_B").transform.localPosition = new Vector3 (3f, -237f);
-			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (3f, -275.4f);
-			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (7f, -313.4f);
+//			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (3f, -275.4f);
+//			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (7f, -313.4f);
 //			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (-19f, -199f);
 //			GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0,150,255,255);
 //			GameObject.Find ("Option_B").transform.localPosition = new Vector3 (-19f, -237f);
@@ -199,7 +208,13 @@ public class UIManager : MonoBehaviour
             clicked = true;
 		} else if (clicked == true) {
 			GameObject.Find ("Bubble").transform.localPosition = new Vector3 (-14.6f, 251.6f);
-			GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f,262.2f);
+			if (optionA) {
+				GameObject.Find ("Question_B1").transform.localPosition = new Vector3 (-44f, 262.2f);
+			}
+			if (optionB) {
+				GameObject.Find ("Question_B2").transform.localPosition = new Vector3 (-44f, 262.2f);
+
+			}
 			end=false;
 			start_time = timer;
 		}
@@ -216,12 +231,12 @@ public class UIManager : MonoBehaviour
         {
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0, 150, 255, 255);
             GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
             GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
             optionA = true;
             optionB = false;
             optionC = false;
@@ -229,8 +244,9 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+			RealScene_NPC_Face_A.SetActive (true);
             GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
-            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+			GameObject.Find("Question_B1").transform.localPosition = new Vector3(-44f, 262.2f);
             end = false;
             start_time = timer;
         }
@@ -241,12 +257,12 @@ public class UIManager : MonoBehaviour
         {
             GameObject.Find("Option_B").GetComponent<Text>().color = new Color(0, 150, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
             GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
             optionA = false;
             optionB = true;
             optionC = false;
@@ -254,8 +270,9 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+			RealScene_NPC_Face_B.SetActive (true);
             GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
-            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+			GameObject.Find("Question_B2").transform.localPosition = new Vector3(-44f, 262.2f);
             end = false;
             start_time = timer;
         }
@@ -265,14 +282,14 @@ public class UIManager : MonoBehaviour
     {
         if (!optionC)
         {
-            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(0, 150, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(255, 255, 255, 255);
             GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//			GameObject.Find("Option_C").GetComponent<Text>().color = new Color(0, 150, 255, 255);
+//            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
             GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
             optionA = false;
             optionB = false;
             optionC = true;
@@ -281,7 +298,7 @@ public class UIManager : MonoBehaviour
         else
         {
             GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f, 0);
-            GameObject.Find("Question_B").transform.localPosition = new Vector3(-8.4f, 262.2f);
+			GameObject.Find("Question_B").transform.localPosition = new Vector3(-44f, 262.2f);
             end = false;
             start_time = timer;
         }
@@ -291,14 +308,14 @@ public class UIManager : MonoBehaviour
     {
         if (!optionD)
         {
-            GameObject.Find("Option_D").GetComponent<Text>().color = new Color(0, 150, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(255, 255, 255, 255);
             GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//            GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//			GameObject.Find("Option_D").GetComponent<Text>().color = new Color(0, 150, 255, 255);
             GameObject.Find("Option_A").GetComponent<Text>().enabled = true;
             GameObject.Find("Option_B").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
-            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_C").GetComponent<Text>().enabled = true;
+//            GameObject.Find("Option_D").GetComponent<Text>().enabled = true;
             optionA = false;
             optionB = false;
             optionC = false;
@@ -318,46 +335,70 @@ public class UIManager : MonoBehaviour
 	{	
 		GameObject.Find ("Option_A").GetComponent<Text>().enabled=true;
 		GameObject.Find ("Option_B").GetComponent<Text>().enabled=true;
-		GameObject.Find ("Option_C").GetComponent<Text>().enabled=true;
-		GameObject.Find ("Option_D").GetComponent<Text>().enabled=true;
+//		GameObject.Find ("Option_C").GetComponent<Text>().enabled=true;
+//		GameObject.Find ("Option_D").GetComponent<Text>().enabled=true;
 
 		GameObject.Find("Dialogue").transform.localPosition = new Vector3(-600f,0);
 		GameObject.Find("Bubble").transform.localPosition =new Vector3(-600f,0);
 		GameObject.Find("Question_A").transform.localPosition = new Vector3(-600f,0);
-		GameObject.Find("Question_B").transform.localPosition = new Vector3(-600f,0f);
+		GameObject.Find("Question_B1").transform.localPosition = new Vector3(-600f,0f);
+		GameObject.Find("Question_B2").transform.localPosition = new Vector3(-600f,0f);
 
 		GameObject.Find("big_NPC").transform.localPosition =new Vector3(-600f,0);
 		GameObject.Find("Option_A").transform.localPosition = new Vector3(-600f,0);
 		GameObject.Find("Option_B").transform.localPosition = new Vector3(-600f,0);
-		GameObject.Find("Option_C").transform.localPosition = new Vector3(-600f,0);
-		GameObject.Find("Option_D").transform.localPosition =new Vector3(-600f,0);
+//		GameObject.Find("Option_C").transform.localPosition = new Vector3(-600f,0);
+//		GameObject.Find("Option_D").transform.localPosition =new Vector3(-600f,0);
 		//GameObject.Find("big_NPC").SetActive(false);
 		}
 
 
 	public void OptionModification(string event_name){
-		GameObject.Find ("Option_A").GetComponent<Text> ().text = "A.  Nice " + event_name+" !";
-		GameObject.Find ("Option_B").GetComponent<Text> ().text = "B.  Poorly designed " + event_name+" !";
+
+
+	
 
 		GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0, 150, 255, 255);
 		GameObject.Find("Option_B").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-		GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
-		GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//		GameObject.Find("Option_C").GetComponent<Text>().color = new Color(255, 255, 255, 255);
+//		GameObject.Find("Option_D").GetComponent<Text>().color = new Color(255, 255, 255, 255);
 
 		if (event_name == "Party") {
-			GameObject.Find("Question_A").GetComponent<Text>().text="How's party?";
+			GameObject.Find("Question_A").GetComponent<Text>().text="What have you been up to?";
+			GameObject.Find ("Option_A").GetComponent<Text> ().text = "A. Not much.";
+			GameObject.Find ("Option_B").GetComponent<Text> ().text = "B. I’m starting a research project soon.";
+			//B1 B2
+			GameObject.Find ("Question_B1").GetComponent<Text> ().text = "Oh, ok.";
+			GameObject.Find ("Question_B2").GetComponent<Text> ().text = "Oh, cool!";
+			RealScene_NPC_Face_A.GetComponent<Image> ().sprite = (Sprite)Resources.Load ("NPC Faces/NPC_04", typeof(Sprite));
+			RealScene_NPC_Face_B.GetComponent<Image> ().sprite = (Sprite)Resources.Load ("NPC Faces/NPC_03", typeof(Sprite));
+
 		}
-		if (event_name == "Meeting") {
-			GameObject.Find("Question_A").GetComponent<Text>().text="Meeting time!";
-		}		
+			
 		if (event_name == "Office Hours") {
-			GameObject.Find("Question_A").GetComponent<Text>().text="I didn't do my homework.";
-		}		
-		if (event_name == "Game Night") {
-			GameObject.Find("Question_A").GetComponent<Text>().text="Let's Play!";
-		}		
-		if (event_name == "Lunch") {
-			GameObject.Find("Question_A").GetComponent<Text>().text="Extremely hungry!";
+			GameObject.Find("Question_A").GetComponent<Text>().text="Can you please help me with the homework?";
+			GameObject.Find ("Option_A").GetComponent<Text> ().text = "A. Sure, I’d be happy to.";
+			GameObject.Find ("Option_B").GetComponent<Text> ().text = "B. You should be able to do the homework yourself.";
+			//B1 B2
+			GameObject.Find ("Question_B1").GetComponent<Text> ().text = "Yay! Thank you so much!";
+			GameObject.Find ("Question_B2").GetComponent<Text> ().text = "Augh!";	
+			RealScene_NPC_Face_A.GetComponent<Image> ().sprite = (Sprite)Resources.Load ("NPC Faces/NPC_01", typeof(Sprite));
+			RealScene_NPC_Face_B.GetComponent<Image> ().sprite = (Sprite)Resources.Load ("NPC Faces/NPC_05", typeof(Sprite));
+			}	
+		
+			
+		if (event_name == "Dinner") {
+			GameObject.Find("Question_A").GetComponent<Text>().text="You know, there’s a concert happening this week. Want to go to it with me?";
+			GameObject.Find ("Option_A").GetComponent<Text> ().text = "A. Yeah, that sounds awesome!";
+			GameObject.Find ("Option_B").GetComponent<Text> ().text = "B. No, sorry, I’m really busy this week.";
+			//B1 B2
+			GameObject.Find ("Question_B1").GetComponent<Text> ().text = "Sweet! Can’t wait";
+			GameObject.Find ("Question_B2").GetComponent<Text> ().text = "Aww, maybe next time, then.";	
+		
+			RealScene_NPC_Face_A.GetComponent<Image> ().sprite = (Sprite)Resources.Load ("NPC Faces/NPC_01", typeof(Sprite));
+			RealScene_NPC_Face_B.GetComponent<Image> ().sprite = (Sprite)Resources.Load ("NPC Faces/NPC_04", typeof(Sprite));
+
+
 		}		
 		if (event_name == "Movie Night") {
 			GameObject.Find("Question_A").GetComponent<Text>().text="Star wars?";
