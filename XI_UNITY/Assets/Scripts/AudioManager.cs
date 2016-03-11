@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour {
 	public AudioClip neu_mood_sfx;
 
 	public  AudioSource sfx;
+
+	public AudioSource office;
 	// Use this for initialization
 	void Start () {
 	
@@ -53,7 +55,15 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	public  void neu_sfx_play(){
-		sfx.clip= pos_mood_sfx;
+		sfx.clip= neu_mood_sfx;
 		sfx.Play ();
 	}
+
+	public  void office_sfx_play(){
+		office.Play ();
+	}
+	public  void office_sfx_stop(){
+		office.Stop ();
+	}
+
 }

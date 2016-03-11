@@ -129,6 +129,9 @@ public class UIManager : MonoBehaviour
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Office", typeof(Sprite));
 	
 			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-155f, 131f, 0f);
+
+			GameObject.Find ("Main Camera").GetComponent<AudioManager> ().office_sfx_play ();
+
 		}	
 		if (event_name == "Lunch") {
 			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Lunch", typeof(Sprite));
@@ -162,6 +165,8 @@ public class UIManager : MonoBehaviour
 
 		GameObject.Find("Current Scene").GetComponent<RectTransform>().localPosition = new Vector3(-923.5f, 0, 0);
 		GameObject.Find("Calendar").GetComponent<RectTransform>().localPosition = Vector3.zero;
+
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().office_sfx_stop ();
 
 		CuSceneBool = false;
 	}
