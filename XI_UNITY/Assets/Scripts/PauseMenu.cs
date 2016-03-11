@@ -57,7 +57,7 @@ public class PauseMenu : MonoBehaviour
 
 	public void Close()
 	{
-
+		GameManager.Calendar.WindowEvent();
 		GameManager.Instance.StartGame();
 		gameObject.SetActive (false);
 		//Destroy(gameObject);

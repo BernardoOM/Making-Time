@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum GameState {	MainMenu, Calendar, Event, Status, Pause	};
+public enum GameState {	MainMenu, Calendar, Tutorial, Status, Pause	};
 
 //public delegate void OnStateChange();
 
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
 //	public event OnStateChange	stateChanger;
 	public  GameState curState {	get; private set; }
-	private GameState prevState;
+	private GameState prevState = GameState.Tutorial;
 
 	public static GameManager Instance
 	{
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 			DontDestroyOnLoad(gameObject);
 		}
 
-		curState = GameState.Calendar;
+		curState = GameState.Tutorial;
 
 		StartGame ();
 	}

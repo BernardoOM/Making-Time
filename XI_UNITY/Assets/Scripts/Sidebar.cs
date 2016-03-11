@@ -318,7 +318,7 @@ public class Sidebar : MonoBehaviour
 	{
 		if(GameManager.Instance.curState != GameState.Pause)
 		{
-
+			GameManager.Calendar.WindowEvent();
 
 			GameManager.Instance.PauseGame();
 
@@ -337,11 +337,5 @@ public class Sidebar : MonoBehaviour
 				pausephone.GetComponent<RectTransform> ().localPosition = new Vector3 (0, 0, 0);
 				}
 			}
-
-
-
-
 		}
-
 	}
-

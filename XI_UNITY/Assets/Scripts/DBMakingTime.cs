@@ -28,17 +28,28 @@ public class DBMakingTime : MonoBehaviour
        _dbc.Open();//Open connection to the database.
     }
 
-    // Use this for initialization
-    void Start()
-    {
+	public static string CheckEventType(string name)
+	{
+		OpenDB("MakingTime.db");
+		_dbcm = _dbc.CreateCommand();
 
+		sqlQuery = "select * from Event_Type where pk_Event_Name = '" + name + "'";
+		_dbcm.CommandText = sqlQuery;
+		_dbr = _dbcm.ExecuteReader();
 
-    }
-    // Update is called once per frame
-    void Update()
-    {
+		_dbr.Read();
 
-    }
+		string type = _dbr.GetString(2);
+
+		_dbr.Close();
+		_dbr = null;
+		_dbcm.Dispose();
+		_dbcm = null;
+		_dbc.Close();
+		_dbc = null;
+
+		return type;
+	}
 
 	public static void ReadRandomNewCommitment(string event_Type, ref string name, ref int time_Length,
 	                                           ref int maxTime, ref int minTime)

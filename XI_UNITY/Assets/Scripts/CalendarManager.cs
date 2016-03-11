@@ -13,6 +13,7 @@ public class CalendarManager : MonoBehaviour
 	public event TimeHandler		OnDayStarted;
 	public event CommitmentHandler	OnCheckCommitments;
 	public event ClickHandler		OnCommitmentClicked;
+	public event ClickHandler		OnWindow;
 
 	//To be canged later
 	public List<Commitment>	unscheduledCommitments = new List<Commitment>();
@@ -48,6 +49,11 @@ public class CalendarManager : MonoBehaviour
        // hasEventMissed = false;
 
         curState = ClickState.NoFocus;
+
+		if(ApplicationModel.tutorialEvent == "Party")
+		{	Commitment.GenerateCommitment("Party", "", 1, 0, 0, 3, 3);	}
+		else
+		{	Commitment.GenerateCommitment("Dinner", "", 1, 0, 0, 3, 3);	}
 
  		//generate work events at begining. 5-15 work events. 1-3 per day. mon to friday. 
 		for(int generateCount = 1; generateCount < 6; generateCount += 1)
@@ -125,6 +131,9 @@ public class CalendarManager : MonoBehaviour
 		}
 	}
 
+	public void WindowEvent()
+	{	OnWindow();	}
+
 	public void CompleteCommitment(Commitment sender)
 	{
 		//To be changed later
@@ -141,10 +150,10 @@ public class CalendarManager : MonoBehaviour
 	}
 
 	public void RemoveCommitment(Commitment com)
-		{
-				unscheduledCommitments.Remove(com);
-				Drag.ShiftDeck();
-			}
+	{
+		unscheduledCommitments.Remove(com);
+		Drag.ShiftDeck();
+	}
 
 	public void CommitmentClicked()
 	{
@@ -226,7 +235,7 @@ public class CalendarManager : MonoBehaviour
 	//display inviattation window 
 	public void acept_social_event(Commitment com){
 		if (com.curType == CommitmentType.Social) {
-				GameObject	acept_prefab =Instantiate(Resources.Load("Window_Accept_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
+			GameObject	acept_prefab =Instantiate(Resources.Load("Window_Accept_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
 			acept_prefab.GetComponent<Social_Acceptance> ().Acept_Window (com);
 		}
 	}

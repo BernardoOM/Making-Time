@@ -66,7 +66,7 @@ public class Timer : MonoBehaviour
 			leavingEvent = false;
 		}
 
-		if (GameManager.Instance.curState != GameState.Pause && isOn)
+		if (GameManager.Instance.curState != GameState.Pause  && GameManager.Instance.curState != GameState.Tutorial && isOn)
 		{
 			if(commitmentActive)
 			{	eventTimer += Time.deltaTime*GameManager.Calendar.fastforward / 5;	}

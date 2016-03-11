@@ -12,12 +12,12 @@ public class Commitment : MonoBehaviour
 {
 	public CommitmentType curType;
 	public string	name;
-	public string creator;
+	public string	creator;
 	public int		curTotalDay,	curTime,		timeLength,	timeLeft;
 	public int		maxTotalDay,	minTotalDay,	maxTime,	minTime;
-	public bool	scheduled;
-	public bool activated;
-	public bool	completed;
+	public bool		scheduled;
+	public bool		activated;
+	public bool		completed;
 
 	private static int	startX = -494;
 	private static int	calendarStartY = 272;
@@ -25,14 +25,16 @@ public class Commitment : MonoBehaviour
 	private static int	blockWidth = 163;
 	private static int	blockHeight = 88;
 
-	private string timePath = "Sprites/Postits";
-	private Object[] events;
+	private Object[]	events;
+	private string		timePath = "Sprites/Postits";
+	private bool		dragSave = false;
 	//variables for change colors of each event button. acctivated and done.
 
 	// Use this for initialization
 	void Start ()
 	{
 		GameManager.Calendar.OnCheckCommitments += Calendar_OnCheckCommitments;
+		GameManager.Calendar.OnWindow += GameManager_Calendar_OnWindow;
 
 		completed = false;
 	}
@@ -123,6 +125,17 @@ public class Commitment : MonoBehaviour
 		}
 	}
 
+	void GameManager_Calendar_OnWindow()
+	{
+		Drag dragScript = GetComponent<Drag>();
+		if(dragScript.enabled)
+		{
+			dragSave = dragScript.enabled;
+			dragScript.enabled = false;
+		}
+		else
+		{	dragScript.enabled = dragSave;	}
+	}
 
 	public bool CheckScheduleConflict(int totalDay, int time)
 	{
@@ -351,15 +364,40 @@ public class Commitment : MonoBehaviour
 	public static void GenerateCommitment(string aName, string aCreator, int aTimeLength, int aMaxTotalDay,
 	                                      int aMinTotalDay, int aMaxTime, int aMinTime)
 	{
-		GameObject commitment = Instantiate(Resources.Load("Button"))  as GameObject;
+		GameObject commitment;
+		CommitmentType aType = CommitmentType.Social;
+		string type = DBMakingTime.CheckEventType(aName);
+
+		switch(type)
+		{
+		case "Work":
+			commitment = Instantiate(Resources.Load("WorkButton")) as GameObject;
+			aType = CommitmentType.Work;
+			break;
+		case "Leisure":
+			commitment = Instantiate(Resources.Load("LeisureButton")) as GameObject;
+			aType = CommitmentType.Leisure;
+			break;
+		case "Social":
+			commitment = Instantiate(Resources.Load("SocialButton")) as GameObject;
+			aType = CommitmentType.Social;
+			break;
+		case "Chore":
+			commitment = Instantiate(Resources.Load("ChoreButton")) as GameObject;
+			aType = CommitmentType.Chore;
+			break;
+		default:
+			commitment = Instantiate(Resources.Load("Button")) as GameObject;
+			break;
+		}
 		Commitment com = commitment.GetComponent<Commitment>();
 
 		com.RecordInfo(aName, aCreator, aTimeLength, aMaxTotalDay,
 		               aMinTotalDay, aMaxTime, aMinTime);
+		com.curType = aType;
 
 		GameManager.Calendar.UnScheduleCommitment(com);
 		com.transform.parent = GameObject.Find("Deck").transform;
-		com.transform.localScale = Vector3.one;
 		Drag.PlaceUnscheduled(com);
 	}
 
