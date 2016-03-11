@@ -100,8 +100,8 @@ public class DBMakingTime : MonoBehaviour
 
 		while (_dbr.Read())
 		{
-			values [0] = _dbr.GetInt32 (4);
-			values [1] = _dbr.GetInt32 (6); 
+			values [0] = _dbr.GetInt32 (3);
+			values [1] = _dbr.GetInt32 (5); 
 		}
 
 		_dbr.Close();
