@@ -23,7 +23,7 @@ public class Intro_Dialogue : MonoBehaviour {
 	void Update () {
 		timer += Time.deltaTime;
 		if (timer - click_time > 1.3f&&timer - click_time < 4f) {
-			//SceneManager.LoadScene (2);
+			SceneManager.LoadScene (2);
 		}
 	}
 

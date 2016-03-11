@@ -110,7 +110,19 @@ public class CalendarManager : MonoBehaviour
 		viewingWeek = curWeek;
 
 		delete_lastweek_calendar ();
+		curDayOfWeek = 0;
+		curTotalDay = 0;
 		//delete_lastweek_calendar
+
+		//generate work events at begining. 5-15 work events. 1-3 per day. mon to friday. 
+		for(int generateCount = 1; generateCount < 6; generateCount += 1)
+		{	
+			int event_numbs=Random.Range (1, 4);
+			for (int i = 0; i < event_numbs; i++) {
+				Commitment.Generate_Works (generateCount);
+			}
+
+		}
 	}
 
 	public void CompleteCommitment(Commitment sender)
@@ -239,6 +251,7 @@ public class CalendarManager : MonoBehaviour
 				//GameObject.Find ("Bubble_text").GetComponent<Text>().text ="Oh you missed "+ unscheduledCommitments [i].name + " !";
 
 			unscheduledCommitments[i].gameObject.SetActive(false);
+				//scheduledCommitments[i].gameObject.SetActive(false);
 			unscheduledCommitments.RemoveAt (i);
 
 		//GameObject.Find ("Bubble_Calendar").transform.localPosition = new Vector3 (-444.3f, 315.7f);
@@ -259,12 +272,12 @@ public class CalendarManager : MonoBehaviour
 	//delete_lastweek_calendar
 	public void delete_lastweek_calendar(){
 
-			
 		for (int i = 0; i < scheduledCommitments.Count; i++) {
-			scheduledCommitments [i].gameObject.SetActive (false);
-			scheduledCommitments.RemoveAt (i);
+			//scheduledCommitments [i].gameObject.SetActive (false);
+			Destroy (scheduledCommitments [i].gameObject);
+			//scheduledCommitments.RemoveAt (i);
 		}
-
+		scheduledCommitments.Clear ();
 
 	}
 

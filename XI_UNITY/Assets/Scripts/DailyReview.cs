@@ -136,7 +136,7 @@ public class DailyReview : MonoBehaviour
 		else if (missed >= 2){textMissed = "You missed " + missed + " things today\n";}
 
         if(done == 0 && missed == 0){GameObject.Find("DescriptionDR").GetComponent<Text>().text ="";}
-        else{GameObject.Find("DescriptionDR").GetComponent<Text>().text = "Really! What happened this day?";}
+		else{GameObject.Find("DescriptionDR").GetComponent<Text>().text = "Daily Review ";}
 
         if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[0]; }
         else if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[1]; }
@@ -262,7 +262,7 @@ public class DailyReview : MonoBehaviour
 	{	dailyEvents.Add(newCom);	}
 
 	public void ShowWindow(GameObject window)
-	{	window.transform.localPosition = new Vector3(62f, -7f);	}
+	{	window.transform.localPosition = new Vector3(0f, 0f);	}
 
 	public void HideWindow(GameObject window)
 	{	window.transform.localPosition = new Vector3(-200f, -1000f);	}

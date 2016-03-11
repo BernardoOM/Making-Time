@@ -213,7 +213,8 @@ public class Commitment : MonoBehaviour
 		Commitment com = commitment.GetComponent<Commitment>();
 
 		//Debug.Log ((CommitmentType)Random.Range (0, 4));
-		switch((CommitmentType)Random.Range(0, 4))
+		//switch((CommitmentType)Random.Range(0, 4))
+		switch(newCommitment)
 		{
 		case CommitmentType.Work:
 			if(aName == "Teach Class")
@@ -231,11 +232,13 @@ public class Commitment : MonoBehaviour
 			aMaxTotalDay = aMinTotalDay + Random.Range(0, 7);
 			break;
 		case CommitmentType.Social:
-			aMinTotalDay = totalDay + 1;
+			//			aMinTotalDay = totalDay + 1;
+			aMinTotalDay = totalDay;
 			aMaxTotalDay = aMinTotalDay + Random.Range(0, 3);
 			break;
 		case CommitmentType.Chore:
-			aMinTotalDay = totalDay + 2;
+			//			aMinTotalDay = totalDay + 2;
+			aMinTotalDay = totalDay;
 			aMaxTotalDay = aMinTotalDay + Random.Range(0, 5);
 			break;
 		}
@@ -378,14 +381,16 @@ public class Commitment : MonoBehaviour
 		if (array [0] == 0) {
 			if (array [1] == 0) {
 				 path="Faces_on_events/face00";
-
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
 			}
 			if (array [1] > 0) {
 				 path="Faces_on_events/face30";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
 
 			}
 			if (array [1] < 0) {
 				 path="Faces_on_events/face-30";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
 
 			}
 		}
@@ -393,28 +398,34 @@ public class Commitment : MonoBehaviour
 		if (array [0] > 0) {
 			if (array [1] == 0) {
 				 path="Faces_on_events/face03";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
 
 			}
 			if (array [1] > 0) {
 				 path="Faces_on_events/face33";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
 
 			}
 			if (array [1] < 0) {
 				 path="Faces_on_events/face-33";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
 
 			}
 		}	
 		if (array [0] < 0) {
 			if (array [1] == 0) {
 				 path="Faces_on_events/face0-3";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().pos_sfx_play ();
 
 			}
 			if (array [1] > 0) {
 				 path="Faces_on_events/face03";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
 
 			}
 			if (array [1] < 0) {
 				 path="Faces_on_events/face-3-3";
+				GameObject.Find ("Main Camera").GetComponent<AudioManager> ().neg_sfx_play ();
 
 			}
 		}
@@ -424,7 +435,7 @@ public class Commitment : MonoBehaviour
 		face.transform.parent = transform.parent;
 		face.transform.localPosition 
 		= new Vector3(startX + (curTotalDay* blockWidth)+blockWidth/2, calendarStartY - (curTime * blockHeight)-blockHeight/2, 0);
-
+		face.transform.parent = transform;
 	}
 
 }
