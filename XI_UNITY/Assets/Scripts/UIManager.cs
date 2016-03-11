@@ -36,6 +36,9 @@ public class UIManager : MonoBehaviour
 	//creat this bool for invitation and ause window when current scene on the left
 	//move those two windows to the middle of the screen 
 
+
+
+
     void Update(){
 		timer += Time.deltaTime;
 //		Debug.Log (timer - start_time);
@@ -114,6 +117,39 @@ public class UIManager : MonoBehaviour
 		OptionModification (event_name);
 		GameObject.Find ("RealScene_Label_Text").GetComponent<Text> ().text = event_name;
 		CuSceneBool = true;
+
+//		events = Resources.LoadAll(timePath, typeof(Sprite));
+//		for (int i = 0; i < events.Length; i++)
+//		{
+//			if ((int)curType==3 && events[i].name == "Chore_Postit_active") { GetComponent<Image>().sprite = (Sprite)events[i]; }
+//			else if ((int)curType==2 &&events[i].name == "Social_Postit_active") { GetComponent<Image>().sprite = (Sprite)events[i]; }
+//			else if ((int)curType==0 &&events[i].name == "Work_Postit_active") { GetComponent<Image>().sprite= (Sprite)events[i]; }
+//		}
+		if (event_name == "Office Hours") {
+			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Office", typeof(Sprite));
+	
+			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-155f, 131f, 0f);
+		}	
+		if (event_name == "Lunch") {
+			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Lunch", typeof(Sprite));
+			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 154f, 0f);
+
+		}		
+		if (event_name == "Party") {
+			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_Party", typeof(Sprite));
+			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 71f, 0f);
+
+		}
+		if (event_name == "Movie Night") {
+			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_MovieNight", typeof(Sprite));
+			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 71f, 0f);
+
+		}
+		if (event_name == "Game Night") {
+			GameObject.Find ("Current Scene").GetComponent<Image> ().sprite = (Sprite)Resources.Load ("Sprites/RealScene/RealScene_MovieNight", typeof(Sprite));
+			GameObject.Find ("small_NPC").transform.localPosition = new Vector3 (-135f, 71f, 0f);
+
+		}
 		//creat this bool for invitation and ause window when current scene on the left
 		//move those two windows to the middle of the screen 
 

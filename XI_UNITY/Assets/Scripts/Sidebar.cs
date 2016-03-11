@@ -316,7 +316,8 @@ public class Sidebar : MonoBehaviour
 		{
 			GameManager.Instance.PauseGame();
 			GameObject go = Instantiate(Resources.Load("PausePhone"),transform.parent.position, transform.parent.rotation) as GameObject;
-			go.transform.parent = transform.parent;
+			//go.transform.parent = transform.parent;
+			go.transform.SetParent (GameObject.Find ("Calendar").transform, false);
 			go.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
 
 			//if in real scene, move the pause window to the center of screen 
