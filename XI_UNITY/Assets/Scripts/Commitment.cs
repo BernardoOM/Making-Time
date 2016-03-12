@@ -85,6 +85,9 @@ public class Commitment : MonoBehaviour
 						else if ((int)curType==0 &&events[i].name == "Work_Postit_active") { GetComponent<Image>().sprite= (Sprite)events[i]; }
 						}
 
+					GameObject.Find ("Main Camera").GetComponent<AudioManager> ().event_play();
+
+					//activation sound
 				}
 
 
@@ -98,6 +101,7 @@ public class Commitment : MonoBehaviour
 				}
 				completed = true;
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
+				GameManager.Calendar.OnWindow -= GameManager_Calendar_OnWindow;
 
 				//change event color to done. 
 				events = Resources.LoadAll(timePath, typeof(Sprite));
@@ -119,6 +123,8 @@ public class Commitment : MonoBehaviour
 				GameManager.Calendar.FailedCommitment(this);
 				gameObject.SetActive(false);
 				GameManager.Calendar.OnCheckCommitments -= Calendar_OnCheckCommitments;
+				GameManager.Calendar.OnWindow -= GameManager_Calendar_OnWindow;
+
 				//do delete 
 				//do feedback
 			}

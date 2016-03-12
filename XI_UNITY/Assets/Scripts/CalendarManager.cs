@@ -237,6 +237,8 @@ public class CalendarManager : MonoBehaviour
 		if (com.curType == CommitmentType.Social) {
 			GameObject	acept_prefab =Instantiate(Resources.Load("Window_Accept_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
 			acept_prefab.GetComponent<Social_Acceptance> ().Acept_Window (com);
+			GameObject.Find ("SideBar").GetComponent<Sidebar> ().trun_pause_off();
+
 		}
 	}
 
@@ -244,6 +246,8 @@ public class CalendarManager : MonoBehaviour
 		if (com.curType == CommitmentType.Chore) {
 			GameObject	acept_prefab =Instantiate(Resources.Load("Window_Chore_Social"),new Vector3(0, 0, 0),Quaternion.identity) as GameObject;
 			acept_prefab.GetComponent<Chore_Acceptance> ().Acept_Window (com);
+			GameObject.Find ("SideBar").GetComponent<Sidebar> ().trun_pause_off();
+
 		}
 	}
 

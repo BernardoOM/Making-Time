@@ -92,6 +92,9 @@ public class Chore_Acceptance : MonoBehaviour {
 
     // being called by button onclick(), in prefab - acept button.
 	public void Acept_Event(){
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+		GameObject.Find ("SideBar").GetComponent<Sidebar> ().trun_pause_on();
+
 		GameManager.Instance.StartGame();
 		Destroy (gameObject);
 

@@ -192,7 +192,7 @@ public class UIManager : MonoBehaviour
 
 			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (3f, -199f);
             GameObject.Find("Option_A").GetComponent<Text>().color = new Color(0,150,255,255);
-            GameObject.Find ("Option_B").transform.localPosition = new Vector3 (3f, -237f);
+            GameObject.Find ("Option_B").transform.localPosition = new Vector3 (3f, -288f);
 //			GameObject.Find ("Option_C").transform.localPosition = new Vector3 (3f, -275.4f);
 //			GameObject.Find ("Option_D").transform.localPosition = new Vector3 (7f, -313.4f);
 //			GameObject.Find ("Option_A").transform.localPosition = new Vector3 (-19f, -199f);

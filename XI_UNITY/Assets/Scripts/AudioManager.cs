@@ -9,8 +9,9 @@ public class AudioManager : MonoBehaviour {
 	public AudioClip neg_mood_sfx;
 	public AudioClip pos_mood_sfx;
 	public AudioClip neu_mood_sfx;
-
+	public AudioClip click;
 	public  AudioSource sfx;
+	public AudioClip event_start;
 
 	public AudioSource office;
 	// Use this for initialization
@@ -46,17 +47,17 @@ public class AudioManager : MonoBehaviour {
 
 	public  void neg_sfx_play(){
 		sfx.clip= neg_mood_sfx;
-		sfx.Play ();
+		//sfx.Play ();
 	}
 
 	public  void pos_sfx_play(){
 		sfx.clip= pos_mood_sfx;
-		sfx.Play ();
+		//sfx.Play ();
 	}
 
 	public  void neu_sfx_play(){
 		sfx.clip= neu_mood_sfx;
-		sfx.Play ();
+		//sfx.Play ();
 	}
 
 	public  void office_sfx_play(){
@@ -65,5 +66,15 @@ public class AudioManager : MonoBehaviour {
 	public  void office_sfx_stop(){
 		office.Stop ();
 	}
+	public  void click_play(){
+		//sfx.clip= pickup;
+		sfx.clip= click;
+		sfx.Play ();
+	}
 
+	public  void event_play(){
+		//sfx.clip= pickup;
+		sfx.clip= event_start;
+		sfx.Play ();
+	}
 }

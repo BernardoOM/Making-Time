@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour
 	private static int width = 160;
 	private static int maxHeight = 520;
 	//length of an in-game day in seconds
-	private static int realTimePerDay = 42;
+	private static int realTimePerDay = 36;
 	//30
 
 	private bool isOn = false;
@@ -78,13 +78,13 @@ public class Timer : MonoBehaviour
 			if(timer > (GameManager.Calendar.curTime + 1) * (realTimePerDay / 6))
 			{	GameManager.Calendar.TimeBlockStarted();	}
 
-            if (timer >= 0 && timer < 10) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[0];
+            if (timer >= 0 && timer < 12) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[0];
                 GameObject.Find("DayTextIcon").GetComponent<Text>().text = "Morning";
             }
-            else if (timer >= 10 && timer < 20) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[1];
+            else if (timer >= 12 && timer < 24) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[1];
                 GameObject.Find("DayTextIcon").GetComponent<Text>().text = "Afternoon";
             }
-            else if (timer >= 20 && timer <= 30) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[2];
+            else if (timer >= 24 && timer <= 36) { GameObject.Find("TimeIcon").GetComponent<Image>().sprite = timeIcon[2];
                 GameObject.Find("DayTextIcon").GetComponent<Text>().text = "Evening";
             }
 

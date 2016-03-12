@@ -6,6 +6,9 @@ public enum PlayerMood {EH, EN, ES, NH, NN, NS, TH, TN, TS};
 
 public class Sidebar : MonoBehaviour
 {
+
+	public GameObject pause_on;
+	public GameObject pause_off;
 	public Animator	Mood;
 	public Text		energy;
 	public Text		happiness;
@@ -338,4 +341,14 @@ public class Sidebar : MonoBehaviour
 				}
 			}
 		}
+
+	public void trun_pause_on(){
+		pause_on.SetActive (true);
+		pause_off.SetActive (false);
+
 	}
+	public void trun_pause_off(){
+		pause_on.SetActive (false);
+		pause_off.SetActive (true);
+	}
+}

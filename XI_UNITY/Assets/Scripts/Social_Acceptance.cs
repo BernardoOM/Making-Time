@@ -98,6 +98,8 @@ public class Social_Acceptance : MonoBehaviour {
 
     // being called by button onclick(), in prefab - acept button.
 	public void Acept_Event(){
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		GameObject.Find ("Accept_Button").SetActive (false);
 		GameObject.Find ("Refuse_Button").SetActive (false);
 		close = true;
@@ -120,6 +122,8 @@ public class Social_Acceptance : MonoBehaviour {
 
     //being called like above, refuse button.
 	public void Refuse_Event(){
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		GameManager.Calendar.refuse_social (temp_com);
 		close = true;
 		GameObject.Find ("Accept_Button").SetActive (false);
@@ -132,6 +136,9 @@ public class Social_Acceptance : MonoBehaviour {
 
 	public void Close_Window(){
 		if (close == true) {
+			GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+			GameObject.Find ("SideBar").GetComponent<Sidebar> ().trun_pause_on();
+
 			Destroy (gameObject);
 			GameManager.Instance.StartGame ();
 		}

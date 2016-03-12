@@ -66,18 +66,18 @@ public class DailyReview : MonoBehaviour
 
 		}
 
-        for (int i = 0; i < FacedS.Length; i++)
-        {
-            if (FacedS[i].name == "face_4_4_02") { faces[0] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_4_-4_02") { faces[1] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_-4_-4_01") { faces[2] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_-4_4_02") { faces[3] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_N_4_02") { faces[4] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_N_-4_02") { faces[5] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_-4_N_01") { faces[6] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_4_N_02") { faces[7] = (Sprite)FacedS[i]; }
-            else if (FacedS[i].name == "face_N_N_02") { faces[8] = (Sprite)FacedS[i]; }
-        }
+		for (int i = 0; i < FacedS.Length; i++)
+		{
+			if (FacedS[i].name == "face_-4_-4_01") { faces[0] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_-4_4_01") { faces[1] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_-4_N_01") { faces[2] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_4_-4_02") { faces[3] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_4_4_02") { faces[4] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_4_N_02") { faces[5] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_N_-4_02") { faces[6] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_N_4_02") { faces[7] = (Sprite)FacedS[i]; }
+			else if (FacedS[i].name == "face_N_N_02") { faces[8] = (Sprite)FacedS[i]; }
+		}
 
   //      Debug.Log("Textures Loaded: " + characters.Length);
 		//Debug.Log("Textures Loaded: " + icons.Length);
@@ -138,16 +138,16 @@ public class DailyReview : MonoBehaviour
         if(done == 0 && missed == 0){GameObject.Find("DescriptionDR").GetComponent<Text>().text ="";}
 		else{GameObject.Find("DescriptionDR").GetComponent<Text>().text = "Daily Review ";}
 
-        if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[0]; }
-        else if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[1]; }
-        else if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[2]; }
-        else if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[3]; }
-        else if (GameManager.People.GetEnergy() >= 4 && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[4]; }//Energetic
-        else if (GameManager.People.GetEnergy() <= -4 && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[5]; }//tiredness
-        else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4)&& GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[6]; }//stressed 
-        else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[7]; }//happiness
-        else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[8]; }//neutral 
-        Debug.Log(GameManager.People.GetEnergy() + "  " + GameManager.People.GetHappiness());
+		if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[0]; }
+		else if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[1]; }
+		else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && GameManager.People.GetHappiness() <= -4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[2]; }//stressed 
+		else if (GameManager.People.GetEnergy() <= -4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[3]; }
+		else if (GameManager.People.GetEnergy() >= 4 && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[4]; }
+		else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && GameManager.People.GetHappiness() >= 4) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[5]; }//happiness
+		else if (GameManager.People.GetEnergy() <= -4 && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[6]; }//tiredness
+		else if (GameManager.People.GetEnergy() >= 4 && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[7]; }//Energetic
+		else if ((GameManager.People.GetEnergy() < 4 || GameManager.People.GetEnergy() > -4) && (GameManager.People.GetHappiness() < 4 || GameManager.People.GetHappiness() > -4)) { GameObject.Find("MoodImgDR").GetComponent<Image>().sprite = faces[8]; }//neutral 
+		Debug.Log(GameManager.People.GetHappiness() + "  " + GameManager.People.GetEnergy());
 
 
         GameObject.Find("DoneTextDR").GetComponent<Text>().text = textDone;
@@ -254,9 +254,14 @@ public class DailyReview : MonoBehaviour
 		else if (dailyEvents[curDisplaingPage - 1].name == "Grocery Shopping") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
 		else if (dailyEvents[curDisplaingPage - 1].name == "Dinner") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
 		else if (dailyEvents[curDisplaingPage - 1].name == "House Cleaning") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
-        else if (dailyEvents[curDisplaingPage - 1].name == "Go to Gym") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
-        else if (dailyEvents[curDisplaingPage - 1].name == "Get Gas") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
-    }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Go to Gym") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Get Gas") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Teach Class") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Concert") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Lunch") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = dailyEvents[curDisplaingPage - 1].creator + " is " + ChkGoodBad + " with you"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Grading") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+		else if (dailyEvents[curDisplaingPage - 1].name == "Wash Car") { GameObject.Find("DescriptionEP").GetComponent<Text>().text = "You are " + ChkGoodBad + " with yourself"; }
+	}
 
 	public void AddEventToReview(Commitment newCom)
 	{	dailyEvents.Add(newCom);	}

@@ -24,6 +24,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void Mute()
 	{
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		MuteButton.SetActive(true);
 		UnMuteButton.SetActive(false);
         GameObject.Find("SoundText").GetComponent<Text>().text = "Sound: Off";
@@ -33,6 +35,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void UnMute()
 	{
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		MuteButton.SetActive(false);
 		UnMuteButton.SetActive(true);
         GameObject.Find("SoundText").GetComponent<Text>().text = "Sound: On";
@@ -41,6 +45,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void Play()
 	{
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		FastForwardButton.SetActive(true);
 		PlayButton.SetActive(false);
         GameObject.Find("FastTimeText").GetComponent<Text>().text = "Fast Forward: Off";
@@ -49,6 +55,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void FastForward()
 	{
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		FastForwardButton.SetActive(false);
 		PlayButton.SetActive(true);
         GameObject.Find("FastTimeText").GetComponent<Text>().text = "Fast Forward: On";
@@ -57,6 +65,8 @@ public class PauseMenu : MonoBehaviour
 
 	public void Close()
 	{
+		GameObject.Find ("Main Camera").GetComponent<AudioManager> ().click_play ();
+
 		GameManager.Calendar.WindowEvent();
 		GameManager.Instance.StartGame();
 		gameObject.SetActive (false);
